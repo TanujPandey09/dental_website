@@ -24,6 +24,7 @@ export const metadata: Metadata = {
     title: "Lumina Dental Care",
     description: "Advanced Dentistry Designed Around Your Smile",
     type: "website",
+    images: ["/dental/og-image.png"],
   },
   icons: {
     icon: '/dental/favicon.png',
