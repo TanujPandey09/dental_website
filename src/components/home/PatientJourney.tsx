@@ -1,121 +1,129 @@
 "use client";
 
 import { useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Calendar01Icon, MicroscopeIcon, Activity01Icon, SmileIcon } from "hugeicons-react";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-const steps = [
-  {
-    number: "01",
-    title: "Consultation",
-    description: "Your journey begins with a comprehensive 1-on-1 consultation in our comfortable, spa-like environment.",
-    icon: <Calendar01Icon className="w-8 h-8" />
-  },
-  {
-    number: "02",
-    title: "Diagnosis",
-    description: "Using advanced 3D imaging, we create a precise map of your dental anatomy for optimal planning.",
-    icon: <MicroscopeIcon className="w-8 h-8" />
-  },
-  {
-    number: "03",
-    title: "Treatment",
-    description: "Experience pain-free procedures performed by world-class specialists using state-of-the-art tech.",
-    icon: <Activity01Icon className="w-8 h-8" />
-  },
-  {
-    number: "04",
-    title: "Smile Transformation",
-    description: "Walk out with a confident, radiant smile and a personalized long-term care plan.",
-    icon: <SmileIcon className="w-8 h-8" />
-  }
-];
+import { motion, useScroll, useSpring, useReducedMotion } from "framer-motion";
+import siteConfig from "@/config/site";
 
 export function PatientJourney() {
-  const container = useRef<HTMLElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const container = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
-  useGSAP(() => {
-    // Parallax Stacking Effect with GSAP
-    cardsRef.current.forEach((card, index) => {
-      if (!card) return;
-      
-      const isLast = index === cardsRef.current.length - 1;
-      
-      // We animate all cards EXCEPT the last one to shrink and fade slightly as they go up
-      if (!isLast) {
-        gsap.to(card, {
-          scale: 0.9,
-          opacity: 0.5,
-          y: -20,
-          ease: "none",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 15%", // When the card hits the sticky top position
-            end: "bottom 0%", // Until it's completely scrolled past
-            scrub: true,
-          }
-        });
-      }
-    });
-  }, { scope: container });
+  // Scroll-linked progress for the connecting rail
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ["start 0.8", "end 0.55"],
+  });
+  const railProgress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 26,
+    mass: 0.3,
+  });
+  const progress = reduceMotion ? 1 : railProgress;
+
+  const steps = siteConfig.journey;
 
   return (
-    <section ref={container} className="py-24 bg-muted/20 relative">
-      <div className="container mx-auto px-4 md:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <h2 className="text-sm font-bold text-accent uppercase tracking-wider mb-3">Your Experience</h2>
-          <h3 className="text-3xl md:text-5xl font-heading font-bold text-primary">
+    <section
+      className="py-12 sm:py-28 bg-background relative overflow-hidden"
+      aria-labelledby="patient-journey-heading"
+    >
+      {/* Ambient background */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none bg-[radial-gradient(60%_50%_at_50%_0%,color-mix(in_oklab,var(--primary)_10%,transparent),transparent_70%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -bottom-40 -right-32 w-[480px] h-[480px] rounded-full bg-accent/10 blur-[120px] pointer-events-none"
+      />
+
+      <div className="container mx-auto px-4 md:px-8 relative">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-20">
+          <h2
+            id="patient-journey-heading"
+            className="text-3xl md:text-5xl font-heading font-bold text-foreground text-balance"
+          >
             The Patient Journey
-          </h3>
-          <p className="text-muted-foreground mt-4 text-lg">
+          </h2>
+          <p className="text-muted-foreground mt-3 sm:mt-4 text-base sm:text-lg text-pretty">
             A seamless, step-by-step process designed around your comfort and health.
           </p>
         </div>
 
-        {/* Stacking Cards Container */}
-        <div className="max-w-3xl mx-auto relative flex flex-col gap-8 pb-32">
-          {steps.map((step, index) => (
-            <div 
-              key={index}
-              ref={el => { cardsRef.current[index] = el }}
-              className="sticky"
-              style={{ 
-                top: `calc(15vh + ${index * 30}px)`, 
-                zIndex: index 
-              }}
-            >
-              <div className="w-full p-8 md:p-12 rounded-3xl bg-background border border-border shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] flex flex-col md:flex-row items-center gap-8 md:gap-12 transition-all">
-                
-                {/* Number & Icon */}
-                <div className="flex-shrink-0 flex flex-col items-center justify-center w-24 h-24 md:w-32 md:h-32 rounded-2xl bg-primary/5 border border-primary/10">
-                  <div className="text-accent mb-2">
-                    {step.icon}
-                  </div>
-                  <div className="text-3xl md:text-4xl font-heading font-bold text-primary/20">
-                    {step.number}
-                  </div>
-                </div>
-                
-                {/* Content */}
-                <div className="text-center md:text-left flex-1">
-                  <h4 className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-4">
+        <div ref={container} className="relative max-w-6xl mx-auto">
+          {/* Mobile: vertical rail */}
+          <div
+            aria-hidden="true"
+            className="hidden absolute left-[27px] top-7 bottom-7 w-0.5 rounded-full bg-border"
+          >
+            <motion.div
+              style={{ scaleY: progress }}
+              className="origin-top w-full h-full rounded-full bg-gradient-to-b from-primary to-accent"
+            />
+          </div>
+
+          {/* Desktop: horizontal rail */}
+          <div
+            aria-hidden="true"
+            className="hidden lg:block absolute top-[27px] left-[10%] right-[10%] h-0.5 rounded-full bg-border"
+          >
+            <motion.div
+              style={{ scaleX: progress }}
+              className="origin-left w-full h-full rounded-full bg-gradient-to-r from-primary to-accent"
+            />
+          </div>
+
+          <ol className="no-scrollbar relative -mx-4 px-4 pb-2 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 sm:mx-0 sm:px-0 lg:pb-0 lg:grid lg:grid-cols-5 lg:gap-5 lg:overflow-visible">
+            {steps.map((step, index) => (
+              <motion.li
+                key={step.title}
+                initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{
+                  duration: 0.6,
+                  delay: reduceMotion ? 0 : index * 0.08,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="relative w-[78vw] max-w-[300px] shrink-0 snap-start lg:w-auto lg:max-w-none lg:shrink lg:pt-[84px]"
+              >
+                {/* Step node */}
+                <motion.div
+                  initial={reduceMotion ? false : { scale: 0.6, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true, amount: 0.6 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 20, delay: reduceMotion ? 0 : index * 0.08 + 0.05 }}
+                  className="relative mb-3 lg:mb-0 lg:absolute lg:left-1/2 lg:top-0 lg:-translate-x-1/2 flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/25 ring-4 ring-background"
+                >
+                  {step.icon}
+                </motion.div>
+
+                {/* Card */}
+                <div className="group relative h-full overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-[0_10px_40px_-14px_rgba(15,23,42,0.08)] transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_24px_60px_-18px_color-mix(in_oklab,var(--primary)_30%,transparent)]">
+                  {/* Large watermark number */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -top-2 right-4 select-none font-heading text-7xl font-bold leading-none text-primary/[0.07] transition-colors duration-300 group-hover:text-primary/15"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <h3 className="relative mt-2 mb-2 text-lg sm:text-xl font-heading font-bold text-foreground">
                     {step.title}
-                  </h4>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
+                  </h3>
+                  <p className="relative text-muted-foreground leading-relaxed text-[15px]">
                     {step.description}
                   </p>
-                </div>
 
-              </div>
-            </div>
-          ))}
+                  {/* Accent underline on hover */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-primary to-accent transition-[width] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:w-full"
+                  />
+                </div>
+              </motion.li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

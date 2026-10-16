@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
+import siteConfig from "@/config/site";
 
 function Counter({ target, label }: { target: number; label: string }) {
   const [count, setCount] = useState(0);
@@ -50,13 +50,15 @@ function Counter({ target, label }: { target: number; label: string }) {
 
 export function TrustSection() {
   return (
-    <section className="py-20 bg-white border-y border-border/50">
+    <section className="py-10 sm:py-20 bg-white border-y border-border/50">
       <div className="container mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-8 divide-x divide-border/50">
-          <Counter target={15} label="Years Experience" />
-          <Counter target={5000} label="Happy Patients" />
-          <Counter target={12} label="Certified Dentists" />
-          <Counter target={25000} label="Treatments Completed" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-6 md:gap-8
+          [&>*:nth-child(even)]:border-l [&>*:nth-child(even)]:border-border/50
+          md:[&>*:nth-child(3)]:border-l md:[&>*:nth-child(3)]:border-border/50">
+          <Counter target={siteConfig.clinic.yearsExperience} label="Years Experience" />
+          <Counter target={siteConfig.clinic.happyPatients} label="Happy Patients" />
+          <Counter target={siteConfig.clinic.certifiedDentists} label="Certified Dentists" />
+          <Counter target={siteConfig.clinic.treatmentsCompleted} label="Treatments Completed" />
         </div>
       </div>
     </section>

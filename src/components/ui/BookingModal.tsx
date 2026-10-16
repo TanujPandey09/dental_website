@@ -29,7 +29,7 @@ export function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: ()
               <div className="space-y-3">
                 <Label htmlFor="service" className="text-sm font-medium text-foreground">Select Service</Label>
                 <Select>
-                  <SelectTrigger id="service" className="w-full h-12 rounded-xl border-input bg-transparent focus:ring-accent">
+                  <SelectTrigger id="service" className="w-full h-12 rounded-xl border-input bg-transparent focus:ring-primary">
                     <SelectValue placeholder="Choose a treatment" />
                   </SelectTrigger>
                   <SelectContent>
@@ -43,12 +43,12 @@ export function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: ()
               
               <div className="space-y-3">
                 <Label htmlFor="date" className="text-sm font-medium text-foreground">Preferred Date</Label>
-                <Input id="date" type="date" className="w-full h-12 rounded-xl border-input bg-transparent focus-visible:ring-accent" />
+                <Input id="date" type="date" className="w-full h-12 rounded-xl border-input bg-transparent focus-visible:ring-primary" />
               </div>
               
               <Button className="w-full h-12 rounded-xl mt-4 group" onClick={() => setStep(2)}>
                 Continue to Details
-                <ArrowRight01Icon className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight01Icon className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Button>
             </div>
           ) : (
@@ -56,22 +56,22 @@ export function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: ()
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-3">
                   <Label htmlFor="firstName" className="text-sm font-medium text-foreground">First Name</Label>
-                  <Input id="firstName" type="text" className="h-12 rounded-xl focus-visible:ring-accent" placeholder="John" />
+                  <Input id="firstName" type="text" className="h-12 rounded-xl focus-visible:ring-primary" placeholder="John" />
                 </div>
                 <div className="space-y-3">
                   <Label htmlFor="lastName" className="text-sm font-medium text-foreground">Last Name</Label>
-                  <Input id="lastName" type="text" className="h-12 rounded-xl focus-visible:ring-accent" placeholder="Doe" />
+                  <Input id="lastName" type="text" className="h-12 rounded-xl focus-visible:ring-primary" placeholder="Doe" />
                 </div>
               </div>
               
               <div className="space-y-3">
                 <Label htmlFor="email" className="text-sm font-medium text-foreground">Email Address</Label>
-                <Input id="email" type="email" className="h-12 rounded-xl focus-visible:ring-accent" placeholder="john@example.com" />
+                <Input id="email" type="email" className="h-12 rounded-xl focus-visible:ring-primary" placeholder="john@example.com" />
               </div>
               
               <div className="space-y-3">
                 <Label htmlFor="phone" className="text-sm font-medium text-foreground">Phone Number</Label>
-                <Input id="phone" type="tel" className="h-12 rounded-xl focus-visible:ring-accent" placeholder="(555) 123-4567" />
+                <Input id="phone" type="tel" className="h-12 rounded-xl focus-visible:ring-primary" placeholder="(555) 123-4567" />
               </div>
               
               <div className="flex gap-4 pt-4">

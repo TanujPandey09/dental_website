@@ -1,30 +1,35 @@
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 import { ServiceClient } from "./page-client";
+import siteConfig from "@/config/site";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
+  { params }: Props
 ): Promise<Metadata> {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
-  const title = slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+  const service = siteConfig.services.find((s) => s.id === slug);
+  const title =
+    service?.title ??
+    slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 
   return {
-    title: `${title} | Healthy Smiles Dental Clinic`,
-    description: `Learn more about our premium ${title.toLowerCase()} services. State-of-the-art procedures with proven success rates and lifetime warranties.`,
+    title: `${title} | ${siteConfig.clinic.name}`,
+    description:
+      service?.detailSubtitle ??
+      `Learn more about our premium ${title.toLowerCase()} services. State-of-the-art procedures with proven success rates and lifetime warranties.`,
     openGraph: {
-      title: `${title} | Healthy Smiles`,
+      title: `${title} | ${siteConfig.clinic.name}`,
       description: `Premium ${title.toLowerCase()} services with expert care.`,
-      images: ['/dental/og-services.png'],
+      images: [siteConfig.clinic.ogImage],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | Healthy Smiles`,
-    }
+      title: `${title} | ${siteConfig.clinic.name}`,
+    },
   };
 }
 

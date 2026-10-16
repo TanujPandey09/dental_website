@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu01Icon, Cancel01Icon, Call02Icon } from "hugeicons-react";
 import { cn } from "@/lib/utils";
 import { useBooking } from "@/components/BookingContext";
+import siteConfig from "@/config/site";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -24,58 +25,57 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "Services", href: "/services" },
-    { name: "Doctors", href: "/doctors" },
-    { name: "About Us", href: "/about" },
-    { name: "Reviews", href: "/testimonials" },
-    { name: "Contact", href: "/contact" },
-  ];
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  const navLinks = siteConfig.navigation.header;
 
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 border-b",
+        "fixed top-0 w-full z-50 transition-[background-color,border-color,padding,box-shadow] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
         scrolled
-          ? "bg-primary/95 backdrop-blur-xl border-white/10 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.15)]"
-          : "bg-white border-transparent py-4"
+          ? "bg-card/80 backdrop-blur-xl border-b border-border py-3 shadow-[0_4px_30px_rgba(15,23,42,0.06)]"
+          : "bg-transparent border-b border-transparent py-5"
       )}
     >
       <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center group relative z-10 shrink-0">
+        <Link
+          href="/"
+          aria-label={`${siteConfig.clinic.name} — home`}
+          className="flex items-center group relative z-10 shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+        >
           <Image
-            src="/dental/Logo.png"
-            alt="Healthy Smiles Dental Logo"
+            src={siteConfig.clinic.logoLight}
+            alt={siteConfig.clinic.name}
             width={150}
-            height={10}
+            height={59}
+            className="h-10 w-auto sm:h-11 transition-transform duration-300 group-hover:scale-[1.02]"
             priority
           />
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-          <ul className="flex items-center gap-4 lg:gap-6">
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-8" aria-label="Primary">
+          <ul className="flex items-center gap-3.5 xl:gap-6">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <li key={link.name}>
                   <Link
                     href={link.href}
+                    aria-current={isActive ? "page" : undefined}
                     className={cn(
-                      "text-sm transition-all duration-300 relative py-1 flex flex-col after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:rounded-full after:transition-all hover:after:w-full",
-                      scrolled
-                        ? "hover:text-white after:bg-white"
-                        : "hover:text-primary after:bg-primary",
+                      "text-sm py-1 whitespace-nowrap flex flex-col rounded transition-colors duration-300 relative after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:rounded-full after:transition-[width] after:duration-300 after:ease-[cubic-bezier(0.4,0,0.2,1)] hover:after:w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4",
                       isActive
-                        ? scrolled
-                          ? "text-white font-semibold after:w-full"
-                          : "text-primary font-semibold after:w-full"
-                        : scrolled
-                          ? "text-white/80 font-medium after:w-0"
-                          : "text-foreground/80 font-medium after:w-0"
+                        ? "text-primary font-semibold after:w-full after:bg-primary"
+                        : "text-foreground/75 font-medium after:w-0 after:bg-primary hover:text-primary"
                     )}
                   >
                     {link.name}
@@ -85,58 +85,49 @@ export function Navbar() {
             })}
           </ul>
 
-          <div
-            className={cn(
-              "flex items-center gap-3 lg:gap-4 border-l pl-4 lg:pl-6 transition-colors duration-300",
-              scrolled ? "border-white/20" : "border-border/50"
-            )}
-          >
+          <div className="flex items-center gap-3 xl:gap-4 border-l border-border pl-4 xl:pl-6">
             <a
-              href="tel:+1234567890"
-              className={cn(
-                "hidden lg:flex items-center gap-2 text-sm font-medium transition-colors duration-300",
-                scrolled
-                  ? "text-white/80 hover:text-white"
-                  : "text-muted-foreground hover:text-primary"
-              )}
+              href={`tel:${siteConfig.contact.phone}`}
+              className="hidden xl:flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 whitespace-nowrap"
             >
-              <Call02Icon className="w-4 h-4 shrink-0" />
-              <span>(555) 123-4567</span>
+              <Call02Icon className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <span>{siteConfig.contact.phone}</span>
             </a>
 
             <Button
               onClick={openBooking}
-
-              className={cn(
-                "rounded-lg px-5 lg:px-6 py-6 cursor-pointer text-sm font-semibold transition-all duration-300 shadow-md whitespace-nowrap",
-                scrolled
-                  ? "bg-white text-primary hover:bg-white/90"
-                  : "bg-accent text-white hover:bg-accent/90 shadow-accent/10"
-              )}
+              className="rounded-lg px-5 xl:px-6 h-11 xl:h-12 cursor-pointer text-sm font-semibold shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/25 transition-[background-color,box-shadow] duration-200 whitespace-nowrap"
             >
               Book Appointment
             </Button>
           </div>
         </nav>
 
-        {/* Mobile Toggle */}
-        <button
-          className={cn(
-            "md:hidden p-2 rounded-md transition-colors",
-            scrolled ? "text-white" : "text-foreground"
-          )}
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? (
-            <Cancel01Icon className="w-6 h-6" />
-          ) : (
-            <Menu01Icon className="w-6 h-6" />
-          )}
-        </button>
-      </div >
+        {/* Tablet & Mobile Right Actions */}
+        <div className="flex items-center gap-2.5 sm:gap-3 lg:hidden">
+          <Button
+            onClick={openBooking}
+            className="hidden sm:inline-flex rounded-lg px-4 sm:px-5 h-10 md:h-11 text-xs md:text-sm font-semibold shadow-sm shadow-primary/20 cursor-pointer"
+          >
+            Book Now
+          </Button>
 
-      {/* Premium Side-Drawer Mobile Menu */}
+          <button
+            className="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center rounded-lg border border-border/70 bg-card/60 backdrop-blur-md text-foreground hover:text-primary hover:border-primary/50 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            {mobileMenuOpen ? (
+              <Cancel01Icon className="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
+            ) : (
+              <Menu01Icon className="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Premium Side-Drawer Menu for Mobile & Tablet */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
@@ -146,7 +137,7 @@ export function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[45] md:hidden"
+              className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[45] lg:hidden"
               onClick={() => setMobileMenuOpen(false)}
             />
 
@@ -156,81 +147,92 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-[85vw] max-w-sm bg-white shadow-2xl z-[50] flex flex-col md:hidden"
+              className="fixed top-0 right-0 h-dvh w-[85vw] max-w-sm bg-card shadow-2xl z-[50] flex flex-col lg:hidden"
             >
-              <div className="flex justify-end p-6">
+              <div className="flex items-center justify-between px-6 pt-5 pb-2 shrink-0">
+                <Image
+                  src={siteConfig.clinic.logoLight}
+                  alt={siteConfig.clinic.name}
+                  width={130}
+                  height={50}
+                  className="h-8 w-auto"
+                />
                 <button
-                  className="p-2 text-foreground/80 hover:text-foreground bg-muted/50 rounded-full transition-colors"
+                  className="p-2 text-foreground/80 hover:text-foreground bg-muted/50 hover:bg-muted rounded-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
                   onClick={() => setMobileMenuOpen(false)}
+                  aria-label="Close menu"
                 >
-                  <Cancel01Icon className="w-6 h-6" />
+                  <Cancel01Icon className="w-6 h-6" aria-hidden="true" />
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto px-8 py-6 flex flex-col justify-center">
-                <motion.div 
-                  className="flex flex-col gap-6"
-                  initial="closed"
-                  animate="open"
-                  exit="closed"
-                  variants={{
-                    open: {
-                      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-                    },
-                    closed: {
-                      transition: { staggerChildren: 0.05, staggerDirection: -1 }
-                    }
-                  }}
-                >
-                  {navLinks.map((link) => {
-                    const isActive = pathname === link.href;
-                    return (
-                      <motion.div
-                        key={link.name}
-                        variants={{
-                          open: { opacity: 1, y: 0 },
-                          closed: { opacity: 0, y: 20 }
-                        }}
-                      >
-                        <Link
-                          href={link.href}
-                          className={cn(
-                            "text-3xl font-heading font-bold transition-colors block",
-                            isActive ? "text-primary" : "text-foreground hover:text-primary"
-                          )}
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          {link.name}
-                        </Link>
-                      </motion.div>
-                    );
-                  })}
-                </motion.div>
-
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="mt-12 pt-8 border-t border-border flex flex-col gap-4"
-                >
-                  <a
-                    href="tel:+1234567890"
-                    className="flex items-center gap-3 text-foreground/80 font-medium py-2"
-                  >
-                    <Call02Icon className="w-5 h-5 text-primary" />
-                    <span className="text-lg">(555) 123-4567</span>
-                  </a>
-                  <Button
-                    size="lg"
-                    className="w-full bg-accent hover:bg-accent/90 text-white rounded-xl py-6 text-lg font-bold shadow-lg shadow-accent/20"
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      openBooking();
+              <div className="flex-1 overflow-y-auto">
+                <div className="min-h-full flex flex-col justify-center px-6 py-8 gap-5">
+                  <motion.div
+                    className="flex flex-col gap-5"
+                    initial="closed"
+                    animate="open"
+                    exit="closed"
+                    variants={{
+                      open: {
+                        transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+                      },
+                      closed: {
+                        transition: { staggerChildren: 0.05, staggerDirection: -1 }
+                      }
                     }}
                   >
-                    Book Appointment
-                  </Button>
-                </motion.div>
+                    {navLinks.map((link) => {
+                      const isActive = pathname === link.href;
+                      return (
+                        <motion.div
+                          key={link.name}
+                          variants={{
+                            open: { opacity: 1, y: 0 },
+                            closed: { opacity: 0, y: 20 }
+                          }}
+                        >
+                          <Link
+                            href={link.href}
+                            aria-current={isActive ? "page" : undefined}
+                            className={cn(
+                              "text-2xl font-heading font-bold transition-colors block leading-tight rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4",
+                              isActive ? "text-primary" : "text-foreground hover:text-primary"
+                            )}
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {link.name}
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="mt-6 pt-6 border-t border-border flex flex-col gap-4"
+                  >
+                    <a
+                      href={`tel:${siteConfig.contact.phone}`}
+                      className="flex items-center gap-3 text-foreground/80 font-medium py-1"
+                    >
+                      <Call02Icon className="w-5 h-5 text-primary shrink-0" aria-hidden="true" />
+                      <span className="text-base">{siteConfig.contact.phone}</span>
+                    </a>
+                    <Button
+                      size="lg"
+                      className="w-full h-14 bg-primary hover:bg-primary/90 text-white rounded-xl text-base font-bold shadow-lg shadow-primary/20"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        openBooking();
+                      }}
+                    >
+                      Book Appointment
+                    </Button>
+                  </motion.div>
+                </div>
               </div>
             </motion.div>
           </>

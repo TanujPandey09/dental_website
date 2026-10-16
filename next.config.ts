@@ -1,22 +1,15 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "plus.unsplash.com",
-      },
-      {
-        protocol: "https",
-        hostname: "media.istockphoto.com",
-      },
-    ],
-  },
-};
+/**
+ * The template ships with local images in `public/dental/images/` (see
+ * `src/config/images.ts`), so no remote image hosts are required.
+ *
+ * If you host images on a CDN or use a remote source, allow the hostname here:
+ *
+ *   images: {
+ *     remotePatterns: [{ protocol: "https", hostname: "images.example.com" }],
+ *   },
+ */
+const nextConfig: NextConfig = {};
 
 export default nextConfig;

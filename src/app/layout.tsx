@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
-import { Inter, Inter_Tight } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import siteConfig from "@/config/site";
 
-const interTight = Inter_Tight({
+const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-heading",
 });
@@ -16,19 +17,36 @@ const inter = Inter({
   variable: "--font-body",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || siteConfig.seo.metadataBase;
+
 export const metadata: Metadata = {
-  title: "Lumina Dental Care | Advanced Dentistry Designed Around Your Smile",
-  description: "Modern dentistry with experienced professionals, advanced technology, and patient-first care.",
-  keywords: ["dentist", "dental clinic", "cosmetic dentistry", "dental implants", "orthodontics", "premium healthcare"],
+  metadataBase: siteUrl ? new URL(siteUrl) : undefined,
+  title: siteConfig.seo.title,
+  description: siteConfig.seo.description,
+  keywords: siteConfig.seo.keywords,
   openGraph: {
-    title: "Lumina Dental Care",
-    description: "Advanced Dentistry Designed Around Your Smile",
-    type: "website",
-    images: ["/dental/og-image.png"],
+    title: siteConfig.seo.openGraph.title,
+    description: siteConfig.seo.openGraph.description,
+    type: siteConfig.seo.openGraph.type,
+    siteName: siteConfig.clinic.name,
+    images: siteConfig.seo.openGraph.images,
+  },
+  twitter: {
+    card: siteConfig.seo.twitter.card,
+    title: siteConfig.seo.twitter.title,
+    description: siteConfig.seo.twitter.description,
+    images: siteConfig.seo.twitter.images,
   },
   icons: {
-    icon: '/dental/favicon.png',
+    icon: siteConfig.clinic.favicon,
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: siteConfig.clinic.primaryColor,
 };
 
 import { BookingProvider } from "@/components/BookingContext";
@@ -40,13 +58,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn(interTight.variable, inter.variable, "antialiased")}>
-      <body className="min-h-screen bg-background font-body flex flex-col">
+    <html lang="en" className={cn(fraunces.variable, inter.variable, "antialiased")}>
+      <body className="min-h-screen bg-background font-body flex flex-col overflow-x-hidden">
         <CustomCursor />
         <SmoothScroll>
           <BookingProvider>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold"
+            >
+              Skip to content
+            </a>
             <Navbar />
-            <main className="flex-1">
+            <main id="main-content" className="flex-1">
               {children}
             </main>
             <Footer />

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import siteConfig from "@/config/site";
 
 const bookingSchema = z.object({
   firstName: z.string().min(2, "First name is required"),
@@ -27,6 +29,9 @@ const bookingSchema = z.object({
 });
 
 export function BookingForm() {
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const form = useForm<z.infer<typeof bookingSchema>>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
@@ -41,10 +46,51 @@ export function BookingForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof bookingSchema>) {
-    console.log(values);
-    alert("Appointment requested! We will contact you to confirm the exact time.");
-    form.reset();
+  async function onSubmit(values: z.infer<typeof bookingSchema>) {
+    setStatus("submitting");
+    setErrorMessage("");
+    try {
+      const res = await fetch("/api/booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.ok) {
+        throw new Error(json.error || "Something went wrong. Please try again.");
+      }
+      form.reset();
+      setStatus("success");
+    } catch (err) {
+      setErrorMessage(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      );
+      setStatus("error");
+    }
+  }
+
+  if (status === "success") {
+    return (
+      <div className="text-center py-10" role="status" aria-live="polite">
+        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
+          <span className="text-3xl" aria-hidden="true">✓</span>
+        </div>
+        <h3 className="text-2xl font-heading font-bold text-foreground mb-3">
+          Request received
+        </h3>
+        <p className="text-muted-foreground mb-8 max-w-sm mx-auto">
+          Thank you! We&apos;ll contact you shortly to confirm the exact time of your
+          appointment.
+        </p>
+        <Button
+          onClick={() => setStatus("idle")}
+          variant="outline"
+          className="h-12 px-8 rounded-xl font-bold"
+        >
+          Book another appointment
+        </Button>
+      </div>
+    );
   }
 
   return (
@@ -59,7 +105,7 @@ export function BookingForm() {
               <FormItem>
                 <FormLabel>First Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John" className="h-12 rounded-xl focus-visible:ring-accent" {...field} />
+                  <Input placeholder="John" className="h-12 rounded-xl focus-visible:ring-primary" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -72,7 +118,7 @@ export function BookingForm() {
               <FormItem>
                 <FormLabel>Last Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Doe" className="h-12 rounded-xl focus-visible:ring-accent" {...field} />
+                  <Input placeholder="Doe" className="h-12 rounded-xl focus-visible:ring-primary" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -88,7 +134,7 @@ export function BookingForm() {
               <FormItem>
                 <FormLabel>Email Address</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="john@example.com" className="h-12 rounded-xl focus-visible:ring-accent" {...field} />
+                  <Input type="email" placeholder="john@example.com" className="h-12 rounded-xl focus-visible:ring-primary" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -101,7 +147,7 @@ export function BookingForm() {
               <FormItem>
                 <FormLabel>Phone Number</FormLabel>
                 <FormControl>
-                  <Input type="tel" placeholder="(555) 123-4567" className="h-12 rounded-xl focus-visible:ring-accent" {...field} />
+                  <Input type="tel" placeholder="(555) 123-4567" className="h-12 rounded-xl focus-visible:ring-primary" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -121,16 +167,16 @@ export function BookingForm() {
               <FormLabel>Reason for Visit</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="h-12 rounded-xl focus:ring-accent">
+                  <SelectTrigger className="h-12 rounded-xl focus:ring-primary">
                     <SelectValue placeholder="Select a treatment or service" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="general">General Checkup & Cleaning</SelectItem>
-                  <SelectItem value="cosmetic">Cosmetic Consultation (Veneers, Bonding)</SelectItem>
-                  <SelectItem value="implants">Dental Implants Consultation</SelectItem>
-                  <SelectItem value="whitening">Teeth Whitening</SelectItem>
-                  <SelectItem value="emergency">Emergency Dental Care</SelectItem>
+                  {siteConfig.forms.bookingServices.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -146,7 +192,7 @@ export function BookingForm() {
               <FormItem>
                 <FormLabel>Preferred Date</FormLabel>
                 <FormControl>
-                  <Input type="date" className="h-12 rounded-xl focus-visible:ring-accent text-foreground" {...field} />
+                  <Input type="date" className="h-12 rounded-xl focus-visible:ring-primary text-foreground" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -160,7 +206,7 @@ export function BookingForm() {
                 <FormLabel>Preferred Time</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="h-12 rounded-xl focus:ring-accent">
+                    <SelectTrigger className="h-12 rounded-xl focus:ring-primary">
                       <SelectValue placeholder="Select time of day" />
                     </SelectTrigger>
                   </FormControl>
@@ -184,7 +230,7 @@ export function BookingForm() {
               <FormLabel>Additional Notes (Optional)</FormLabel>
               <FormControl>
                 <textarea 
-                  className="flex min-h-[100px] w-full rounded-xl border border-input bg-transparent px-4 py-3 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex min-h-[100px] w-full rounded-xl border border-input bg-transparent px-4 py-3 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
                   placeholder="Is there anything specific you would like us to know?"
                   {...field}
                 />
@@ -194,8 +240,19 @@ export function BookingForm() {
           )}
         />
 
-        <Button type="submit" className="w-full h-14 rounded-xl shadow-lg shadow-primary/20 text-base font-bold mt-4">
-          Request Appointment
+        {status === "error" && (
+          <p role="alert" className="text-sm font-medium text-destructive bg-destructive/10 rounded-xl px-4 py-3">
+            {errorMessage}
+          </p>
+        )}
+
+        <Button
+          type="submit"
+          disabled={status === "submitting"}
+          aria-busy={status === "submitting"}
+          className="w-full h-14 rounded-xl shadow-lg shadow-primary/20 text-base font-bold mt-4 disabled:opacity-60"
+        >
+          {status === "submitting" ? "Sending…" : "Request Appointment"}
         </Button>
       </form>
     </Form>

@@ -1,5 +1,4 @@
 import { Hero } from "@/components/home/Hero";
-import { TrustSection } from "@/components/home/TrustSection";
 import { ServicesPreview } from "@/components/home/ServicesPreview";
 import { MeetDentists } from "@/components/home/MeetDentists";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";

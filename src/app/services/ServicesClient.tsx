@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { SparklesIcon, Shield01Icon, Activity01Icon, SmileIcon, StethoscopeIcon, CheckmarkBadge01Icon, FilterIcon } from "hugeicons-react";
 import { useBooking } from "@/components/BookingContext";
 import { Button } from "@/components/ui/button";
+import { images } from "@/config/images";
 
 const allServices = [
   {
@@ -14,7 +16,7 @@ const allServices = [
     description: "Transform your smile with premium veneers, bonding, and total smile makeovers.",
     category: "Cosmetic",
     icon: <SparklesIcon className="w-8 h-8" />,
-    image: "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=600&auto=format&fit=crop"
+    image: images.services["cosmetic-dentistry"]
   },
   {
     id: "dental-implants",
@@ -22,7 +24,7 @@ const allServices = [
     description: "Permanent, natural-looking tooth replacements using state-of-the-art titanium implants.",
     category: "Restorative",
     icon: <Shield01Icon className="w-8 h-8" />,
-    image: "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=600&auto=format&fit=crop"
+    image: images.services["dental-implants"]
   },
   {
     id: "teeth-whitening",
@@ -30,7 +32,7 @@ const allServices = [
     description: "Professional whitening treatments for a brilliantly bright smile in just one visit.",
     category: "Cosmetic",
     icon: <Activity01Icon className="w-8 h-8" />,
-    image: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?q=80&w=600&auto=format&fit=crop"
+    image: images.services["teeth-whitening"]
   },
   {
     id: "orthodontics",
@@ -38,7 +40,7 @@ const allServices = [
     description: "Clear aligners and modern braces for perfectly straight teeth without the metal look.",
     category: "Specialty",
     icon: <SmileIcon className="w-8 h-8" />,
-    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=600&auto=format&fit=crop"
+    image: images.services["orthodontics"]
   },
   {
     id: "general-dentistry",
@@ -46,7 +48,7 @@ const allServices = [
     description: "Comprehensive exams, cleanings, and preventative care to keep your smile healthy.",
     category: "General",
     icon: <StethoscopeIcon className="w-8 h-8" />,
-    image: "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?q=80&w=600&auto=format&fit=crop"
+    image: images.services["general-dentistry"]
   },
   {
     id: "root-canal",
@@ -54,7 +56,7 @@ const allServices = [
     description: "Painless endodontic treatments to save infected teeth and relieve pain instantly.",
     category: "Restorative",
     icon: <Shield01Icon className="w-8 h-8" />,
-    image: "https://plus.unsplash.com/premium_photo-1674575270991-653fb6bfc1bf?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHJvb3QlMjBjYW5hbCUyMHRyZWF0bWVudHxlbnwwfHwwfHx8MA%3D%3D"
+    image: images.services["root-canal"]
   },
   {
     id: "pediatric-dentistry",
@@ -62,7 +64,7 @@ const allServices = [
     description: "Gentle, fun, and educational dental care specialized for children of all ages.",
     category: "Specialty",
     icon: <SmileIcon className="w-8 h-8" />,
-    image: "https://images.unsplash.com/photo-1631051103633-24959376b92d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVkaWF0cmljJTIwZGVudGlzdHxlbnwwfHwwfHx8MA%3D%3D"
+    image: images.services["pediatric-dentistry"]
   },
   {
     id: "oral-surgery",
@@ -70,7 +72,7 @@ const allServices = [
     description: "Expert extractions, wisdom teeth removal, and advanced surgical procedures.",
     category: "Specialty",
     icon: <CheckmarkBadge01Icon className="w-8 h-8" />,
-    image: "https://images.unsplash.com/photo-1588776814546-daab30f310ce?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8b3JhbCUyMHN1cmdlcnl8ZW58MHx8MHx8fDA%3D"
+    image: images.services["oral-surgery"]
   }
 ];
 
@@ -85,12 +87,12 @@ export function ServicesClient() {
     : allServices.filter(service => service.category === activeCategory);
 
   return (
-    <section className="py-24 bg-muted/30">
+    <section className="py-10 sm:py-20 bg-muted/30">
       <div className="container mx-auto px-4 md:px-8">
 
         {/* Filters */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
-          <div className="flex items-center gap-2 text-slate-500 font-medium">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-6 sm:mb-12 gap-4 sm:gap-6">
+          <div className="flex items-center gap-2 text-muted-foreground font-medium">
             <FilterIcon className="w-5 h-5" />
             <span>Filter by Category:</span>
           </div>
@@ -99,9 +101,10 @@ export function ServicesClient() {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${activeCategory === category
-                  ? "bg-primary text-white shadow-md"
-                  : "bg-white text-slate-600 border border-slate-200 hover:border-primary hover:text-primary"
+                aria-pressed={activeCategory === category}
+                className={`px-5 py-2 rounded-full text-sm font-semibold transition-[color,background-color,border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 ${activeCategory === category
+                  ? "bg-primary text-primary-foreground shadow-md"
+                  : "bg-card text-muted-foreground border border-border hover:border-primary hover:text-primary"
                   }`}
               >
                 {category}
@@ -111,7 +114,7 @@ export function ServicesClient() {
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           <AnimatePresence mode="popLayout">
             {filteredServices.map((service) => (
               <motion.div
@@ -121,40 +124,40 @@ export function ServicesClient() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
                 key={service.id}
-                className="service-card block group relative h-[420px] rounded-3xl overflow-hidden"
+                className="service-card block group relative h-[320px] sm:h-[400px] md:h-[420px] rounded-3xl overflow-hidden"
               >
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
-                  <img
+                  <Image
                     src={service.image}
                     alt={service.title}
-                    className="w-full h-full object-cover scale-100 group-hover:scale-110 transition-transform duration-700 ease-out"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover scale-100 group-hover:scale-110 transition-transform duration-700 ease-out"
                   />
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
                 </div>
 
                 {/* Content */}
-                <div className="relative z-10 h-full flex flex-col justify-end p-8 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-                  <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-white mb-6 border border-white/20 group-hover:scale-110 group-hover:bg-accent group-hover:border-accent transition-all duration-500">
+                <div className="relative z-10 h-full flex flex-col justify-end p-5 sm:p-8">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/15 flex items-center justify-center text-white mb-3 md:mb-6 border border-white/25 group-hover:scale-110 group-hover:bg-primary group-hover:border-primary transition-[transform,background-color,border-color] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
                     {service.icon}
                   </div>
 
-                  <h4 className="text-2xl font-heading font-bold text-white mb-3 drop-shadow-md">
+                  <h2 className="text-2xl font-heading font-bold text-white mb-3 drop-shadow-md">
                     {service.title}
-                  </h4>
+                  </h2>
 
-                  <p className="text-white/90 text-sm leading-relaxed mb-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 h-0 group-hover:h-auto overflow-hidden drop-shadow-sm font-medium">
+                  <p className="text-white/90 text-sm leading-relaxed mb-4 md:mb-6 line-clamp-2 md:line-clamp-none drop-shadow-sm font-medium">
                     {service.description}
                   </p>
 
-                  <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 h-0 group-hover:h-auto overflow-hidden">
-                    <Link href={`/services/${service.id}`} className="flex-1">
-                      <Button variant="outline" className="w-full h-10 border-white/30 bg-white/10 text-white hover:bg-white hover:text-primary backdrop-blur-sm">
-                        Details
-                      </Button>
-                    </Link>
-                    <Button className="flex-1 h-10 bg-accent hover:bg-accent/90 text-white border-0" onClick={(e) => { e.preventDefault(); openBooking(); }}>
+                  <div className="flex gap-3">
+                    <Button asChild variant="outline" className="flex-1 h-10 border-white/30 bg-white/10 text-white hover:bg-white hover:text-primary">
+                      <Link href={`/services/${service.id}`}>Details</Link>
+                    </Button>
+                    <Button className="flex-1 h-10 bg-primary hover:bg-primary/90 text-primary-foreground border-0" onClick={() => openBooking()}>
                       Book
                     </Button>
                   </div>
@@ -168,7 +171,7 @@ export function ServicesClient() {
         </div>
 
         {filteredServices.length === 0 && (
-          <div className="text-center py-20 text-slate-500">
+          <div role="status" className="text-center py-20 text-muted-foreground">
             No services found for this category.
           </div>
         )}
