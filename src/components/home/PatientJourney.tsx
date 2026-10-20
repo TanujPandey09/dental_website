@@ -1,129 +1,250 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useSpring, useReducedMotion } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ArrowRight01Icon, Calendar01Icon, SparklesIcon } from "hugeicons-react";
+import { useBooking } from "@/components/BookingContext";
 import siteConfig from "@/config/site";
+import { cn } from "@/lib/utils";
+
+// Custom tailored SVG icons matching the reference screenshot precisely
+function StageIcon({ index, className }: { index: number; className?: string }) {
+  if (index === 0) {
+    return <Calendar01Icon className={cn("w-5 h-5", className)} />;
+  }
+  if (index === 1) {
+    return (
+      <svg className={cn("w-5 h-5", className)} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+      </svg>
+    );
+  }
+  if (index === 2) {
+    return (
+      <svg className={cn("w-5 h-5", className)} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+    );
+  }
+  if (index === 3) {
+    return (
+      <svg className={cn("w-5 h-5", className)} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+      </svg>
+    );
+  }
+  return (
+    <svg className={cn("w-5 h-5", className)} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
+  );
+}
 
 export function PatientJourney() {
-  const container = useRef<HTMLDivElement>(null);
-  const reduceMotion = useReducedMotion();
-
-  // Scroll-linked progress for the connecting rail
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start 0.8", "end 0.55"],
-  });
-  const railProgress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 26,
-    mass: 0.3,
-  });
-  const progress = reduceMotion ? 1 : railProgress;
+  const { openBooking } = useBooking();
+  const [activeStep, setActiveStep] = useState(0);
 
   const steps = siteConfig.journey;
 
   return (
     <section
-      className="py-12 sm:py-28 bg-background relative overflow-hidden"
+      className="py-20 sm:py-28 lg:py-32 bg-[#07142A] text-white relative overflow-hidden"
       aria-labelledby="patient-journey-heading"
     >
-      {/* Ambient background */}
+      {/* Background ambient lighting */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none bg-[radial-gradient(60%_50%_at_50%_0%,color-mix(in_oklab,var(--primary)_10%,transparent),transparent_70%)]"
+        className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-teal-500/10 rounded-full blur-[140px] pointer-events-none"
       />
       <div
         aria-hidden="true"
-        className="absolute -bottom-40 -right-32 w-[480px] h-[480px] rounded-full bg-accent/10 blur-[120px] pointer-events-none"
+        className="absolute bottom-0 left-10 w-[500px] h-[300px] bg-teal-600/5 rounded-full blur-[120px] pointer-events-none"
       />
 
-      <div className="container mx-auto px-4 md:px-8 relative">
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-20">
-          <h2
-            id="patient-journey-heading"
-            className="text-3xl md:text-5xl font-heading font-bold text-foreground text-balance"
-          >
-            The Patient Journey
-          </h2>
-          <p className="text-muted-foreground mt-3 sm:mt-4 text-base sm:text-lg text-pretty">
-            A seamless, step-by-step process designed around your comfort and health.
-          </p>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+        {/* Header Row: Left Eyebrow & Title, Right Editorial Subtext */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 sm:gap-8 pb-12 sm:pb-16 border-b border-white/10">
+          <div className="max-w-2xl">
+            {/* The Patient Journey Eyebrow Badge */}
+            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-teal-500/15 text-teal-300 border border-teal-500/25 mb-4">
+              <SparklesIcon className="w-3.5 h-3.5 text-teal-400" />
+              The Patient Journey
+            </span>
+
+            {/* From first question to aftercare. */}
+            <h2
+              id="patient-journey-heading"
+              className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-white tracking-tight leading-[1.15]"
+            >
+              From first question{" "}
+              <span className="italic text-teal-400 font-serif">to aftercare.</span>
+            </h2>
+          </div>
+
+          {/* Right Subtext */}
+          <div className="lg:max-w-md">
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-light">
+              Five clear stages, designed to remove uncertainty without hiding the clinical detail
+              <span className="text-amber-500 font-bold ml-0.5">.</span>
+            </p>
+          </div>
         </div>
 
-        <div ref={container} className="relative max-w-6xl mx-auto">
-          {/* Mobile: vertical rail */}
-          <div
-            aria-hidden="true"
-            className="hidden absolute left-[27px] top-7 bottom-7 w-0.5 rounded-full bg-border"
-          >
-            <motion.div
-              style={{ scaleY: progress }}
-              className="origin-top w-full h-full rounded-full bg-gradient-to-b from-primary to-accent"
-            />
-          </div>
+        {/* Desktop 5-Column Timeline with Stepper Line Starting Directly from Each Step */}
+        <div className="hidden md:block relative pt-12 lg:pt-16">
+          <div className="grid grid-cols-5 gap-6 lg:gap-8 relative z-10">
+            {steps.map((step, index) => {
+              const isFilled = index <= activeStep;
+              const isCurrent = index === activeStep;
 
-          {/* Desktop: horizontal rail */}
-          <div
-            aria-hidden="true"
-            className="hidden lg:block absolute top-[27px] left-[10%] right-[10%] h-0.5 rounded-full bg-border"
-          >
-            <motion.div
-              style={{ scaleX: progress }}
-              className="origin-left w-full h-full rounded-full bg-gradient-to-r from-primary to-accent"
-            />
-          </div>
-
-          <ol className="no-scrollbar relative -mx-4 px-4 pb-2 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 sm:mx-0 sm:px-0 lg:pb-0 lg:grid lg:grid-cols-5 lg:gap-5 lg:overflow-visible">
-            {steps.map((step, index) => (
-              <motion.li
-                key={step.title}
-                initial={reduceMotion ? false : { opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{
-                  duration: 0.6,
-                  delay: reduceMotion ? 0 : index * 0.08,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="relative w-[78vw] max-w-[300px] shrink-0 snap-start lg:w-auto lg:max-w-none lg:shrink lg:pt-[84px]"
-              >
-                {/* Step node */}
-                <motion.div
-                  initial={reduceMotion ? false : { scale: 0.6, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true, amount: 0.6 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 20, delay: reduceMotion ? 0 : index * 0.08 + 0.05 }}
-                  className="relative mb-3 lg:mb-0 lg:absolute lg:left-1/2 lg:top-0 lg:-translate-x-1/2 flex items-center justify-center w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/25 ring-4 ring-background"
+              return (
+                <div
+                  key={step.title}
+                  onMouseEnter={() => setActiveStep(index)}
+                  onFocus={() => setActiveStep(index)}
+                  onClick={() => setActiveStep(index)}
+                  tabIndex={0}
+                  className="group relative flex flex-col justify-between focus:outline-none cursor-pointer p-1 rounded-xl"
                 >
-                  {step.icon}
-                </motion.div>
+                  <div>
+                    {/* Node Circle & Stepper Line that starts directly from this circle */}
+                    <div className="relative flex items-center mb-6">
+                      <motion.div
+                        animate={{
+                          scale: isCurrent ? 1.08 : 1,
+                        }}
+                        transition={{ type: "spring", stiffness: 350, damping: 22 }}
+                        className={cn(
+                          "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shrink-0 z-10 relative ring-4 ring-[#07142A]",
+                          isFilled
+                            ? "bg-[#0F766E] text-white shadow-lg shadow-teal-900/50"
+                            : "bg-white text-slate-800 shadow-md group-hover:ring-teal-400/40"
+                        )}
+                      >
+                        <StageIcon
+                          index={index}
+                          className={isFilled ? "text-white" : "text-slate-800"}
+                        />
+                      </motion.div>
 
-                {/* Card */}
-                <div className="group relative h-full overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-[0_10px_40px_-14px_rgba(15,23,42,0.08)] transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_24px_60px_-18px_color-mix(in_oklab,var(--primary)_30%,transparent)]">
-                  {/* Large watermark number */}
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -top-2 right-4 select-none font-heading text-7xl font-bold leading-none text-primary/[0.07] transition-colors duration-300 group-hover:text-primary/15"
+                      {/* Stepper line: Starts directly from the right edge of this circle (left-12) to the next circle */}
+                      {index < steps.length - 1 && (
+                        <div
+                          className="hidden md:block absolute left-12 right-[-1.5rem] lg:right-[-2rem] top-1/2 -translate-y-1/2 h-[2px] bg-white/15 pointer-events-none"
+                          aria-hidden="true"
+                        >
+                          <div
+                            className={cn(
+                              "h-full bg-teal-400 shadow-[0_0_10px_rgba(45,212,191,0.7)] transition-all duration-300 ease-out",
+                              index < activeStep
+                                ? "w-full"
+                                : index === 0 && activeStep === 0
+                                  ? "w-10 sm:w-14"
+                                  : "w-0"
+                            )}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Step Title */}
+                    <h3
+                      className={cn(
+                        "font-serif text-lg lg:text-xl font-medium tracking-tight mt-1 mb-2.5 transition-colors duration-200",
+                        isCurrent ? "text-white" : "text-white/85 group-hover:text-white"
+                      )}
+                    >
+                      {step.title}
+                    </h3>
+
+                    {/* Step Description */}
+                    <p className="text-slate-400 text-xs sm:text-[13px] leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
+
+                  {/* Micro-footnote / Tag at bottom */}
+                  {step.note && (
+                    <span className="text-[11px] text-slate-500 font-mono tracking-wider uppercase mt-6 block">
+                      {step.note}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mobile Vertical Sequence with Animated Height Rail */}
+        <div className="md:hidden pt-8 space-y-8">
+          <div className="relative pl-8 space-y-8">
+            {/* Vertical background rail */}
+            <div
+              className="absolute left-[15px] top-4 bottom-4 w-[2px] bg-white/15 pointer-events-none"
+              aria-hidden="true"
+            >
+              {/* Active animated vertical fill */}
+              <div
+                className="w-full bg-teal-400 shadow-[0_0_10px_rgba(45,212,191,0.6)] transition-[height] duration-300 ease-out"
+                style={{
+                  height: activeStep === 0 ? "24px" : `${(activeStep / (steps.length - 1)) * 100}%`,
+                }}
+              />
+            </div>
+
+            {steps.map((step, index) => {
+              const isFilled = index <= activeStep;
+              return (
+                <div
+                  key={step.title}
+                  onClick={() => setActiveStep(index)}
+                  className="relative group cursor-pointer"
+                >
+                  {/* Floating Circle on the vertical rail */}
+                  <div
+                    className={cn(
+                      "absolute -left-[45px] top-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors shadow-sm z-10 ring-4 ring-[#07142A]",
+                      isFilled
+                        ? "bg-[#0F766E] text-white"
+                        : "bg-white text-slate-800"
+                    )}
                   >
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
+                    <StageIcon
+                      index={index}
+                      className={cn("w-4 h-4", isFilled ? "text-white" : "text-slate-800")}
+                    />
+                  </div>
 
-                  <h3 className="relative mt-2 mb-2 text-lg sm:text-xl font-heading font-bold text-foreground">
+                  {/* Step Info */}
+                  <h3 className="font-serif text-lg font-medium text-white tracking-tight mt-0.5 mb-2">
                     {step.title}
                   </h3>
-                  <p className="relative text-muted-foreground leading-relaxed text-[15px]">
+                  <p className="text-slate-400 text-xs leading-relaxed">
                     {step.description}
                   </p>
-
-                  {/* Accent underline on hover */}
-                  <span
-                    aria-hidden="true"
-                    className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-primary to-accent transition-[width] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:w-full"
-                  />
+                  {step.note && (
+                    <span className="text-[10px] text-slate-500 font-mono tracking-wider uppercase mt-2.5 block">
+                      {step.note}
+                    </span>
+                  )}
                 </div>
-              </motion.li>
-            ))}
-          </ol>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Bottom Bar: Helper Note & White CTA Button */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 mt-16 sm:mt-20 pt-8 border-t border-white/10">
+
+
+          <button
+            type="button"
+            onClick={openBooking}
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-[#07142A] hover:bg-slate-100 font-semibold text-sm transition-all shadow-md hover:shadow-lg hover:scale-[1.02] cursor-pointer shrink-0 self-start sm:self-auto"
+          >
+            <span>Start with a request</span>
+            <ArrowRight01Icon className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </section>

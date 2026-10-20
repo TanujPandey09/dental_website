@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import { ArrowRight01Icon } from "hugeicons-react";
+import { ArrowRight01Icon, SparklesIcon } from "hugeicons-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -11,99 +12,143 @@ import siteConfig from "@/config/site";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const SERVICE_TAGS: Record<string, string> = {
+  "cosmetic-dentistry": "Same-Day CEREC",
+  "dental-implants": "Computer-Guided 3D",
+  "teeth-whitening": "In-Office Laser",
+  orthodontics: "Clear Aligners",
+  "general-dentistry": "Ultrasonic Gentle",
+  "root-canal": "Precision Rotary",
+  "pediatric-dentistry": "Kid-Friendly Care",
+  "oral-surgery": "Sedation Options",
+};
+
 export function ServicesPreview() {
   const container = useRef<HTMLElement>(null);
 
-  useGSAP(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gsap.set(".service-card", { opacity: 1, y: 0 });
-      return;
-    }
-    gsap.fromTo(".service-card",
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: container.current,
-          start: "top 75%",
-        }
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(".service-card", { opacity: 1, y: 0 });
+        return;
       }
-    );
-  }, { scope: container });
+      gsap.fromTo(
+        ".service-card",
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: container.current,
+            start: "top 75%",
+          },
+        }
+      );
+    },
+    { scope: container }
+  );
 
-  const serviceLinks = siteConfig.services.map((service) => ({
+  // Show top 4 flagship services on the landing page for a clean, balanced single row
+  const serviceLinks = siteConfig.services.slice(0, 4).map((service) => ({
     ...service,
     slug: service.id,
   }));
 
   return (
-    <section ref={container} className="py-12 sm:py-24 bg-muted/30 relative">
-      <div className="container mx-auto px-4 md:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-end gap-4 md:gap-6 mb-6 sm:mb-16">
+    <section ref={container} className="py-16 sm:py-24 bg-muted/30 relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-10 sm:mb-16">
           <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground">
-              Advanced Dental Solutions
+            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-primary/10 text-primary border border-primary/20 mb-3">
+              <SparklesIcon className="w-3.5 h-3.5" />
+              Specialized Care
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground leading-tight">
+              Advanced Dental Solutions.
             </h2>
-            <p className="text-muted-foreground mt-3 sm:mt-4 text-base sm:text-lg max-w-xl">
-              Preventive care to full-mouth rehabilitation, delivered by specialists using modern techniques.
+            <p className="text-muted-foreground mt-3 sm:mt-4 text-base sm:text-lg max-w-xl leading-relaxed">
+              From preventive hygiene to full-mouth reconstruction, delivered by specialists using sub-millimeter digital technology.
             </p>
           </div>
-          <Link
-            href="/services"
-            className="group inline-flex items-center justify-center h-12 px-6 rounded-full border border-border bg-card hover:border-primary hover:bg-primary hover:text-primary-foreground transition-[color,background-color,border-color] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] font-medium text-primary"
+
+          {/* Header Action */}
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
           >
-            View All Services
-            <ArrowRight01Icon className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
+            <Link href="/services">
+              <span>View All Services</span>
+              <ArrowRight01Icon className="size-4 transition-transform duration-150 group-hover/button:translate-x-0.5" />
+            </Link>
+          </Button>
         </div>
 
-        <div className="no-scrollbar -mx-4 px-4 pb-2 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 md:overflow-visible">
+        {/* Double-Bezel Card Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
           {serviceLinks.map((service) => (
-            <Link
-              href={`/services/${service.slug}`}
+            <div
               key={service.id}
-              className="service-card block group relative h-[340px] w-[76vw] max-w-[300px] shrink-0 snap-start md:h-[420px] md:w-auto md:max-w-none md:shrink rounded-3xl overflow-hidden cursor-pointer"
+              className="service-card p-1.5 sm:p-2 rounded-3xl bg-muted/40 border border-border/70 shadow-sm flex flex-col group hover:-translate-y-1.5 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]"
             >
-              {/* Background Image */}
-              <div className="absolute inset-0 z-0">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover scale-100 group-hover:scale-110 transition-transform duration-700 ease-out"
-                />
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-300" />
-              </div>
-
-              {/* Content */}
-              <div className="relative z-10 h-full flex flex-col justify-end p-5 sm:p-8">
-                <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/15 flex items-center justify-center text-white mb-4 md:mb-6 border border-white/25 group-hover:scale-110 group-hover:bg-primary group-hover:border-primary transition-[transform,background-color,border-color] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
-                  {service.icon}
+              <Link
+                href={`/services/${service.slug}`}
+                className="relative h-[380px] sm:h-[420px] md:h-[440px] rounded-[calc(1.5rem-2px)] overflow-hidden cursor-pointer shadow-sm flex flex-col justify-end p-6 sm:p-7 block"
+              >
+                {/* Background Image */}
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover scale-100 group-hover:scale-108 transition-transform duration-700 ease-out"
+                  />
+                  {/* Natural Dark Photographic Scrim */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300" />
                 </div>
 
-                <h3 className="text-2xl font-heading font-bold text-white mb-3 drop-shadow-md">
-                  {service.title}
-                </h3>
-
-                <p className="text-white/90 text-sm leading-relaxed mb-4 md:mb-6 line-clamp-3 md:line-clamp-none drop-shadow-sm font-medium">
-                  {service.description}
-                </p>
-
-                <div className="flex items-center text-sm font-semibold text-white">
-                  Learn more
-                  <ArrowRight01Icon className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                {/* Floating Category & Spec Pills */}
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-10">
+                  <div className="backdrop-blur-md bg-white/15 border border-white/20 text-white text-[10px] sm:text-[11px] font-bold px-3 py-1 rounded-full shadow-sm">
+                    {service.category}
+                  </div>
+                  <div className="backdrop-blur-md bg-slate-950/60 border border-white/15 text-white/90 text-[10px] font-semibold px-2.5 py-1 rounded-full">
+                    {SERVICE_TAGS[service.id] || "Advanced Protocol"}
+                  </div>
                 </div>
-              </div>
 
-              {/* Glassmorphism Spotlight Hover Border */}
-              <div className="absolute inset-0 border-2 border-white/0 rounded-3xl transition-colors duration-500 z-20 pointer-events-none mix-blend-overlay" />
-            </Link>
+                {/* Content */}
+                <div className="relative z-10">
+                  <div className="w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-white mb-4 border border-white/20 group-hover:scale-105 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                    {service.icon}
+                  </div>
+
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-white mb-2 leading-snug drop-shadow-sm">
+                    {service.title}
+                  </h3>
+
+                  <p className="text-white/80 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2 font-normal">
+                    {service.description}
+                  </p>
+
+                  {/* Trailing Action */}
+                  <div className="inline-flex items-center gap-2 text-xs font-semibold text-white group-hover:text-emerald-300 transition-colors pt-2">
+                    <span>Explore Treatment</span>
+                    <span className="w-6 h-6 rounded-lg bg-white/15 border border-white/20 flex items-center justify-center overflow-hidden shrink-0 transition-all duration-300 group-hover:bg-emerald-400 group-hover:text-slate-950 group-hover:border-emerald-400">
+                      <ArrowRight01Icon className="w-3.5 h-3.5 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-6" aria-hidden="true" />
+                      <ArrowRight01Icon className="w-3.5 h-3.5 absolute -translate-x-6 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0" aria-hidden="true" />
+                    </span>
+                  </div>
+                </div>
+
+                {/* Focus/Hover Outer Highlight */}
+                <div className="absolute inset-0 border border-white/0 group-hover:border-white/20 rounded-[calc(1.5rem-2px)] transition-colors duration-300 pointer-events-none" />
+              </Link>
+            </div>
           ))}
         </div>
       </div>

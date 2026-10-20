@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { DoctorClient } from "./page-client";
 import siteConfig from "@/config/site";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
+
+export function generateStaticParams() {
+  return siteConfig.doctors.map((doctor) => ({ slug: doctor.id }));
+}
 
 export async function generateMetadata(
   { params }: Props
@@ -35,5 +40,7 @@ export async function generateMetadata(
 
 export default async function DoctorDetailsPage({ params }: Props) {
   const resolvedParams = await params;
+  const doctor = siteConfig.doctors.find((d) => d.id === resolvedParams.slug);
+  if (!doctor) notFound();
   return <DoctorClient slug={resolvedParams.slug} />;
 }

@@ -2,7 +2,6 @@ import { images } from "./images";
 import {
   SparklesIcon,
   Shield01Icon,
-  Activity01Icon,
   SmileIcon,
   StethoscopeIcon,
   HealthIcon,
@@ -10,9 +9,16 @@ import {
   CheckmarkBadge01Icon,
   Award01Icon,
   MicroscopeIcon,
-  Tag01Icon,
   Hospital01Icon,
   Sofa01Icon,
+  DentalToothIcon,
+  DentalBracesIcon,
+  DentalCareIcon,
+  Sun01Icon,
+  Calendar01Icon,
+  Doctor01Icon,
+  Invoice01Icon,
+  CustomerSupportIcon,
 } from "hugeicons-react";
 
 
@@ -85,6 +91,7 @@ export interface ServiceConfig {
   detailTitle?: string;
   detailSubtitle?: string;
   detailBullets?: string[];
+  processSteps?: { title: string; desc: string }[];
   faq?: { q: string; a: string }[];
   heroImage?: string;
   benefits?: { title: string; desc: string; icon: React.ReactNode }[];
@@ -181,9 +188,42 @@ export interface FormConfig {
 }
 
 export interface JourneyStep {
+  step?: string;
   title: string;
   description: string;
-  icon: React.ReactNode;
+  note?: string;
+  icon?: React.ReactNode;
+}
+
+export interface UIConfig {
+  /**
+   * Shows or hides the built-in template preview controls: the hero-style
+   * dropdown and layout switchers inside the navbar (desktop and mobile
+   * drawer), and the switcher bars on the About and Services pages.
+   *
+   * - `false` (default) — normal clinic presentation: visitors never see
+   *   template-selection UI. All variants stay reachable by URL
+   *   (`/?hero=booking`, `/about?view=timeline`, `/services?view=bento`).
+   * - `true` — buyer/developer preview: the switcher controls appear so the
+   *   available variants can be compared side by side.
+   *
+   * This is a plain content setting, not a security feature.
+   */
+  showTemplateSwitchers: boolean;
+  /**
+   * Shows a "Sample content" notice on testimonials flagged `demo: true`
+   * (homepage and /testimonials).
+   *
+   * - `false` (default) — normal clinic presentation: no per-item badges, so
+   *   placeholder reviews never look like intrusive warnings to real
+   *   visitors. Sample content is identified in the documentation and,
+   *   once real reviews are added, set their `demo` field to `false`.
+   * - `true` — buyer/developer preview: every `demo: true` item is clearly
+   *   marked so placeholder content is obvious while reviewing the template.
+   *
+   * This is a plain content setting, not a security feature.
+   */
+  showSampleContentNotices: boolean;
 }
 
 export interface SiteConfig {
@@ -202,6 +242,7 @@ export interface SiteConfig {
   features: FeatureConfig[];
   journey: JourneyStep[];
   forms: FormConfig;
+  ui: UIConfig;
   awards: string[];
 }
 
@@ -242,7 +283,7 @@ export const defaultSiteConfig: SiteConfig = {
     linkedin: "",
   },
   hero: {
-    badge: "Voted #1 Dental Practice in New York",
+    badge: "Comprehensive Multi-Specialty Dental Care",
     headline: "Advanced Dentistry.",
     headlineAccent: "Designed Around You.",
     description:
@@ -274,7 +315,7 @@ export const defaultSiteConfig: SiteConfig = {
       description:
         "Permanent, natural-looking tooth replacements using state-of-the-art titanium implants.",
       category: "Restorative",
-      icon: <Shield01Icon className="w-7 h-7" />,
+      icon: <DentalToothIcon className="w-7 h-7" />,
       image: images.services["dental-implants"],
       detailTitle: "Permanent Tooth Replacement",
       detailSubtitle: "State-of-the-art titanium implants",
@@ -290,7 +331,7 @@ export const defaultSiteConfig: SiteConfig = {
       description:
         "Professional whitening treatments for a brilliantly bright smile in just one visit.",
       category: "Cosmetic",
-      icon: <Activity01Icon className="w-7 h-7" />,
+      icon: <Sun01Icon className="w-7 h-7" />,
       image: images.services["teeth-whitening"],
       detailTitle: "Brighten Your Smile",
       detailSubtitle: "One-visit professional whitening",
@@ -306,7 +347,7 @@ export const defaultSiteConfig: SiteConfig = {
       description:
         "Clear aligners and modern braces for perfectly straight teeth without the metal look.",
       category: "Specialty",
-      icon: <SmileIcon className="w-7 h-7" />,
+      icon: <DentalBracesIcon className="w-7 h-7" />,
       image: images.services["orthodontics"],
       detailTitle: "Straighten Your Teeth",
       detailSubtitle: "Clear aligners and modern braces",
@@ -322,7 +363,7 @@ export const defaultSiteConfig: SiteConfig = {
       description:
         "Comprehensive exams, cleanings, and preventative care to keep your smile healthy.",
       category: "General",
-      icon: <StethoscopeIcon className="w-7 h-7" />,
+      icon: <DentalCareIcon className="w-7 h-7" />,
       image: images.services["general-dentistry"],
     },
     {
@@ -331,7 +372,7 @@ export const defaultSiteConfig: SiteConfig = {
       description:
         "Painless endodontic treatments to save infected teeth and relieve pain instantly.",
       category: "Restorative",
-      icon: <HealthIcon className="w-7 h-7" />,
+      icon: <Shield01Icon className="w-7 h-7" />,
       image: images.services["root-canal"],
       detailTitle: "Painless Root Canal",
       detailSubtitle: "Save infected teeth instantly",
@@ -678,23 +719,21 @@ heroImage:
   testimonials: [
     {
       id: 1,
-      name: "Michael R.",
+      name: "Sarah L.",
       treatment: "Cosmetic Dentistry",
       text:
         "The team here completely transformed my smile. From the consultation to the final result, the level of professionalism and care was unmatched. I finally have the confidence to smile in photos.",
       rating: 5,
       patientImage: images.testimonials.patients[1],
-      beforeImage: images.testimonials.before,
-      afterImage: images.testimonials.after,
       platform: "Google",
       demo: true,
     },
     {
       id: 2,
-      name: "Sarah L.",
+      name: "Michael R.",
       treatment: "Dental Implants",
       text:
-        "I was extremely nervous about getting an implant, but Dr. Chen made the entire process painless and comfortable. The facility feels more like a luxury spa than a dental clinic.",
+        "I was anxious about getting an implant, but the team made the entire procedure calm and comfortable. The facility feels peaceful and reassuring throughout every visit.",
       rating: 5,
       patientImage: images.testimonials.patients[2],
       platform: "Yelp",
@@ -705,11 +744,9 @@ heroImage:
       name: "Emma T.",
       treatment: "Teeth Whitening",
       text:
-        "I came in for a whitening session before my wedding. The results were immediate and stunning. The staff went above and beyond to ensure I was comfortable throughout.",
+        "I came in for a whitening session before my wedding. The results were natural and immediate. The staff went above and beyond to ensure I felt comfortable throughout.",
       rating: 5,
       patientImage: images.testimonials.patients[3],
-      beforeImage: images.testimonials.before,
-      afterImage: images.testimonials.after,
       platform: "Healthgrades",
       demo: true,
     },
@@ -718,7 +755,7 @@ heroImage:
       name: "David K.",
       treatment: "General Dentistry",
       text:
-        "Best cleaning I've ever had. They were thorough, gentle, and the hygienist explained everything she was doing. I no longer dread my 6-month checkups.",
+        "Thorough, gentle, and the hygienist explained everything she was doing clearly. I feel confident and well cared for at every regular checkup.",
       rating: 5,
       patientImage: images.testimonials.patients[4],
       platform: "Healthgrades",
@@ -726,10 +763,10 @@ heroImage:
     },
     {
       id: 5,
-      name: "Jessica M.",
+      name: "Robert B.",
       treatment: "Orthodontics",
       text:
-        "Finished my Invisalign treatment last week and I couldn't be happier. The monitoring app they use meant I didn't have to come into the office constantly. Super convenient for my busy schedule.",
+        "Finished my clear aligner treatment last week and couldn't be happier with the outcome. The digital monitoring app made scheduling visits seamless and convenient.",
       rating: 5,
       patientImage: images.testimonials.patients[5],
       platform: "Google",
@@ -737,14 +774,12 @@ heroImage:
     },
     {
       id: 6,
-      name: "Robert B.",
-      treatment: "Dental Implants",
+      name: "Jessica M.",
+      treatment: "Restorative Dentistry",
       text:
-        "After struggling with a missing tooth for years, I finally took the plunge. The 3D scanning tech they use is incredible. The implant feels completely natural.",
+        "After needing restorative work on a damaged molar, the 3D scanning and computer-guided placement felt precise and painless. The tooth feels completely natural.",
       rating: 5,
       patientImage: images.testimonials.patients[6],
-      beforeImage: images.testimonials.before,
-      afterImage: images.testimonials.after,
       platform: "Google",
       demo: true,
     },
@@ -803,34 +838,44 @@ heroImage:
   },
   journey: [
     {
-      title: "Book Your Visit",
+      step: "01",
+      title: "Book your visit",
       description:
-        "Reserve online in under a minute or call us directly. Same-day and evening slots are available to fit your schedule.",
-      icon: <CheckmarkBadge01Icon className="w-6 h-6" />,
+        "Choose a service and a preferred time. We confirm the appointment with you — a request is not a confirmed reservation.",
+      note: "Online request or phone",
+      icon: <Calendar01Icon className="w-5 h-5" />,
     },
     {
-      title: "Meet Your Dentist",
+      step: "02",
+      title: "Meet your dentist",
       description:
-        "A relaxed, unrushed consultation where we listen to your goals, answer every question, and map out what matters most to you.",
-      icon: <StethoscopeIcon className="w-6 h-6" />,
+        "A conversation about your goals, concerns, and history, followed by an examination and any appropriate imaging.",
+      note: "Assessment first",
+      icon: <Doctor01Icon className="w-5 h-5" />,
     },
     {
-      title: "Personalized Plan",
+      step: "03",
+      title: "Understand the plan",
       description:
-        "You receive a clear, itemized treatment plan with transparent pricing and timeline — no surprises, no pressure.",
-      icon: <Tag01Icon className="w-6 h-6" />,
+        "We explain findings, options, alternatives, and costs in writing before treatment begins.",
+      note: "No pressure to proceed",
+      icon: <Invoice01Icon className="w-5 h-5" />,
     },
     {
-      title: "Comfortable Treatment",
+      step: "04",
+      title: "Receive treatment",
       description:
-        "Gentle, precise procedures with sedation options and a team focused on keeping you calm and comfortable throughout.",
-      icon: <Activity01Icon className="w-6 h-6" />,
+        "Your dentist confirms the agreed plan with you at the visit and checks in on your comfort throughout.",
+      note: "Paced to your needs",
+      icon: <DentalCareIcon className="w-5 h-5" />,
     },
     {
-      title: "Lasting Follow-Up",
+      step: "05",
+      title: "Aftercare & follow-up",
       description:
-        "We check in after every procedure and partner with you to protect a healthy, confident smile for years to come.",
-      icon: <HealthIcon className="w-6 h-6" />,
+        "You leave with clear aftercare information and a review plan matched to the treatment.",
+      note: "Written guidance",
+      icon: <CheckmarkBadge01Icon className="w-5 h-5" />,
     },
   ],
   features: [
@@ -850,12 +895,12 @@ heroImage:
       title: "Transparent Pricing",
       description:
         "No hidden fees. We provide clear, upfront treatment plans and accept major insurance.",
-      icon: <Tag01Icon className="w-6 h-6" />,
+      icon: <Invoice01Icon className="w-6 h-6" />,
     },
     {
       title: "Emergency Support",
       description:
-        "Dental emergencies don't wait. We offer 24/7 priority booking for urgent care needs.",
+        "Dental emergencies don't wait. We offer same-day priority appointments for urgent dental care.",
       icon: <Hospital01Icon className="w-6 h-6" />,
     },
     {
@@ -865,9 +910,9 @@ heroImage:
       icon: <Sofa01Icon className="w-6 h-6" />,
     },
     {
-      title: "Lifetime Warranty",
+      title: "Clinical Guarantee",
       description:
-        "We stand behind our work with comprehensive warranties on implants and veneers.",
+        "We stand behind our work with comprehensive clinical warranties on restorative treatments.",
       icon: <Shield01Icon className="w-6 h-6" />,
     },
   ],
@@ -886,12 +931,16 @@ heroImage:
       { value: "billing", label: "Billing & Insurance" },
     ],
   },
+  ui: {
+    showTemplateSwitchers: true,
+    showSampleContentNotices: true,
+  },
   awards: [
     "American Dental Association",
-    "Top Dentist NYC 2023",
-    "Invisalign Diamond Provider",
-    "Aesthetics Dentistry Award",
-    "Healthcare Excellence",
+    "Academy of General Dentistry",
+    "Invisalign Certified Provider",
+    "American Academy of Cosmetic Dentistry",
+    "International Congress of Oral Implantologists",
   ],
 };
 

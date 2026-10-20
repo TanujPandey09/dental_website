@@ -10,19 +10,16 @@ This guide explains how to customize the Lumina Dental Next.js template for your
 | Navbar & footer links | ✅ Yes | `src/config/site.tsx` |
 | Appointment & contact form options | ✅ Yes | `src/config/site.tsx` (`forms`) |
 | Home page sections | ✅ Yes | `src/config/site.tsx` + `src/components/home/*` |
-| Service **list** (`/services`) | ⚠️ Sample data | `src/app/services/ServicesClient.tsx` |
+| Service **list** (`/services`) | ✅ Yes | `src/config/site.tsx` (`services[]`) |
 | Service **detail** (`/services/[slug]`) | ✅ Yes (config + fallbacks) | `src/config/site.tsx` (`services[]`), layout in `src/app/services/[slug]/page-client.tsx` |
-| Doctor **list** (`/doctors`) | ⚠️ Sample data | `src/app/doctors/DoctorsClient.tsx` |
+| Doctor **list** (`/doctors`) | ✅ Yes | `src/config/site.tsx` (`doctors[]`) |
 | Doctor **detail** (`/doctors/[slug]`) | ✅ Yes (config + fallbacks) | `src/config/site.tsx` (`doctors[]`), layout in `src/app/doctors/[slug]/page-client.tsx` |
-| Testimonials page (`/testimonials`) | ⚠️ Sample data | `src/app/testimonials/TestimonialsClient.tsx` |
+| Testimonials page (`/testimonials`) | ✅ Yes | `src/config/site.tsx` (`testimonials[]`) |
 
-The **detail** pages (`/services/[slug]`, `/doctors/[slug]`) read their title,
-hero image, stats, credentials, expertise, philosophy, testimonials and contact
-info from `src/config/site.tsx`, falling back to sensible defaults when a field
-is omitted. The **list** pages (`/services`, `/doctors`, `/testimonials`) keep
-their own sample arrays for bespoke icons and layout — copy those arrays when
-adapting the template, or refactor them to read from `src/config/site.tsx` if
-you prefer a single source of truth.
+Every page reads from `src/config/site.tsx`. The **detail** pages
+(`/services/[slug]`, `/doctors/[slug]`) additionally derive related services and
+the relevant clinicians from the same arrays, and fall back to sensible defaults
+when an optional field is omitted. Unknown slugs return a 404.
 
 ## 🎨 Visual Branding
 
@@ -117,6 +114,12 @@ services: [
     detailTitle: "Detail Title",
     detailSubtitle: "Detail Subtitle",
     detailBullets: ["Bullet 1", "Bullet 2"],
+    // Optional — overrides the neutral default "what to expect" timeline
+    // on the detail page. Omit to keep the generic, claim-free steps.
+    processSteps: [
+      { title: "Consultation", desc: "Discuss goals and assess suitability." },
+      { title: "Treatment plan", desc: "Agree on a personalised plan." },
+    ],
   },
 ],
 ```
@@ -124,6 +127,11 @@ services: [
 > To use this service's image on the service detail page `/services/your-service`,
 > add a matching entry to `images.services` in `src/config/images.ts` (the detail
 > page looks the image up by the service `id`).
+
+The service detail page also auto-derives two sections from config: **related
+services** (other entries in `services[]`) and **your care team** (doctors whose
+specialty matches the treatment). Each section hides itself when there is
+nothing to show, so no extra wiring is required.
 
 Then the service list on the home page and `/services` page will automatically update.
 
@@ -173,21 +181,85 @@ Doctor cards on the `/doctors` page will automatically render the new doctor.
 
 ## 🔔 Demo Disclaimers
 
-The template includes an optional "Demo Review" badge to distinguish sample
-data from real patient information.
+Sample content is labelled so it never masquerades as real patient data. Two
+independent switches work together:
 
-When a testimonial in `src/config/site.tsx` has `demo: true`, a "Demo Review"
-badge is rendered on the home page testimonial cards. Set `demo: true` while
-you are still using placeholder content, and `demo: false` once your content is
-real.
+1. **Per-item `demo: true`** — set on individual testimonials and doctors in
+   `src/config/site.tsx`.
+2. **Global toggle** — `siteConfig.ui.showSampleContentNotices` (default
+   `false`). Notices only render when this is `true`, so a live site ships
+   with zero sample-content labelling by default.
+
+```ts
+// In site.tsx config:
+ui: {
+  showSampleContentNotices: true, // show "Sample content" / "Sample profile" notices
+},
+```
+
+When both are active, the following notices appear:
+
+| Surface | Data | Notice |
+|---------|------|--------|
+| Home testimonial cards | `demo: true` testimonials | `Sample content` badge |
+| `/testimonials` cards | `demo: true` testimonials | `Sample content` badge |
+| `/doctors` cards | `demo: true` doctors | `Sample profile` chip |
+| Doctor detail hero | `demo: true` doctors | `Sample profile` chip |
 
 ```ts
 // In site.tsx config (testimonials array):
-demo: true,  // shows the "Demo Review" badge on the home page
+demo: true, // marks this testimonial as sample content
 ```
 
-> The doctor profiles and the `/testimonials` listing also carry a `demo` flag
-> in the sample data; enable the badge there too if you extend those components.
+> Buyer workflow: preview with `showSampleContentNotices: true` while you are
+> still using placeholder content; flip it to `false` (and set `demo: false`
+> on replaced items) before launch. With the toggle off, no notices render
+> anywhere regardless of `demo` flags.
+
+## 🧩 Template Variants & Preview Controls
+
+The template ships with multiple layout variants selected through URL query
+parameters. No code changes are needed to preview or ship a different variant.
+
+| Page | Parameter | Values | Default |
+|------|-----------|--------|---------|
+| Home | `?hero=` | `cinematic`, `booking`, `specialist`, `minimal`, `immersive` | `cinematic` |
+| About | `?view=` | `story`, `clinical`, `timeline` | `story` |
+| Services | `?view=` | `grid`, `list`, `bento` | `grid` |
+
+Examples:
+
+```
+/?hero=booking
+/about?view=timeline
+/services?view=bento
+```
+
+The URL is the source of truth: deep links, refresh, and browser
+back/forward all restore the correct variant. Unknown values fall back to the
+default silently.
+
+### Variant switcher visibility
+
+Variant switchers (navbar dropdowns, mobile drawer panels, page-level bars)
+are hidden by default so a live visitor never sees template-selection UI.
+Enable them for internal preview via `siteConfig.ui.showTemplateSwitchers`
+(default `false`):
+
+```ts
+// In site.tsx config:
+ui: {
+  showTemplateSwitchers: true, // expose ?hero=/?view= switchers in the UI
+},
+```
+
+- `false` (default) — plain links in the navbar; no switcher bars. Variants
+  remain reachable via URL parameters.
+- `true` — dropdowns/switcher bars appear for easy variant browsing.
+
+Both `ui` flags are plain config fields: no feature-flag framework, no auth,
+and both are documented in the `UIConfig` interface in
+`src/config/site.tsx`.
 
 ## 📱 Form Configuration
 
@@ -283,6 +355,19 @@ module.exports = {
 ```
 
 Or use React context to override specific config values at runtime if needed.
+
+## ♿ Accessibility & Motion
+
+The template respects the visitor's **reduced-motion** preference globally:
+`<MotionConfig reducedMotion="user">` in `src/app/layout.tsx` disables
+transform/layout animations while keeping opacity and colour transitions, and
+the marquee / GSAP timelines keep their own `prefers-reduced-motion` guards.
+Animated counters render a static value instead of animating.
+
+Interactive controls (navbar dropdowns, mobile drawer, footer and social links)
+meet a 44px minimum tap target, dropdown parents toggle instead of navigating on
+touch-only devices, the mobile drawer closes with `Escape`, and decorative icons
+are hidden from assistive technology.
 
 ## 📋 Checklist Before Going Live
 

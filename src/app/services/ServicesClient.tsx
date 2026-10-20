@@ -1,182 +1,185 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { SparklesIcon, Shield01Icon, Activity01Icon, SmileIcon, StethoscopeIcon, CheckmarkBadge01Icon, FilterIcon } from "hugeicons-react";
-import { useBooking } from "@/components/BookingContext";
-import { Button } from "@/components/ui/button";
-import { images } from "@/config/images";
+import { SparklesIcon } from "hugeicons-react";
+import { ServicesGrid } from "@/components/services/templates/ServicesGrid";
+import { ServicesList } from "@/components/services/templates/ServicesList";
+import { ServicesBento } from "@/components/services/templates/ServicesBento";
+import { TemplatePillSwitcher, TemplateVariantOption } from "@/components/ui/TemplatePillSwitcher";
+import siteConfig from "@/config/site";
+import { cn } from "@/lib/utils";
 
-const allServices = [
-  {
-    id: "cosmetic-dentistry",
-    title: "Cosmetic Dentistry",
-    description: "Transform your smile with premium veneers, bonding, and total smile makeovers.",
-    category: "Cosmetic",
-    icon: <SparklesIcon className="w-8 h-8" />,
-    image: images.services["cosmetic-dentistry"]
-  },
-  {
-    id: "dental-implants",
-    title: "Dental Implants",
-    description: "Permanent, natural-looking tooth replacements using state-of-the-art titanium implants.",
-    category: "Restorative",
-    icon: <Shield01Icon className="w-8 h-8" />,
-    image: images.services["dental-implants"]
-  },
-  {
-    id: "teeth-whitening",
-    title: "Teeth Whitening",
-    description: "Professional whitening treatments for a brilliantly bright smile in just one visit.",
-    category: "Cosmetic",
-    icon: <Activity01Icon className="w-8 h-8" />,
-    image: images.services["teeth-whitening"]
-  },
-  {
-    id: "orthodontics",
-    title: "Orthodontics",
-    description: "Clear aligners and modern braces for perfectly straight teeth without the metal look.",
-    category: "Specialty",
-    icon: <SmileIcon className="w-8 h-8" />,
-    image: images.services["orthodontics"]
-  },
-  {
-    id: "general-dentistry",
-    title: "General Dentistry",
-    description: "Comprehensive exams, cleanings, and preventative care to keep your smile healthy.",
-    category: "General",
-    icon: <StethoscopeIcon className="w-8 h-8" />,
-    image: images.services["general-dentistry"]
-  },
-  {
-    id: "root-canal",
-    title: "Root Canal Therapy",
-    description: "Painless endodontic treatments to save infected teeth and relieve pain instantly.",
-    category: "Restorative",
-    icon: <Shield01Icon className="w-8 h-8" />,
-    image: images.services["root-canal"]
-  },
-  {
-    id: "pediatric-dentistry",
-    title: "Pediatric Dentistry",
-    description: "Gentle, fun, and educational dental care specialized for children of all ages.",
-    category: "Specialty",
-    icon: <SmileIcon className="w-8 h-8" />,
-    image: images.services["pediatric-dentistry"]
-  },
-  {
-    id: "oral-surgery",
-    title: "Oral Surgery",
-    description: "Expert extractions, wisdom teeth removal, and advanced surgical procedures.",
-    category: "Specialty",
-    icon: <CheckmarkBadge01Icon className="w-8 h-8" />,
-    image: images.services["oral-surgery"]
-  }
+export type ServicesView = "grid" | "list" | "bento";
+
+const allServices = siteConfig.services;
+
+const categories = ["All", "Cosmetic", "Restorative", "Orthodontics", "Preventive"];
+
+const VIEW_OPTIONS: TemplateVariantOption[] = [
+  { id: "grid", title: "Visual Cards", num: "01" },
+  { id: "list", title: "Directory", num: "02" },
+  { id: "bento", title: "Bento Architecture", num: "03" },
 ];
 
-const categories = ["All", "General", "Cosmetic", "Restorative", "Specialty"];
-
-export function ServicesClient() {
+function ServicesClientContent() {
+  const searchParams = useSearchParams();
   const [activeCategory, setActiveCategory] = useState("All");
-  const { openBooking } = useBooking();
+
+  const param = searchParams.get("view");
+  const viewStyle: ServicesView = VIEW_OPTIONS.some((o) => o.id === param)
+    ? (param as ServicesView)
+    : "grid";
+
+  const handleViewChange = (v: ServicesView) => {
+    const url = new URL(window.location.href);
+    if (v === "grid") {
+      url.searchParams.delete("view");
+    } else {
+      url.searchParams.set("view", v);
+    }
+    window.history.pushState({}, "", url.toString());
+  };
 
   const filteredServices = activeCategory === "All"
     ? allServices
-    : allServices.filter(service => service.category === activeCategory);
+    : allServices.filter((service) => {
+        if (activeCategory === "Cosmetic") return service.category === "Cosmetic";
+        if (activeCategory === "Restorative") return service.category === "Restorative";
+        if (activeCategory === "Orthodontics") return service.id === "orthodontics";
+        if (activeCategory === "Preventive") return service.category === "General" || service.id === "general-dentistry";
+        return service.category === activeCategory;
+      });
 
   return (
-    <section className="py-10 sm:py-20 bg-muted/30">
-      <div className="container mx-auto px-4 md:px-8">
+    <section className="pt-24 pb-12 sm:pt-28 sm:pb-16 bg-[#FAFAFA] min-h-screen">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 
-        {/* Filters */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-6 sm:mb-12 gap-4 sm:gap-6">
-          <div className="flex items-center gap-2 text-muted-foreground font-medium">
-            <FilterIcon className="w-5 h-5" />
-            <span>Filter by Category:</span>
+        {/* Top Control Bar: Eyebrow Badge left, Floating Template Switcher right */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-6">
+          <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-teal-50 text-teal-800 border border-teal-200/60 font-sans w-fit">
+            <SparklesIcon className="w-3.5 h-3.5 text-teal-600" />
+            Clinical Care
+          </span>
+
+          {siteConfig.ui.showTemplateSwitchers && (
+            <TemplatePillSwitcher
+              label="SERVICES"
+              variants={VIEW_OPTIONS}
+              activeId={viewStyle}
+              onSelect={(id) => handleViewChange(id as ServicesView)}
+              isDarkTheme={false}
+            />
+          )}
+        </div>
+
+        {/* Editorial Header Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-end pb-6 sm:pb-8 border-b border-slate-200">
+          {/* Left Title & Subtitle */}
+          <div className="lg:col-span-7">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-slate-900 tracking-tight leading-[1.12]">
+              Treatment, <br />
+              <span className="italic text-teal-700 font-serif">thought through.</span>
+            </h1>
+
+            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mt-2.5 max-w-xl">
+              Six core areas of care, each starting with an assessment and a conversation. Explore the approach, the process, and what a consultation can tell you.
+            </p>
           </div>
-          <div className="flex flex-wrap gap-2 justify-center md:justify-end">
-            {categories.map(category => (
+
+          {/* Right Clinical Disclaimer Card */}
+          <div className="lg:col-span-5 flex justify-start lg:justify-end">
+            <div className="w-full max-w-md bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+              <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed mb-3">
+                Treatment suitability is individual. Nothing on this page is a diagnosis or guarantee, or a substitute for clinical assessment.
+              </p>
+              <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-slate-100 text-[10px] font-mono text-teal-700 font-semibold tracking-wider">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
+                  IN-PERSON ASSESSMENT
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
+                  CLEAR WRITTEN PLAN
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Category Filter Pills (Visible for all views to match reference screenshots) */}
+        <div className="flex flex-wrap gap-2 py-4 sm:py-5">
+          {categories.map((category) => {
+            const active = activeCategory === category;
+            return (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                aria-pressed={activeCategory === category}
-                className={`px-5 py-2 rounded-full text-sm font-semibold transition-[color,background-color,border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 ${activeCategory === category
-                  ? "bg-primary text-primary-foreground shadow-md"
-                  : "bg-card text-muted-foreground border border-border hover:border-primary hover:text-primary"
-                  }`}
+                aria-pressed={active}
+                className={cn(
+                  "px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer shadow-sm",
+                  active
+                    ? "bg-slate-900 text-white shadow-slate-900/10"
+                    : "bg-white text-slate-700 border border-slate-200 hover:border-slate-900 hover:text-slate-900"
+                )}
               >
                 {category}
               </button>
-            ))}
-          </div>
+            );
+          })}
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          <AnimatePresence mode="popLayout">
-            {filteredServices.map((service) => (
+        {/* Dynamic Template Switcher */}
+        <div>
+          <AnimatePresence mode="wait">
+            {viewStyle === "grid" && (
               <motion.div
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
+                key="grid"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.3 }}
-                key={service.id}
-                className="service-card block group relative h-[320px] sm:h-[400px] md:h-[420px] rounded-3xl overflow-hidden"
               >
-                {/* Background Image */}
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover scale-100 group-hover:scale-110 transition-transform duration-700 ease-out"
-                  />
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10 h-full flex flex-col justify-end p-5 sm:p-8">
-                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white/15 flex items-center justify-center text-white mb-3 md:mb-6 border border-white/25 group-hover:scale-110 group-hover:bg-primary group-hover:border-primary transition-[transform,background-color,border-color] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
-                    {service.icon}
-                  </div>
-
-                  <h2 className="text-2xl font-heading font-bold text-white mb-3 drop-shadow-md">
-                    {service.title}
-                  </h2>
-
-                  <p className="text-white/90 text-sm leading-relaxed mb-4 md:mb-6 line-clamp-2 md:line-clamp-none drop-shadow-sm font-medium">
-                    {service.description}
-                  </p>
-
-                  <div className="flex gap-3">
-                    <Button asChild variant="outline" className="flex-1 h-10 border-white/30 bg-white/10 text-white hover:bg-white hover:text-primary">
-                      <Link href={`/services/${service.id}`}>Details</Link>
-                    </Button>
-                    <Button className="flex-1 h-10 bg-primary hover:bg-primary/90 text-primary-foreground border-0" onClick={() => openBooking()}>
-                      Book
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Glassmorphism Spotlight Hover Border */}
-                <div className="absolute inset-0 border-2 border-white/0 group-hover:border-white/20 rounded-3xl transition-colors duration-500 z-20 pointer-events-none mix-blend-overlay" />
+                <ServicesGrid services={filteredServices} />
               </motion.div>
-            ))}
+            )}
+
+            {viewStyle === "list" && (
+              <motion.div
+                key="list"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ServicesList services={filteredServices} />
+              </motion.div>
+            )}
+
+            {viewStyle === "bento" && (
+              <motion.div
+                key="bento"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ServicesBento services={allServices} activeCategory={activeCategory} />
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
 
-        {filteredServices.length === 0 && (
-          <div role="status" className="text-center py-20 text-muted-foreground">
-            No services found for this category.
-          </div>
-        )}
-
       </div>
     </section>
+  );
+}
+
+export function ServicesClient() {
+  return (
+    <Suspense fallback={<div className="min-h-screen py-24 flex items-center justify-center">Loading services...</div>}>
+      <ServicesClientContent />
+    </Suspense>
   );
 }

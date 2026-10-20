@@ -5,91 +5,137 @@ import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SparklesIcon, CheckmarkBadge01Icon } from "hugeicons-react";
 import siteConfig from "@/config/site";
 import { images } from "@/config/images";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const FEATURE_SPECS = [
+  "Board Certified · Ongoing Fellowship",
+  "0.02mm Optical Precision · 3D CBCT",
+  "Itemized Estimates · Zero Hidden Fees",
+  "Same-Day Reserved Urgent Slots",
+  "Acoustic Noise-Canceling · Zero Odor",
+  "Comprehensive Treatment Warranty",
+];
+
 export function WhyChooseUs() {
   const container = useRef<HTMLElement>(null);
 
-  useGSAP(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gsap.set(".feature-card", { opacity: 1, y: 0 });
-      return;
-    }
-    gsap.fromTo(".feature-card",
-      { opacity: 0, y: 40 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        stagger: 0.08,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: container.current,
-          start: "top 75%",
-        },
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(".feature-card", { opacity: 1, y: 0 });
+        return;
       }
-    );
-  }, { scope: container });
+      gsap.fromTo(
+        ".feature-card",
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: container.current,
+            start: "top 75%",
+          },
+        }
+      );
+    },
+    { scope: container }
+  );
 
   return (
-    <section ref={container} className="py-12 sm:py-24 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 opacity-5 pointer-events-none"
-        style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, var(--foreground) 1px, transparent 0)', backgroundSize: '40px 40px' }}
+    <section ref={container} className="py-16 sm:py-24 bg-background relative overflow-x-clip">
+      {/* Soft Ambient Radial Glow */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none bg-[radial-gradient(60%_50%_at_50%_0%,color-mix(in_oklab,var(--primary)_8%,transparent),transparent_70%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-primary/5 blur-[120px] pointer-events-none"
       />
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-16 items-start">
-
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start">
           {/* Sticky Left Content */}
-          <div className="lg:w-1/2 lg:sticky lg:top-32 space-y-4 lg:space-y-8">
+          <div className="lg:w-1/2 lg:sticky lg:top-32 space-y-6 lg:space-y-8">
             <div>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-3 md:mb-6">
-                Excellence in Every Detail
+              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-primary/10 text-primary border border-primary/20 mb-3">
+                <SparklesIcon className="w-3.5 h-3.5" />
+                Clinical Distinctions
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground mb-4 leading-tight">
+                Excellence in <br className="hidden sm:inline" />
+                Every Detail.
               </h2>
-              <p className="text-muted-foreground text-base sm:text-lg mb-0 lg:mb-8 max-w-lg">
-                Every part of your visit — from the room you wait in to the hands that treat you — is built around comfort, safety, and lasting results.
+              <p className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-lg">
+                Every part of your visit — from the calm room you wait in to the hands that treat you — is engineered around comfort, clinical precision, and lasting results.
               </p>
             </div>
 
-            <div className="relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl hidden lg:block">
-              <Image
-                src={images.clinicInterior}
-                alt="Modern Clinic Interior"
-                fill
-                sizes="50vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-8 left-8 right-8 bg-secondary/90 p-5 rounded-2xl text-white">
-                <h3 className="text-xl font-bold font-heading mb-1">State of the Art Facility</h3>
-                <p className="text-white/80 text-sm">Designed for your comfort and equipped with the latest dental technology.</p>
+            {/* Double-Bezel Architectural Image Showcase */}
+            <div className="p-2 rounded-[2.5rem] bg-muted/40 border border-border/80 shadow-md hidden lg:block group">
+              <div className="relative h-[420px] rounded-[calc(2.5rem-0.5rem)] overflow-hidden">
+                <Image
+                  src={images.clinicInterior}
+                  alt="Lumina Dental Modern Clinic Operatory"
+                  fill
+                  sizes="50vw"
+                  className="object-cover scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 backdrop-blur-md bg-card/85 p-5 rounded-2xl border border-border/60 text-card-foreground shadow-lg">
+                  <div className="flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-wider mb-1">
+                    <CheckmarkBadge01Icon className="w-4 h-4" />
+                    <span>State of the Art Facility</span>
+                  </div>
+                  <h3 className="text-lg font-bold font-heading text-foreground mb-1">
+                    Designed for Tranquility &amp; Precision
+                  </h3>
+                  <p className="text-muted-foreground text-xs leading-relaxed">
+                    Operatory suites sound-engineered with private acoustic glass, HEPA-14 medical filtration, and hospital-grade sterilization.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Scrolling Right Content */}
-          <div className="no-scrollbar -mx-4 px-4 pb-2 w-[calc(100%+2rem)] lg:w-1/2 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-4 sm:mx-0 sm:px-0 sm:pb-0 sm:w-full sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible lg:w-1/2">
+          {/* Feature Cards Grid (Double-Bezel Architecture) */}
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:w-1/2">
             {siteConfig.features.map((feature, index) => (
               <div
                 key={index}
-                className="feature-card group w-[72vw] max-w-[280px] shrink-0 snap-start sm:w-auto sm:max-w-none sm:shrink bg-card p-5 sm:p-6 rounded-3xl border border-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                className="feature-card p-1.5 sm:p-2 rounded-3xl bg-muted/40 border border-border/70 shadow-sm flex flex-col group hover:-translate-y-1 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]"
               >
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-primary/5 flex items-center justify-center text-primary mb-3 sm:mb-5 group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-[transform,background-color,color] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]">
-                  {feature.icon}
+                <div className="rounded-[calc(1.5rem-2px)] bg-card p-5 sm:p-6 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-xl hover:border-primary/40 transition-all duration-300">
+                  <div>
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-4 group-hover:scale-105 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-lg font-heading font-bold text-foreground mb-2 leading-snug">
+                      {feature.title}
+                    </h3>
+                    <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mb-4">
+                      {feature.description}
+                    </p>
+                  </div>
+
+                  {/* Tactile Clinical Specification Pill */}
+                  <div className="pt-3 border-t border-border/60 flex items-center justify-between text-[11px] font-semibold text-primary">
+                    <span className="text-muted-foreground font-medium">Standard</span>
+                    <span className="bg-primary/10 px-2.5 py-0.5 rounded-full">
+                      {FEATURE_SPECS[index] || "Clinical Standard"}
+                    </span>
+                  </div>
                 </div>
-                <h3 className="text-lg font-heading font-bold text-foreground mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {feature.description}
-                </p>
               </div>
             ))}
           </div>
-
         </div>
       </div>
     </section>

@@ -3,194 +3,158 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { StarIcon, QuoteUpIcon, FilterIcon } from "hugeicons-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { images } from "@/config/images";
+import { StarIcon, QuoteUpIcon, FilterIcon, SparklesIcon, CheckmarkBadge01Icon } from "hugeicons-react";
+import siteConfig from "@/config/site";
 
-const allReviews = [
-  {
-    id: 1,
-    name: "Michael R.",
-    treatment: "Cosmetic Dentistry",
-    text: "The team here completely transformed my smile. From the consultation to the final result, the level of professionalism and care was unmatched. I finally have the confidence to smile in photos.",
-    rating: 5,
-    patientImage: images.testimonials.patients[1],
-    beforeImage: images.testimonials.before,
-    afterImage: images.testimonials.after,
-    platform: "Google"
-  },
-  {
-    id: 2,
-    name: "Sarah L.",
-    treatment: "Dental Implants",
-    text: "I was extremely nervous about getting an implant, but Dr. Chen made the entire process painless and comfortable. The facility feels more like a luxury spa than a dental clinic.",
-    rating: 5,
-    patientImage: images.testimonials.patients[2],
-    platform: "Yelp"
-  },
-  {
-    id: 3,
-    name: "Emma T.",
-    treatment: "Teeth Whitening",
-    text: "I came in for a whitening session before my wedding. The results were immediate and stunning. The staff went above and beyond to ensure I was comfortable throughout.",
-    rating: 5,
-    patientImage: images.testimonials.patients[3],
-    beforeImage: images.testimonials.before,
-    afterImage: images.testimonials.after,
-    platform: "Google"
-  },
-  {
-    id: 4,
-    name: "David K.",
-    treatment: "General Dentistry",
-    text: "Best cleaning I've ever had. They were thorough, gentle, and the hygienist explained everything she was doing. I no longer dread my 6-month checkups.",
-    rating: 5,
-    patientImage: images.testimonials.patients[4],
-    platform: "Healthgrades"
-  },
-  {
-    id: 5,
-    name: "Jessica M.",
-    treatment: "Orthodontics",
-    text: "Finished my Invisalign treatment last week and I couldn't be happier. The monitoring app they use meant I didn't have to come into the office constantly. Super convenient for my busy schedule.",
-    rating: 5,
-    patientImage: images.testimonials.patients[5],
-    platform: "Google"
-  },
-  {
-    id: 6,
-    name: "Robert B.",
-    treatment: "Dental Implants",
-    text: "After struggling with a missing tooth for years, I finally took the plunge. The 3D scanning tech they use is incredible. The implant feels completely natural.",
-    rating: 5,
-    patientImage: images.testimonials.patients[6],
-    beforeImage: images.testimonials.before,
-    afterImage: images.testimonials.after,
-    platform: "Google"
-  }
+const categories = [
+  "All",
+  ...Array.from(new Set(siteConfig.testimonials.map((t) => t.treatment))),
 ];
-
-const categories = ["All", "Cosmetic Dentistry", "Dental Implants", "Orthodontics", "General Dentistry"];
 
 export function TestimonialsClient() {
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const filteredReviews = activeCategory === "All" 
-    ? allReviews 
-    : allReviews.filter(review => review.treatment === activeCategory);
+  const filteredReviews = activeCategory === "All"
+    ? siteConfig.testimonials
+    : siteConfig.testimonials.filter(review => review.treatment === activeCategory);
 
   return (
     <div className="bg-background">
-      
-      {/* Trust Badges / Stats Section */}
-      <section className="py-8 sm:py-12 bg-secondary border-y border-secondary-foreground/10">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 items-center">
-            <div className="text-center">
-              <div className="flex justify-center gap-1 text-rating mb-2">
-                {[...Array(5)].map((_, i) => <StarIcon key={i} className="w-6 h-6 fill-current" />)}
+
+      {/* 1. Trust Badges / Stats Section */}
+      <section className="py-10 sm:py-14 bg-secondary text-secondary-foreground border-y border-secondary-foreground/10 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/10 rounded-full blur-[140px] pointer-events-none" />
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-12 lg:gap-16 items-center">
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 text-center min-w-[200px]">
+              <div className="flex justify-center gap-1 text-rating mb-2" role="img" aria-label="5 out of 5 stars">
+                {[...Array(5)].map((_, i) => <StarIcon key={i} className="w-4 h-4 fill-current" aria-hidden="true" />)}
               </div>
-              <div className="text-secondary-foreground font-bold text-xl font-heading">4.9/5 Average</div>
-              <div className="text-secondary-foreground/70 text-sm">Across 1,200+ Reviews</div>
+              <div className="text-white font-bold text-lg sm:text-xl font-heading">4.9/5 Star Rating</div>
+              <div className="text-secondary-foreground/75 text-xs font-medium">Verified Patient Reviews</div>
             </div>
-            
-            <div className="hidden md:block w-px h-16 bg-secondary-foreground/10"></div>
-            
-            <div className="text-center">
-              <div className="text-secondary-foreground font-bold text-3xl font-heading mb-1">Google</div>
-              <div className="text-secondary-foreground/70 text-sm">Top Rated Clinic 2024</div>
+
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 text-center min-w-[200px]">
+              <div className="flex items-center justify-center gap-1.5 text-accent font-bold text-sm mb-1.5">
+                <CheckmarkBadge01Icon className="w-4 h-4" />
+                <span>Independent Platforms</span>
+              </div>
+              <div className="text-white font-bold text-xl sm:text-2xl font-heading mb-0.5">Google &amp; Yelp</div>
+              <div className="text-secondary-foreground/75 text-xs font-medium">Third-Party Authenticated</div>
             </div>
-            
-            <div className="hidden md:block w-px h-16 bg-secondary-foreground/10"></div>
-            
-            <div className="text-center">
-              <div className="text-secondary-foreground font-bold text-3xl font-heading mb-1">Healthgrades</div>
-              <div className="text-secondary-foreground/70 text-sm">Patient Choice Award</div>
+
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 text-center min-w-[200px]">
+              <div className="flex items-center justify-center gap-1.5 text-accent font-bold text-sm mb-1.5">
+                <SparklesIcon className="w-4 h-4" />
+                <span>Clinical Governance</span>
+              </div>
+              <div className="text-white font-bold text-xl sm:text-2xl font-heading mb-0.5">Healthgrades</div>
+              <div className="text-secondary-foreground/75 text-xs font-medium">Verified Practice Profile</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Reviews Grid Section */}
-      <section className="py-10 sm:py-20 bg-muted/30">
-        <div className="container mx-auto px-4 md:px-8">
-          
+      {/* 2. Reviews Grid Section */}
+      <section className="py-16 sm:py-24 bg-muted/30">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+
           {/* Filters */}
-          <div className="flex flex-col md:flex-row justify-between items-center mb-8 sm:mb-16 gap-4 sm:gap-6">
-            <div className="flex items-center gap-2 text-muted-foreground font-medium">
-              <FilterIcon className="w-5 h-5" />
+          <div className="flex flex-col md:flex-row justify-between items-center mb-10 sm:mb-16 gap-4 sm:gap-6">
+            <div className="flex items-center gap-2 text-muted-foreground font-semibold text-xs sm:text-sm">
+              <FilterIcon className="w-4 h-4 text-primary" />
               <span>Filter by Treatment:</span>
             </div>
             <div className="flex flex-wrap gap-2 justify-center md:justify-end">
-              {categories.map(category => (
-                <button
-                  key={category}
-                  onClick={() => setActiveCategory(category)}
-                  aria-pressed={activeCategory === category}
-                  className={`px-5 py-2 rounded-full text-sm font-semibold transition-[color,background-color,border-color,box-shadow] duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 ${
-                    activeCategory === category 
-                      ? "bg-primary text-primary-foreground shadow-md" 
-                      : "bg-card text-muted-foreground border border-border hover:border-primary hover:text-primary"
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
+              {categories.map(category => {
+                const count = category === "All"
+                  ? siteConfig.testimonials.length
+                  : siteConfig.testimonials.filter(t => t.treatment === category).length;
+
+                return (
+                  <button
+                    key={category}
+                    onClick={() => setActiveCategory(category)}
+                    aria-pressed={activeCategory === category}
+                    className={`px-4 sm:px-5 py-2 rounded-full text-xs font-semibold transition-all duration-300 flex items-center gap-2 cursor-pointer active:scale-95 ${activeCategory === category
+                        ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                        : "bg-card text-muted-foreground border border-border hover:border-primary/50 hover:text-foreground"
+                      }`}
+                  >
+                    <span>{category}</span>
+                    <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${activeCategory === category ? "bg-white/20 text-white" : "bg-muted text-muted-foreground"
+                      }`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Masonry-Style Grid */}
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-4 sm:gap-6 lg:gap-8 space-y-4 sm:space-y-6 lg:space-y-8">
+          {/* Double-Bezel Masonry Grid */}
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
             <AnimatePresence mode="popLayout">
               {filteredReviews.map((review) => (
                 <motion.div
                   layout
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  initial={{ opacity: 0, scale: 0.95, y: 15 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                  transition={{ duration: 0.4 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 15 }}
+                  transition={{ duration: 0.35 }}
                   key={review.id}
                   className="break-inside-avoid"
                 >
-                  <Card className="rounded-3xl border-border/50 hover:shadow-xl transition-shadow duration-300 bg-card relative overflow-hidden group">
-                    <CardContent className="p-5 sm:p-8">
-                      <QuoteUpIcon className="absolute top-5 right-5 sm:top-6 sm:right-6 w-8 h-8 sm:w-10 sm:h-10 text-primary/5 group-hover:text-primary/10 transition-colors" />
-                      
+                  <div className="p-1.5 sm:p-2 rounded-3xl bg-muted/40 border border-border/70 shadow-sm flex flex-col group hover:-translate-y-1 transition-all duration-300">
+                    <div className="rounded-[calc(1.5rem-2px)] bg-card border border-border/60 p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between">
+                      <QuoteUpIcon className="absolute top-6 right-6 w-9 h-9 text-primary/10 group-hover:text-primary/20 transition-colors pointer-events-none" />
+
+                      {/* Before/After Transformation */}
                       {review.beforeImage && review.afterImage && (
-                        <div className="flex gap-2 mb-5 sm:mb-8 rounded-2xl overflow-hidden h-28 sm:h-40">
-                          <div className="w-1/2 relative group-hover:w-[40%] transition-[width] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
-                            <div className="absolute top-2 left-2 bg-black/60 text-white text-[10px] font-bold px-2 py-1 rounded-md z-10">BEFORE</div>
+                        <div className="flex gap-2.5 mb-6 rounded-2xl overflow-hidden h-28 sm:h-36 border border-border/60">
+                          <div className="w-1/2 relative group-hover:w-[42%] transition-[width] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
+                            <div className="absolute top-2 left-2 backdrop-blur-md bg-black/70 text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-10 border border-white/20">
+                              BEFORE
+                            </div>
                             <Image src={review.beforeImage} alt="Before" fill sizes="300px" className="object-cover grayscale opacity-80" />
                           </div>
-                          <div className="w-1/2 relative group-hover:w-[60%] transition-[width] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
-                            <div className="absolute top-2 left-2 bg-primary/90 text-primary-foreground text-[10px] font-bold px-2 py-1 rounded-md z-10">AFTER</div>
+                          <div className="w-1/2 relative group-hover:w-[58%] transition-[width] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
+                            <div className="absolute top-2 left-2 backdrop-blur-md bg-primary text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-full z-10 shadow-sm">
+                              AFTER
+                            </div>
                             <Image src={review.afterImage} alt="After" fill sizes="300px" className="object-cover" />
                           </div>
                         </div>
                       )}
 
-                      <div className="flex gap-1 text-rating mb-4 sm:mb-6">
+                      <div className="flex gap-1 text-rating mb-4" role="img" aria-label={`${review.rating} out of 5 stars`}>
                         {[...Array(review.rating)].map((_, i) => (
                           <StarIcon key={i} className="w-4 h-4 fill-current" aria-hidden="true" />
                         ))}
                       </div>
-                      
-                      <p className="text-muted-foreground mb-5 sm:mb-8 leading-relaxed text-sm sm:text-base italic">
+
+                      <p className="text-muted-foreground mb-6 leading-relaxed text-xs sm:text-sm italic font-normal">
                         &ldquo;{review.text}&rdquo;
                       </p>
-                      
-                      <div className="flex items-center gap-4 pt-6 border-t border-border">
-                        <Image src={review.patientImage} alt={review.name} width={48} height={48} className="w-12 h-12 rounded-full object-cover border-2 border-border" />
-                        <div>
-                          <h3 className="font-heading font-bold text-foreground">{review.name}</h3>
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs text-primary font-semibold px-2 py-0.5 bg-primary/10 rounded-full">{review.treatment}</span>
-                            <span className="text-xs text-muted-foreground">via {review.platform}</span>
+
+                      <div className="flex items-center gap-3.5 pt-4 border-t border-border/60 mt-auto">
+                        <Image src={review.patientImage} alt={review.name} width={44} height={44} className="w-11 h-11 rounded-full object-cover border-2 border-border shrink-0" />
+                        <div className="min-w-0">
+                          <h3 className="font-heading font-bold text-foreground text-sm sm:text-base leading-snug truncate">{review.name}</h3>
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="text-[10px] text-primary font-semibold px-2 py-0.2 bg-primary/10 rounded-full border border-primary/15">{review.treatment}</span>
+                            <span className="text-[10px] text-muted-foreground font-medium">via {review.platform}</span>
                           </div>
                         </div>
+                        {siteConfig.ui.showSampleContentNotices && review.demo && (
+                          <span className="ml-auto shrink-0 text-[10px] font-bold text-muted-foreground bg-muted border border-border px-2 py-0.5 rounded-full">
+                            Sample
+                          </span>
+                        )}
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </AnimatePresence>

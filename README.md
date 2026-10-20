@@ -7,7 +7,7 @@ instead of editing dozens of components.
 
 ![Lumina Dental Preview](./public/dental/images/hero.jpg)
 
-**Status:** `npm run build` passes · `npm run typecheck` passes · `npm run lint` clean (0 errors)
+**Status:** verified with `npm run typecheck` (0 errors), `npm run lint` (0 errors, 0 warnings), and `npm run build` (13 routes).
 
 ---
 
@@ -32,10 +32,11 @@ services: [ /* ... */ ],
 doctors:  [ /* ... */ ],
 ```
 
-> **Note on config coverage.** The list/detail pages (`/services`, `/services/[slug]`,
-> `/doctors`, `/doctors/[slug]`, `/testimonials`) render from sample data arrays
-> colocated in their page components so each can use custom icons and layout.
-> See [`CUSTOMIZATION.md`](./CUSTOMIZATION.md) for exactly which files to edit.
+> **Note on config coverage.** Every page — including the list/detail pages
+> (`/services`, `/services/[slug]`, `/doctors`, `/doctors/[slug]`,
+> `/testimonials`) — renders from `src/config/site.tsx`, so editing that one
+> file updates the whole site. See [`CUSTOMIZATION.md`](./CUSTOMIZATION.md) for
+> the full guide.
 
 Then read [`CUSTOMIZATION.md`](./CUSTOMIZATION.md) for the full guide.
 
@@ -91,6 +92,28 @@ Requires **Node ≥ 20.9** (see `.nvmrc`).
 | `src/components/home/*` | Home sections use config |
 | `src/components/contact/ClinicMap.tsx` | Dynamic map with floating directions card |
 | `src/app/globals.css` | Brand color tokens / base styles |
+
+### Layout variants
+
+Selectable via URL query parameters (defaults shown, switchers hidden in
+production UI by default):
+
+| Page | Parameter | Values |
+|------|-----------|--------|
+| Home | `?hero=` | `cinematic` · `booking` · `specialist` · `minimal` · `immersive` |
+| About | `?view=` | `story` · `clinical` · `timeline` |
+| Services | `?view=` | `grid` · `list` · `bento` |
+
+```
+/?hero=booking
+/about?view=timeline
+/services?view=bento
+```
+
+Preview controls (in-page variant switchers, sample-content notices) are
+gated behind `siteConfig.ui.showTemplateSwitchers` and
+`siteConfig.ui.showSampleContentNotices` — see
+[CUSTOMIZATION.md](./CUSTOMIZATION.md).
 
 ---
 

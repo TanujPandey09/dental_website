@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Fraunces } from "next/font/google";
+import { MotionConfig } from "framer-motion";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -50,6 +51,7 @@ export const viewport: Viewport = {
 };
 
 import { BookingProvider } from "@/components/BookingContext";
+import { HeroStyleProvider } from "@/components/HeroStyleContext";
 import { CustomCursor } from "@/components/CustomCursor";
 
 export default function RootLayout({
@@ -61,21 +63,25 @@ export default function RootLayout({
     <html lang="en" className={cn(fraunces.variable, inter.variable, "antialiased")}>
       <body className="min-h-screen bg-background font-body flex flex-col overflow-x-hidden">
         <CustomCursor />
-        <SmoothScroll>
-          <BookingProvider>
-            <a
-              href="#main-content"
-              className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold"
-            >
-              Skip to content
-            </a>
-            <Navbar />
-            <main id="main-content" className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </BookingProvider>
-        </SmoothScroll>
+        <MotionConfig reducedMotion="user">
+          <SmoothScroll>
+            <BookingProvider>
+              <HeroStyleProvider>
+                <a
+                  href="#main-content"
+                  className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:text-sm focus:font-semibold"
+                >
+                  Skip to content
+                </a>
+                <Navbar />
+                <main id="main-content" className="flex-1">
+                  {children}
+                </main>
+                <Footer />
+              </HeroStyleProvider>
+            </BookingProvider>
+          </SmoothScroll>
+        </MotionConfig>
       </body>
     </html>
   );

@@ -11,8 +11,8 @@ export default function TestimonialsPage() {
   return (
     <>
       <PageHero 
-        title="Real Stories. Real Transformations." 
-        subtitle="Don't just take our word for it. Hear from the thousands of patients whose smiles and lives have been transformed by our care."
+        title="Stories of Confident, Healthy Smiles." 
+        subtitle="Read what patients share about their care, from first consultations to final results."
         badge="Testimonials"
       />
 

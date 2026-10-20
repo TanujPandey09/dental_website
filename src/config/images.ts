@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Central image configuration.
  *
  * Every photo used by the template is referenced from this single file and
@@ -16,8 +16,14 @@ export const images = {
   // ---------------------------------------------------------------------------
   // Global sections
   // ---------------------------------------------------------------------------
-  /** Home hero background â€” large, landscape. */
+  /** Home hero background — large, landscape. */
   hero: "/dental/images/hero.jpg",
+  /** Cinematic hero suite background. */
+  heroCinematic: "/dental/images/hero-cinematic.jpg",
+  /** Architectural luxury suite background. */
+  heroArchitectural: "/dental/images/hero-architectural.jpg",
+  /** Swiss minimalist operatory equipment close-up. */
+  heroSwissOperatory: "/dental/images/hero-swiss-operatory.jpg",
   /** Call-to-action section background (tinted dark overlay is applied). */
   ctaBackground: "/dental/images/cta-background.jpg",
   /** "Why Choose Us" clinic interior (home page, desktop only). */

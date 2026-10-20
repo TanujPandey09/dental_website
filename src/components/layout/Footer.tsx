@@ -1,12 +1,48 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Location01Icon, Call02Icon, Mail01Icon, Clock01Icon, Facebook01Icon, InstagramIcon, TwitterIcon } from "hugeicons-react";
+import { Location01Icon, Call02Icon, Mail01Icon, Clock01Icon, Facebook01Icon, InstagramIcon, TwitterIcon, ArrowRight01Icon, Shield01Icon } from "hugeicons-react";
 import siteConfig from "@/config/site";
+import { Button } from "@/components/ui/button";
 
 export function Footer() {
   return (
-    <footer className="bg-secondary text-secondary-foreground pt-12 md:pt-20 pb-8 md:pb-10">
-      <div className="container mx-auto px-4 md:px-8">
+    <footer className="bg-secondary text-secondary-foreground pt-16 sm:pt-20 pb-10 sm:pb-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+
+        {/* Emergency Clinician Direct Access Banner - Double Bezel */}
+        <div className="p-1.5 rounded-3xl bg-white/5 border border-white/10 mb-12 md:mb-16 shadow-2xl">
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-5 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="flex items-start sm:items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-accent/20 border border-accent/30 flex items-center justify-center text-accent shrink-0">
+                <Call02Icon className="w-6 h-6" aria-hidden="true" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-xs uppercase tracking-wider font-bold text-accent">24/7 Urgent Triage Line</span>
+                </div>
+                <p className="font-heading font-bold text-white text-base sm:text-xl">
+                  Experiencing acute pain or dental trauma? Direct doctor on-call line:
+                </p>
+                <p className="text-secondary-foreground/70 text-xs sm:text-sm mt-0.5">
+                  Reserved daily emergency priority treatment slots at our Rockefeller Center suites.
+                </p>
+              </div>
+            </div>
+            <Button
+              asChild
+              variant="onDark"
+              size="lg"
+              className="w-full md:w-auto shrink-0 text-white"
+            >
+              <a href={`tel:${siteConfig.contact.emergencyPhone}`} className="flex items-center gap-2 text-white">
+                <Call02Icon className="size-4 shrink-0 text-white" aria-hidden="true" />
+                <span className="text-white">Call {siteConfig.contact.emergencyPhone}</span>
+              </a>
+            </Button>
+          </div>
+        </div>
+
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 md:gap-12 mb-8 md:mb-16">
           {/* Brand */}
           <div className="col-span-2 lg:col-span-1 space-y-4 md:space-y-6">
@@ -22,6 +58,10 @@ export function Footer() {
             <p className="hidden md:block text-secondary-foreground/70 text-sm leading-relaxed max-w-xs">
               {siteConfig.contact.address}
             </p>
+            <div className="hidden md:flex items-center gap-2 text-xs text-secondary-foreground/60 pt-1">
+              <Shield01Icon className="w-4 h-4 text-accent shrink-0" aria-hidden="true" />
+              <span>ADA Accredited & OSHA Class-B Compliant</span>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -92,24 +132,24 @@ export function Footer() {
           <p className="text-secondary-foreground/60 text-sm text-center md:text-left">
             &copy; {new Date().getFullYear()} {siteConfig.clinic.name}. All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-5 md:gap-6">
+          <div className="flex flex-wrap justify-center items-center gap-1 md:gap-2">
             {siteConfig.social.facebook && (
-              <a href={siteConfig.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-secondary-foreground/60 hover:text-white text-sm transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-secondary">
+              <a href={siteConfig.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex items-center justify-center w-11 h-11 rounded-full text-secondary-foreground/60 hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-secondary">
                 <Facebook01Icon className="w-4 h-4" aria-hidden="true" />
               </a>
             )}
             {siteConfig.social.instagram && (
-              <a href={siteConfig.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-secondary-foreground/60 hover:text-white text-sm transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-secondary">
+              <a href={siteConfig.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex items-center justify-center w-11 h-11 rounded-full text-secondary-foreground/60 hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-secondary">
                 <InstagramIcon className="w-4 h-4" aria-hidden="true" />
               </a>
             )}
             {siteConfig.social.twitter && (
-              <a href={siteConfig.social.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="text-secondary-foreground/60 hover:text-white text-sm transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-secondary">
+              <a href={siteConfig.social.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="inline-flex items-center justify-center w-11 h-11 rounded-full text-secondary-foreground/60 hover:text-white hover:bg-white/5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-secondary">
                 <TwitterIcon className="w-4 h-4" aria-hidden="true" />
               </a>
             )}
-            <Link href="/privacy-policy" className="text-secondary-foreground/60 hover:text-white text-sm transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-secondary">Privacy Policy</Link>
-            <Link href="/terms-of-service" className="text-secondary-foreground/60 hover:text-white text-sm transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-secondary">Terms of Service</Link>
+            <Link href="/privacy-policy" className="inline-flex items-center min-h-11 px-1 text-secondary-foreground/60 hover:text-white text-sm transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-secondary">Privacy Policy</Link>
+            <Link href="/terms-of-service" className="inline-flex items-center min-h-11 px-1 text-secondary-foreground/60 hover:text-white text-sm transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-secondary">Terms of Service</Link>
           </div>
         </div>
       </div>

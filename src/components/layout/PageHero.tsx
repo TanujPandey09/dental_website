@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { CheckmarkCircle02Icon } from "hugeicons-react";
+import { CheckmarkCircle02Icon, SparklesIcon } from "hugeicons-react";
 
 interface PageHeroProps {
   title: string;
@@ -12,34 +12,102 @@ interface PageHeroProps {
 const trustItems = [
   "Board Certified Specialists",
   "Same-Day Appointments",
-  "Painless Procedures",
+  "Comfort-First Philosophy",
 ];
 
 export function PageHero({ title, subtitle, badge }: PageHeroProps) {
   const reduce = useReducedMotion();
 
   return (
-    <section className="pt-24 pb-12 sm:pt-36 sm:pb-24 bg-background relative overflow-hidden border-b border-border/40">
+    <section className="pt-24 pb-8 sm:pt-28 sm:pb-12 bg-background relative overflow-hidden border-b border-border/40">
 
-      {/* Static grid texture */}
-      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+      {/* Abstract Background System: Soft Ambient Radial Gradients (No Grid) */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+        {/* Soft top-right primary/teal ambient wash */}
+        <div className="absolute top-0 right-0 w-[55vw] max-w-[800px] h-[380px] sm:h-[460px] bg-[radial-gradient(ellipse_at_80%_20%,color-mix(in_oklab,var(--primary)_8%,transparent),transparent_70%)]" />
 
-      {/* Single restrained ambient wash */}
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-primary/10 rounded-full blur-[100px]" />
+        {/* Soft bottom-left mint/accent ambient wash */}
+        <div className="absolute bottom-0 left-0 w-[50vw] max-w-[700px] h-[340px] sm:h-[420px] bg-[radial-gradient(ellipse_at_20%_80%,color-mix(in_oklab,var(--accent)_9%,transparent),transparent_65%)]" />
+
+        {/* Subtle warm center-top atmospheric glow */}
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[320px] bg-[radial-gradient(circle,color-mix(in_oklab,var(--primary)_4%,transparent),transparent_70%)]" />
+
+        {/* Top-Right Restrained Organic Vector Blob */}
+        <svg
+          className="absolute -top-12 -right-12 sm:-top-20 sm:-right-20 w-56 h-56 sm:w-80 sm:h-80 lg:w-[440px] lg:h-[440px] opacity-75 sm:opacity-85"
+          viewBox="0 0 440 440"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <linearGradient id="pagehero-tr-grad" x1="120" y1="40" x2="380" y2="340" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.08" />
+              <stop offset="60%" stopColor="var(--accent)" stopOpacity="0.04" />
+              <stop offset="100%" stopColor="var(--secondary)" stopOpacity="0.01" />
+            </linearGradient>
+            <linearGradient id="pagehero-tr-stroke" x1="160" y1="60" x2="360" y2="320" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.08" />
+            </linearGradient>
+          </defs>
+          {/* Flowing outer organic petal/blob */}
+          <path
+            d="M340 70C390 120 420 190 410 260C400 330 350 390 280 405C210 420 140 380 90 330C40 280 20 200 45 140C70 80 130 40 200 25C270 10 290 20 340 70Z"
+            fill="url(#pagehero-tr-grad)"
+          />
+          {/* Refined concentric hairline contour */}
+          <path
+            d="M315 95C355 135 380 190 372 245C364 300 325 350 270 362C215 374 160 340 120 300C80 260 65 195 85 148C105 100 152 70 208 58C264 46 275 55 315 95Z"
+            stroke="url(#pagehero-tr-stroke)"
+            strokeWidth="1"
+            strokeDasharray="4 6"
+          />
+        </svg>
+
+        {/* Bottom-Left Restrained Organic Vector Blob */}
+        <svg
+          className="absolute -bottom-16 -left-16 sm:-bottom-24 sm:-left-24 w-52 h-52 sm:w-72 sm:h-72 lg:w-[400px] lg:h-[400px] opacity-70 sm:opacity-80"
+          viewBox="0 0 400 400"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <linearGradient id="pagehero-bl-grad" x1="40" y1="360" x2="320" y2="80" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.09" />
+              <stop offset="55%" stopColor="var(--primary)" stopOpacity="0.04" />
+              <stop offset="100%" stopColor="var(--secondary)" stopOpacity="0.01" />
+            </linearGradient>
+            <linearGradient id="pagehero-bl-stroke" x1="60" y1="340" x2="300" y2="100" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.06" />
+            </linearGradient>
+          </defs>
+          {/* Flowing bottom-left organic wave */}
+          <path
+            d="M80 340C30 295 10 220 25 155C40 90 95 45 160 30C225 15 295 40 335 90C375 140 380 215 355 275C330 335 265 375 200 385C135 395 130 385 80 340Z"
+            fill="url(#pagehero-bl-grad)"
+          />
+          {/* Elegant hairline contour */}
+          <path
+            d="M105 315C65 278 50 218 62 165C74 112 118 75 170 62C222 50 278 70 310 110C342 150 346 210 325 258C305 306 252 338 200 346C148 354 145 352 105 315Z"
+            stroke="url(#pagehero-bl-stroke)"
+            strokeWidth="1"
+          />
+        </svg>
       </div>
 
-      <div className="container mx-auto px-4 md:px-8 text-center max-w-4xl relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl relative z-10">
 
         {badge && (
-          <motion.p
+          <motion.div
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: reduce ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="text-sm text-primary font-medium mb-4"
+            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-primary/10 text-primary border border-primary/20 mb-4"
           >
-            {badge}
-          </motion.p>
+            <SparklesIcon className="w-3.5 h-3.5 text-primary" />
+            <span>{badge}</span>
+          </motion.div>
         )}
 
         <motion.h1
@@ -55,7 +123,7 @@ export function PageHero({ title, subtitle, badge }: PageHeroProps) {
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: reduce ? 0 : 0.6, delay: reduce ? 0 : 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-medium mb-10"
+          className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-medium mb-6 sm:mb-8"
         >
           {subtitle}
         </motion.p>

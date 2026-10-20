@@ -4,7 +4,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Button } from "@/components/ui/button";
+import { Button, ButtonBadge } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ArrowRight01Icon, CheckmarkCircle01Icon, UserIcon, Mail01Icon, Call02Icon } from "hugeicons-react";
 import siteConfig from "@/config/site";
 
 const formSchema = z.object({
@@ -65,53 +66,70 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="text-center py-10" role="status" aria-live="polite">
-        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
-          <span className="text-3xl" aria-hidden="true">✓</span>
+      <div className="p-1.5 rounded-3xl bg-primary/10 border border-primary/20 my-4" role="status" aria-live="polite">
+        <div className="rounded-2xl bg-card border border-primary/20 p-8 sm:p-10 text-center">
+          <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-6 text-primary">
+            <CheckmarkCircle01Icon className="w-9 h-9" aria-hidden="true" />
+          </div>
+          <h3 className="text-2xl font-heading font-bold text-foreground mb-3">
+            Message dispatched successfully
+          </h3>
+          <p className="text-muted-foreground mb-8 max-w-sm mx-auto text-sm sm:text-base leading-relaxed">
+            Thank you for reaching out. Our clinical patient coordinator will review your inquiry and follow up within 2 hours.
+          </p>
+          <Button
+            onClick={() => setStatus("idle")}
+            variant="outline"
+            size="lg"
+          >
+            Send another message
+          </Button>
         </div>
-        <h3 className="text-2xl font-heading font-bold text-foreground mb-3">
-          Message sent
-        </h3>
-        <p className="text-muted-foreground mb-8 max-w-sm mx-auto">
-          Thanks for reaching out! Our team will get back to you shortly.
-        </p>
-        <Button
-          onClick={() => setStatus("idle")}
-          variant="outline"
-          className="h-12 px-8 rounded-xl font-bold"
-        >
-          Send another message
-        </Button>
       </div>
     );
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 sm:space-y-6">
         <FormField
           control={form.control}
           name="fullName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Full Name</FormLabel>
               <FormControl>
-                <Input placeholder="John Doe" className="h-12 rounded-xl focus-visible:ring-primary" {...field} />
+                <div className="relative">
+                  <Input
+                    placeholder="e.g. Jane Doe"
+                    className="h-12 pl-10 rounded-xl bg-card border-border/70 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary text-sm"
+                    {...field}
+                  />
+                  <UserIcon className="w-4 h-4 text-muted-foreground absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        
-        <div className="grid sm:grid-cols-2 gap-6">
+
+        <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email Address</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Email Address</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="john@example.com" className="h-12 rounded-xl focus-visible:ring-primary" {...field} />
+                  <div className="relative">
+                    <Input
+                      type="email"
+                      placeholder="e.g. jane@example.com"
+                      className="h-12 pl-10 rounded-xl bg-card border-border/70 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary text-sm"
+                      {...field}
+                    />
+                    <Mail01Icon className="w-4 h-4 text-muted-foreground absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -122,9 +140,17 @@ export function ContactForm() {
             name="phone"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone Number</FormLabel>
+                <FormLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Phone Number</FormLabel>
                 <FormControl>
-                  <Input type="tel" placeholder="(555) 123-4567" className="h-12 rounded-xl focus-visible:ring-primary" {...field} />
+                  <div className="relative">
+                    <Input
+                      type="tel"
+                      placeholder="(555) 123-4567"
+                      className="h-12 pl-10 rounded-xl bg-card border-border/70 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary text-sm"
+                      {...field}
+                    />
+                    <Call02Icon className="w-4 h-4 text-muted-foreground absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -137,16 +163,16 @@ export function ContactForm() {
           name="inquiryType"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>How can we help?</FormLabel>
+              <FormLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Topic of Inquiry</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="h-12 rounded-xl focus:ring-primary">
+                  <SelectTrigger className="h-12 rounded-xl bg-card border-border/70 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm">
                     <SelectValue placeholder="Select a topic" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent className="rounded-xl border-border/70">
                   {siteConfig.forms.contactInquiryTypes.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem key={option.value} value={option.value} className="text-sm py-2.5">
                       {option.label}
                     </SelectItem>
                   ))}
@@ -162,11 +188,11 @@ export function ContactForm() {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message</FormLabel>
+              <FormLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Your Message</FormLabel>
               <FormControl>
-                <textarea 
-                  className="flex min-h-[120px] w-full rounded-xl border border-input bg-transparent px-4 py-3 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
-                  placeholder="Please describe your needs..."
+                <textarea
+                  className="flex min-h-[120px] w-full rounded-xl border border-border/70 bg-card px-4 py-3 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200"
+                  placeholder="Please describe your treatment goals or specific clinical questions..."
                   {...field}
                 />
               </FormControl>
@@ -176,20 +202,27 @@ export function ContactForm() {
         />
 
         {status === "error" && (
-          <p role="alert" className="text-sm font-medium text-destructive bg-destructive/10 rounded-xl px-4 py-3">
+          <p role="alert" className="text-sm font-medium text-destructive bg-destructive/10 rounded-xl px-4 py-3 border border-destructive/20">
             {errorMessage}
           </p>
         )}
 
-        <Button
-          type="submit"
-          disabled={status === "submitting"}
-          aria-busy={status === "submitting"}
-          className="w-full h-12 rounded-xl shadow-lg shadow-primary/20 text-base disabled:opacity-60"
-        >
-          {status === "submitting" ? "Sending…" : "Send Message"}
-        </Button>
+        <div className="flex justify-center sm:justify-end pt-2">
+          <Button
+            type="submit"
+            variant="cta"
+            size="lg"
+            disabled={status === "submitting"}
+            aria-busy={status === "submitting"}
+          >
+            <Mail01Icon className="size-4 shrink-0" aria-hidden="true" />
+            <span>{status === "submitting" ? "Sending Message…" : "Send Message"}</span>
+          </Button>
+        </div>
       </form>
     </Form>
   );
 }
+
+
+

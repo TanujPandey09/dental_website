@@ -101,12 +101,12 @@
   --font-sans: var(--font-body);
   --font-heading: var(--font-heading);
 
-  /* Fluid heading scale — brand/marketing register (>=1.25 ratio, smooth vw ramp) */
-  --text-3xl: clamp(1.65rem, 1.3rem + 1.5vw, 2rem);
-  --text-4xl: clamp(2rem, 1.55rem + 2.1vw, 2.75rem);
-  --text-5xl: clamp(2.5rem, 1.9rem + 2.9vw, 3.5rem);
-  --text-6xl: clamp(3rem, 2.2rem + 3.9vw, 4.25rem);
-  --text-7xl: clamp(3.75rem, 2.7rem + 5vw, 5.25rem);
+  /* Fluid heading scale — balanced typography register */
+  --text-3xl: clamp(1.5rem, 1.25rem + 1vw, 1.875rem);
+  --text-4xl: clamp(1.75rem, 1.4rem + 1.4vw, 2.25rem);
+  --text-5xl: clamp(2rem, 1.6rem + 1.8vw, 2.75rem);
+  --text-6xl: clamp(2.35rem, 1.85rem + 2.2vw, 3.35rem);
+  --text-7xl: clamp(2.75rem, 2.1rem + 2.8vw, 3.85rem);
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);

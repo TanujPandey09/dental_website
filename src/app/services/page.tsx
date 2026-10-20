@@ -13,16 +13,10 @@ export const metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <PageHero 
-        title="Advanced Dental Solutions" 
-        subtitle="From routine cleanings to advanced cosmetic procedures, we offer a full spectrum of dental care under one roof. Our state-of-the-art facility ensures you receive the highest standard of treatment."
-        badge="Services"
-      />
-
       <ServicesClient />
-      
-      <section className="py-12 sm:py-24 bg-card border-y border-border/50">
-        <div className="container mx-auto px-4 md:px-8">
+
+      <section className="py-16 sm:py-24 bg-card border-y border-border/50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
               <Image
@@ -34,7 +28,7 @@ export default function ServicesPage() {
               />
             </div>
             <div>
-              <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-6">
+              <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground mb-6">
                 Advanced Technology for Superior Results
               </h2>
               <p className="text-muted-foreground mb-6">
@@ -42,11 +36,11 @@ export default function ServicesPage() {
               </p>
               <ul className="space-y-4">
                 {[
-                  "Digital X-Rays (90% less radiation)",
+                  "Low-Dose Digital X-Rays",
                   "3D Cone Beam Imaging",
-                  "Intraoral Cameras",
-                  "Laser Dentistry",
-                  "Pain-Free Anesthesia Systems"
+                  "Intraoral Digital Cameras",
+                  "Gentle Laser Dentistry",
+                  "Comfort-Focused Anesthesia Delivery"
                 ].map((tech, i) => (
                   <li key={i} className="flex items-center gap-3 text-foreground font-medium">
                     <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">

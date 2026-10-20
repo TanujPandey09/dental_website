@@ -10,7 +10,7 @@ export default function Loading() {
           aria-hidden="true"
           className="w-10 h-10 rounded-full border-4 border-primary/20 border-t-primary animate-spin"
         />
-        <p className="text-sm font-semibold text-muted-foreground tracking-widest uppercase">
+        <p className="text-sm font-semibold text-muted-foreground">
           Loading
         </p>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import siteConfig from "@/config/site";
-import { Location01Icon, Call02Icon, ArrowRight01Icon, Clock01Icon } from "hugeicons-react";
+import { Location01Icon, Call02Icon, ArrowRight01Icon, Clock01Icon, Navigation03Icon } from "hugeicons-react";
 import { Button } from "@/components/ui/button";
 
 export function ClinicMap() {
@@ -19,59 +19,102 @@ export function ClinicMap() {
   const directionsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address.replace(/\n/g, ", "))}`;
 
   return (
-    <section aria-label="Clinic location and directions" className="relative w-full border-y border-border/40 bg-muted overflow-hidden">
-      {/* Map Embed Container */}
-      <div className="h-[440px] md:h-[500px] w-full relative">
-        <iframe
-          title={`${clinicName} location map`}
-          src={embedSrc}
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          className="absolute inset-0 w-full h-full"
-        />
-
-        {/* Floating Clinic Location Card */}
-        <div className="absolute top-4 left-4 right-4 sm:right-auto sm:left-8 sm:top-8 max-w-sm z-10 pointer-events-auto">
-          <div className="bg-white/95 rounded-2xl p-5 md:p-6 shadow-xl border border-border/60 space-y-4">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                <Location01Icon className="w-5 h-5" aria-hidden="true" />
-              </div>
-              <div className="min-w-0">
-                <h3 className="font-heading font-bold text-foreground text-base leading-tight">
-                  {clinicName}
-                </h3>
-                <p className="text-muted-foreground text-xs leading-relaxed mt-1 whitespace-pre-line">
-                  {address}
-                </p>
-              </div>
+    <section aria-label="Clinic location and directions" className="py-16 sm:py-24 bg-background border-t border-border/40 relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-2">
+              <Navigation03Icon className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>Location & Access</span>
             </div>
+            <h2 className="text-2xl sm:text-4xl font-heading font-bold text-foreground tracking-tight">
+              Visit Our Manhattan Sanctuary
+            </h2>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Open for scheduled consultations</span>
+          </div>
+        </div>
 
-            <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2 border-t border-border/50">
-              <Clock01Icon className="w-4 h-4 text-primary shrink-0" aria-hidden="true" />
-              <span className="truncate">{hours.split("\n")[0]}</span>
-            </div>
+        {/* Double-Bezel Map Container */}
+        <div className="p-1.5 sm:p-2 rounded-3xl bg-muted/40 border border-border/70 shadow-sm relative overflow-hidden">
+          <div className="h-[440px] md:h-[520px] w-full rounded-[calc(1.5rem-2px)] sm:rounded-[calc(1.5rem-4px)] overflow-hidden relative">
+            <iframe
+              title={`${clinicName} location map`}
+              src={embedSrc}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="absolute inset-0 w-full h-full"
+            />
 
-            <div className="flex items-center gap-2 pt-1">
-              <Button asChild size="sm" className="flex-1 bg-primary text-white hover:bg-primary/90 font-bold h-11">
-                <a
-                  href={directionsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Get directions to ${clinicName} on Google Maps`}
-                >
-                  Directions
-                  <ArrowRight01Icon className="w-3.5 h-3.5 ml-1.5" aria-hidden="true" />
-                </a>
-              </Button>
-              <Button asChild size="sm" variant="outline" className="h-11 w-11 p-0 border-border">
-                <a href={`tel:${phone}`} aria-label={`Call ${clinicName} at ${phone}`}>
-                  <Call02Icon className="w-4 h-4 text-primary" aria-hidden="true" />
-                </a>
-              </Button>
+            {/* Floating Clinic Location Card - Double Bezel Glass */}
+            <div className="absolute top-4 left-4 right-4 sm:right-auto sm:left-6 sm:top-6 max-w-sm z-10 pointer-events-auto">
+              <div className="p-1 rounded-2xl bg-background/80 backdrop-blur-xl border border-border/80 shadow-2xl">
+                <div className="rounded-xl bg-card/95 border border-border/60 p-5 md:p-6 space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+                      <Location01Icon className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="font-heading font-bold text-foreground text-base sm:text-lg leading-tight">
+                        {clinicName}
+                      </h3>
+                      <p className="text-muted-foreground text-xs leading-relaxed mt-1 whitespace-pre-line font-medium">
+                        {address}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Transit & Parking Badges */}
+                  <div className="flex items-center gap-2 flex-wrap text-[11px] font-semibold text-muted-foreground pt-1">
+                    <span className="px-2 py-0.5 rounded-full bg-muted border border-border/60">
+                      Subway: B/D/F/M
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-muted border border-border/60">
+                      Valet Parking
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2 border-t border-border/50">
+                    <Clock01Icon className="w-4 h-4 text-primary shrink-0" aria-hidden="true" />
+                    <span className="truncate">{hours.split("\n")[0]}</span>
+                  </div>
+
+                  {/* Action Group */}
+                  <div className="flex items-center gap-2 pt-1">
+                    <Button
+                      asChild
+                      size="default"
+                      variant="cta"
+                      className="flex-1"
+                    >
+                      <a
+                        href={directionsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Get directions to ${clinicName} on Google Maps`}
+                      >
+                        <span className="text-xs sm:text-sm">Get Directions</span>
+                        <ArrowRight01Icon className="size-4 transition-transform duration-150 group-hover/button:translate-x-0.5" aria-hidden="true" />
+                      </a>
+                    </Button>
+                    <Button
+                      asChild
+                      size="icon"
+                      variant="outline"
+                      className="shrink-0"
+                    >
+                      <a href={`tel:${phone}`} aria-label={`Call ${clinicName} at ${phone}`}>
+                        <Call02Icon className="size-4 text-primary" aria-hidden="true" />
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -79,3 +122,4 @@ export function ClinicMap() {
     </section>
   );
 }
+
