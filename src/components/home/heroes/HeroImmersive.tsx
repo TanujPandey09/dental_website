@@ -98,7 +98,7 @@ export function HeroImmersive() {
           initial={{ opacity: 0, y: reduceMotion ? 0 : 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease: [0.32, 0.72, 0, 1] }}
-          className="inline-flex flex-wrap items-center gap-3 sm:gap-4 p-2 sm:p-2.5 rounded-full bg-slate-950/80 backdrop-blur-xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+          className="inline-flex flex-wrap items-center gap-3 sm:gap-4 p-2 sm:p-2.5 rounded-3xl sm:rounded-full bg-slate-950/80 backdrop-blur-xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
         >
           {/* Book a visit CTA button */}
           <Button

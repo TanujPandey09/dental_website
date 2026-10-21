@@ -7,19 +7,27 @@ interface PageHeroProps {
   title: string;
   subtitle: string;
   badge?: string;
+  trustItems?: string[];
+  hideTrust?: boolean;
 }
 
-const trustItems = [
+const DEFAULT_TRUST_ITEMS = [
   "Board Certified Specialists",
   "Same-Day Appointments",
   "Comfort-First Philosophy",
 ];
 
-export function PageHero({ title, subtitle, badge }: PageHeroProps) {
+export function PageHero({
+  title,
+  subtitle,
+  badge,
+  trustItems = DEFAULT_TRUST_ITEMS,
+  hideTrust = false,
+}: PageHeroProps) {
   const reduce = useReducedMotion();
 
   return (
-    <section className="pt-24 pb-8 sm:pt-28 sm:pb-12 bg-background relative overflow-hidden border-b border-border/40">
+    <section className="pt-20 pb-6 sm:pt-28 sm:pb-10 bg-background relative overflow-hidden border-b border-border/40">
 
       {/* Abstract Background System: Soft Ambient Radial Gradients (No Grid) */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none select-none overflow-hidden">
@@ -50,12 +58,10 @@ export function PageHero({ title, subtitle, badge }: PageHeroProps) {
               <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.08" />
             </linearGradient>
           </defs>
-          {/* Flowing outer organic petal/blob */}
           <path
             d="M340 70C390 120 420 190 410 260C400 330 350 390 280 405C210 420 140 380 90 330C40 280 20 200 45 140C70 80 130 40 200 25C270 10 290 20 340 70Z"
             fill="url(#pagehero-tr-grad)"
           />
-          {/* Refined concentric hairline contour */}
           <path
             d="M315 95C355 135 380 190 372 245C364 300 325 350 270 362C215 374 160 340 120 300C80 260 65 195 85 148C105 100 152 70 208 58C264 46 275 55 315 95Z"
             stroke="url(#pagehero-tr-stroke)"
@@ -82,12 +88,10 @@ export function PageHero({ title, subtitle, badge }: PageHeroProps) {
               <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.06" />
             </linearGradient>
           </defs>
-          {/* Flowing bottom-left organic wave */}
           <path
             d="M80 340C30 295 10 220 25 155C40 90 95 45 160 30C225 15 295 40 335 90C375 140 380 215 355 275C330 335 265 375 200 385C135 395 130 385 80 340Z"
             fill="url(#pagehero-bl-grad)"
           />
-          {/* Elegant hairline contour */}
           <path
             d="M105 315C65 278 50 218 62 165C74 112 118 75 170 62C222 50 278 70 310 110C342 150 346 210 325 258C305 306 252 338 200 346C148 354 145 352 105 315Z"
             stroke="url(#pagehero-bl-stroke)"
@@ -103,7 +107,7 @@ export function PageHero({ title, subtitle, badge }: PageHeroProps) {
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: reduce ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-primary/10 text-primary border border-primary/20 mb-4"
+            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-primary/10 text-primary border border-primary/20 mb-3"
           >
             <SparklesIcon className="w-3.5 h-3.5 text-primary" />
             <span>{badge}</span>
@@ -111,40 +115,44 @@ export function PageHero({ title, subtitle, badge }: PageHeroProps) {
         )}
 
         <motion.h1
-          initial={reduce ? false : { opacity: 0, y: 24 }}
+          initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: reduce ? 0 : 0.7, delay: reduce ? 0 : 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground mb-6 tracking-tight leading-[1.08] text-balance"
+          transition={{ duration: reduce ? 0 : 0.6, delay: reduce ? 0 : 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className="text-3xl sm:text-5xl md:text-6xl font-heading font-bold text-foreground mb-4 sm:mb-5 tracking-tight leading-[1.1] text-balance"
         >
           {title}
         </motion.h1>
 
         <motion.p
-          initial={reduce ? false : { opacity: 0, y: 20 }}
+          initial={reduce ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: reduce ? 0 : 0.6, delay: reduce ? 0 : 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-medium mb-6 sm:mb-8"
+          transition={{ duration: reduce ? 0 : 0.5, delay: reduce ? 0 : 0.18, ease: [0.16, 1, 0.3, 1] }}
+          className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto font-normal mb-5 sm:mb-6"
         >
           {subtitle}
         </motion.p>
 
-        {/* Trust proof points */}
-        <motion.ul
-          initial={reduce ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: reduce ? 0 : 0.6, delay: reduce ? 0 : 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap items-center justify-center gap-3"
-        >
-          {trustItems.map((item) => (
-            <li
-              key={item}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border text-sm font-medium text-foreground/80"
-            >
-              <CheckmarkCircle02Icon className="w-4 h-4 text-primary flex-shrink-0" aria-hidden="true" />
-              {item}
-            </li>
-          ))}
-        </motion.ul>
+        {/* Sleek, Single Unified Trust Bar (Responsive on Mobile & Desktop) */}
+        {!hideTrust && trustItems && trustItems.length > 0 && (
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: reduce ? 0 : 0.5, delay: reduce ? 0 : 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2 px-3.5 sm:px-6 py-1.5 sm:py-2.5 rounded-xl sm:rounded-full bg-muted/40 border border-border/70 text-[11px] sm:text-xs md:text-sm font-medium text-foreground/80 shadow-xs"
+          >
+            {trustItems.map((item, idx) => (
+              <div key={item} className="inline-flex items-center gap-2">
+                {idx > 0 && (
+                  <span className="hidden sm:inline-block w-1 h-1 rounded-full bg-border" aria-hidden="true" />
+                )}
+                <span className="inline-flex items-center gap-1.5">
+                  <CheckmarkCircle02Icon className="w-3.5 h-3.5 text-primary shrink-0" aria-hidden="true" />
+                  <span>{item}</span>
+                </span>
+              </div>
+            ))}
+          </motion.div>
+        )}
 
       </div>
 

@@ -87,16 +87,16 @@ export function ServicesPreview() {
           </Button>
         </div>
 
-        {/* Double-Bezel Card Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        {/* Double-Bezel Card Showcase: Horizontal Swipe Slider on Mobile, 4-Col Grid on Desktop */}
+        <div className="flex overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 no-scrollbar">
           {serviceLinks.map((service) => (
             <div
               key={service.id}
-              className="service-card p-1.5 sm:p-2 rounded-3xl bg-muted/40 border border-border/70 shadow-sm flex flex-col group hover:-translate-y-1.5 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]"
+              className="service-card w-[82vw] max-w-[320px] shrink-0 snap-center sm:w-auto sm:max-w-none p-1.5 sm:p-2 rounded-3xl bg-muted/40 border border-border/70 shadow-sm flex flex-col group hover:-translate-y-1.5 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]"
             >
               <Link
                 href={`/services/${service.slug}`}
-                className="relative h-[380px] sm:h-[420px] md:h-[440px] rounded-[calc(1.5rem-2px)] overflow-hidden cursor-pointer shadow-sm flex flex-col justify-end p-6 sm:p-7 block"
+                className="relative h-[360px] sm:h-[420px] md:h-[440px] rounded-[calc(1.5rem-2px)] overflow-hidden cursor-pointer shadow-sm flex flex-col justify-end p-5 sm:p-7 block"
               >
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
@@ -150,6 +150,12 @@ export function ServicesPreview() {
               </Link>
             </div>
           ))}
+        </div>
+
+        {/* Mobile Swipe Indicator */}
+        <div className="flex sm:hidden items-center justify-center gap-1.5 mt-3 text-[11px] font-medium text-muted-foreground">
+          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+          <span>Swipe to explore all flagship services →</span>
         </div>
       </div>
     </section>

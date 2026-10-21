@@ -85,7 +85,7 @@ export function TemplatePillSwitcher({
 
       <span
         className={cn(
-          "text-xs font-semibold whitespace-nowrap pl-0.5 pr-1",
+          "text-[11px] sm:text-xs font-semibold whitespace-nowrap pl-0.5 pr-1 max-w-[100px] xs:max-w-[140px] sm:max-w-none truncate",
           isDarkTheme ? "text-white" : "text-slate-800"
         )}
       >

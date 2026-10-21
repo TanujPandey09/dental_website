@@ -176,8 +176,8 @@ export function PatientJourney() {
         </div>
 
         {/* Mobile Vertical Sequence with Animated Height Rail */}
-        <div className="md:hidden pt-8 space-y-8">
-          <div className="relative pl-8 space-y-8">
+        <div className="md:hidden pt-8">
+          <div className="relative space-y-8">
             {/* Vertical background rail */}
             <div
               className="absolute left-[15px] top-4 bottom-4 w-[2px] bg-white/15 pointer-events-none"
@@ -198,12 +198,12 @@ export function PatientJourney() {
                 <div
                   key={step.title}
                   onClick={() => setActiveStep(index)}
-                  className="relative group cursor-pointer"
+                  className="relative pl-12 group cursor-pointer"
                 >
-                  {/* Floating Circle on the vertical rail */}
+                  {/* Floating Circle centered on the vertical rail (left: 0, w: 32px -> center at 16px) */}
                   <div
                     className={cn(
-                      "absolute -left-[45px] top-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors shadow-sm z-10 ring-4 ring-[#07142A]",
+                      "absolute left-0 top-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors shadow-sm z-10 ring-4 ring-[#07142A]",
                       isFilled
                         ? "bg-[#0F766E] text-white"
                         : "bg-white text-slate-800"

@@ -301,38 +301,38 @@ export function BookingForm() {
         {/* ============================================================== */}
         {/* TOP 3-STAGE PROGRESS STEPPER (Unified Clinical Design)         */}
         {/* ============================================================== */}
-        <div className="p-3 sm:p-4 rounded-2xl bg-muted/40 border border-border/80 shadow-sm">
-          <div className="grid grid-cols-3 gap-2 sm:gap-4 relative">
+        <div className="p-2 sm:p-4 rounded-xl sm:rounded-2xl bg-muted/40 border border-border/80 shadow-sm">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-4 relative">
             {/* Step 1 */}
-            <div className="flex items-center gap-2.5 sm:gap-3">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 ring-4 ring-primary/20 shadow-sm">
-                <DentalCareIcon className="w-4 h-4 text-white" />
+            <div className="flex items-center gap-1.5 sm:gap-3">
+              <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 ring-2 sm:ring-4 ring-primary/20 shadow-sm">
+                <DentalCareIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
               </div>
               <div className="min-w-0">
-                <p className="text-[9px] sm:text-[10px] font-mono uppercase font-bold text-primary tracking-wider">Stage 1</p>
-                <p className="text-[11px] sm:text-xs font-bold text-foreground truncate">Procedure</p>
+                <p className="text-[8px] sm:text-[10px] font-mono uppercase font-bold text-primary tracking-wider">Stage 1</p>
+                <p className="text-[10px] sm:text-xs font-bold text-foreground truncate">Procedure</p>
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className="flex items-center gap-2.5 sm:gap-3">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 ring-4 ring-primary/20 shadow-sm">
-                <Calendar01Icon className="w-4 h-4 text-white" />
+            <div className="flex items-center gap-1.5 sm:gap-3">
+              <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0 ring-2 sm:ring-4 ring-primary/20 shadow-sm">
+                <Calendar01Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
               </div>
               <div className="min-w-0">
-                <p className="text-[9px] sm:text-[10px] font-mono uppercase font-bold text-primary tracking-wider">Stage 2</p>
-                <p className="text-[11px] sm:text-xs font-bold text-foreground truncate">Date &amp; Time</p>
+                <p className="text-[8px] sm:text-[10px] font-mono uppercase font-bold text-primary tracking-wider">Stage 2</p>
+                <p className="text-[10px] sm:text-xs font-bold text-foreground truncate">Date &amp; Time</p>
               </div>
             </div>
 
             {/* Step 3 */}
-            <div className="flex items-center gap-2.5 sm:gap-3">
-              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-primary/10 border border-primary/30 text-primary flex items-center justify-center shrink-0 ring-4 ring-background shadow-sm">
-                <UserIcon className="w-4 h-4 text-primary" />
+            <div className="flex items-center gap-1.5 sm:gap-3">
+              <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-primary/10 border border-primary/30 text-primary flex items-center justify-center shrink-0 ring-2 sm:ring-4 ring-background shadow-sm">
+                <UserIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
               </div>
               <div className="min-w-0">
-                <p className="text-[9px] sm:text-[10px] font-mono uppercase font-bold text-muted-foreground tracking-wider">Stage 3</p>
-                <p className="text-[11px] sm:text-xs font-bold text-foreground truncate">Details</p>
+                <p className="text-[8px] sm:text-[10px] font-mono uppercase font-bold text-muted-foreground tracking-wider">Stage 3</p>
+                <p className="text-[10px] sm:text-xs font-bold text-foreground truncate">Details</p>
               </div>
             </div>
           </div>
@@ -381,20 +381,20 @@ export function BookingForm() {
                         type="button"
                         onClick={() => field.onChange(option.value)}
                         className={cn(
-                          "p-4 rounded-2xl text-left transition-all duration-200 border cursor-pointer flex flex-col justify-between group relative overflow-hidden",
+                          "p-3.5 sm:p-4 rounded-xl sm:rounded-2xl text-left transition-all duration-200 border cursor-pointer flex flex-col justify-between group relative overflow-hidden",
                           isSelected
                             ? "bg-primary/5 border-primary ring-2 ring-primary/20 shadow-md"
                             : "bg-card border-border/70 hover:border-primary/40 hover:bg-muted/40 shadow-sm"
                         )}
                       >
-                        <div className="flex items-start justify-between gap-3 mb-2">
+                        <div className="flex items-start justify-between gap-2.5 mb-2">
                           <div className={cn(
-                            "w-10 h-10 rounded-xl flex items-center justify-center transition-colors shrink-0",
+                            "w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-colors shrink-0",
                             isSelected
                               ? "bg-primary text-white shadow-sm"
                               : "bg-muted text-muted-foreground group-hover:text-primary group-hover:bg-primary/10"
                           )}>
-                            <Icon className="w-5 h-5" />
+                            <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                           </div>
 
                           <div className="flex items-center gap-1.5 shrink-0">
@@ -455,8 +455,8 @@ export function BookingForm() {
           </div>
 
           {/* Double-Bezel SaaS Calendar & Slot Split Widget */}
-          <div className="p-1.5 rounded-3xl bg-muted/40 border border-border/70 shadow-sm">
-            <div className="rounded-[calc(1.5rem-2px)] bg-card border border-border/60 p-4 sm:p-6">
+          <div className="p-1 sm:p-1.5 rounded-2xl sm:rounded-3xl bg-muted/40 border border-border/70 shadow-sm">
+            <div className="rounded-[calc(1rem-1px)] sm:rounded-[calc(1.5rem-2px)] bg-card border border-border/60 p-3 sm:p-6">
 
               <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
 
@@ -494,7 +494,7 @@ export function BookingForm() {
                   {/* Day Names Row */}
                   <div className="grid grid-cols-7 text-center">
                     {DAYS_OF_WEEK.map((day) => (
-                      <span key={day} className="text-[11px] font-semibold text-muted-foreground py-1">
+                      <span key={day} className="text-[10px] sm:text-[11px] font-semibold text-muted-foreground py-1">
                         {day}
                       </span>
                     ))}
@@ -504,7 +504,7 @@ export function BookingForm() {
                   <div className="grid grid-cols-7 gap-1 sm:gap-1.5">
                     {/* Empty leading days */}
                     {Array.from({ length: firstDayOfMonth }).map((_, i) => (
-                      <div key={`empty-${i}`} className="h-9 w-9" />
+                      <div key={`empty-${i}`} className="h-8 w-8 xs:h-9 xs:w-9 sm:h-10 sm:w-10" />
                     ))}
 
                     {/* Day numbers */}
@@ -531,7 +531,7 @@ export function BookingForm() {
                           disabled={isPast}
                           onClick={() => handleSelectDay(dayNum)}
                           className={cn(
-                            "h-9 w-9 sm:h-10 sm:w-10 mx-auto text-xs font-semibold rounded-xl flex items-center justify-center transition-all duration-200 cursor-pointer relative",
+                            "h-8 w-8 xs:h-9 xs:w-9 sm:h-10 sm:w-10 mx-auto text-xs font-semibold rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-200 cursor-pointer relative",
                             isSelected
                               ? "bg-primary text-white shadow-md shadow-primary/30 font-bold scale-105"
                               : isPast
@@ -808,6 +808,7 @@ export function BookingForm() {
               type="submit"
               variant="cta"
               size="lg"
+              className="w-full sm:w-auto h-12 text-sm font-bold shadow-md shadow-primary/20"
               disabled={status === "submitting"}
               aria-busy={status === "submitting"}
             >

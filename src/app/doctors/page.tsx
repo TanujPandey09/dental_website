@@ -14,6 +14,7 @@ export default function DoctorsPage() {
         title="World-Class Specialists" 
         subtitle="Our team consists of board-certified specialists who have trained at the world's most prestigious dental institutions. We believe in continuous education to bring you the best care possible."
         badge="Our Team"
+        trustItems={["Columbia & NYU Trained", "Board-Certified Specialists", "Multidisciplinary Care"]}
       />
 
       <DoctorsClient />

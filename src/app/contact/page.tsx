@@ -36,6 +36,7 @@ export default function ContactPage() {
         title="Get in touch" 
         subtitle="Experience world-class dentistry. Connect with our dedicated patient coordinators to schedule your personalized consultation."
         badge="Contact Support"
+        trustItems={["Prompt 2-Hour Response", "Emergency Same-Day Dispatch", "Rockefeller Center Location"]}
       />
 
       <section className="pt-8 pb-16 sm:pt-10 sm:pb-24 bg-background relative overflow-hidden">

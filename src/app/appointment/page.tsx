@@ -135,8 +135,8 @@ export default function AppointmentPage() {
 
             {/* Right: SaaS Booking Form Container */}
             <div className="lg:col-span-8 order-1 lg:order-2">
-              <div className="p-1.5 sm:p-2 rounded-3xl bg-muted/30 border border-border/70 shadow-sm">
-                <div className="rounded-[calc(1.5rem-2px)] sm:rounded-[calc(1.5rem-4px)] bg-card border border-border/60 p-6 sm:p-10 shadow-xl">
+              <div className="p-1 sm:p-2 rounded-2xl sm:rounded-3xl bg-muted/30 border border-border/70 shadow-sm">
+                <div className="rounded-[calc(1rem-1px)] sm:rounded-[calc(1.5rem-4px)] bg-card border border-border/60 p-3.5 sm:p-8 lg:p-10 shadow-xl">
                   <BookingForm />
                 </div>
               </div>

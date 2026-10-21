@@ -14,6 +14,7 @@ export default function TestimonialsPage() {
         title="Stories of Confident, Healthy Smiles." 
         subtitle="Read what patients share about their care, from first consultations to final results."
         badge="Testimonials"
+        trustItems={["1,200+ Verified 5-Star Reviews", "Google & Yelp Verified", "Real Patient Case Studies"]}
       />
 
       <TestimonialsClient />

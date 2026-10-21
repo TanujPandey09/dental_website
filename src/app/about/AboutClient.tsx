@@ -65,6 +65,7 @@ function AboutClientContent() {
         badge={currentHero.badge}
         title={currentHero.title}
         subtitle={currentHero.subtitle}
+        trustItems={["Founded 2011 · Manhattan", "Patient-Led Clinical Care", "15,000+ Smiles Treated"]}
       />
 
       <section className="pt-6 pb-16 sm:pt-8 sm:pb-20 bg-background">

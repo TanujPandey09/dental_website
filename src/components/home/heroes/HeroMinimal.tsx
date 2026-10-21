@@ -173,7 +173,7 @@ export function HeroMinimal() {
               </div>
 
               {/* Filter Tabs */}
-              <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-1 select-none">
+              <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-1 select-none no-scrollbar">
                 {TREATMENT_TABS.map((tab) => {
                   const isActive = activeTab === tab.id;
                   return (

@@ -165,29 +165,27 @@ export function DoctorClient({ slug }: { slug: string }) {
             </div>
 
             {/* Metrics Row */}
-            <div className="flex flex-wrap items-center gap-6 py-4 border-y border-border/70">
-              <div>
-                <div className="flex items-center gap-1.5 text-foreground font-bold text-xl">
-                  <StarIcon className="w-5 h-5 fill-rating text-rating" aria-hidden="true" />
+            <div className="grid grid-cols-3 gap-2 sm:gap-6 py-4 border-y border-border/70">
+              <div className="border-r border-border/70 pr-2 sm:pr-0">
+                <div className="flex items-center gap-1 sm:gap-1.5 text-foreground font-bold text-base sm:text-xl">
+                  <StarIcon className="w-4 h-4 sm:w-5 sm:h-5 fill-rating text-rating" aria-hidden="true" />
                   <span>{rating}</span>
                 </div>
-                <div className="text-xs text-muted-foreground font-medium mt-0.5">{reviews}+ Patient Reviews</div>
+                <div className="text-[11px] sm:text-xs text-muted-foreground font-medium mt-0.5">{reviews}+ Reviews</div>
               </div>
-              <div className="w-px h-10 bg-border/80"></div>
-              <div>
-                <div className="flex items-center gap-1.5 text-foreground font-bold text-xl">
-                  <UserGroupIcon className="w-5 h-5 text-primary" aria-hidden="true" />
+              <div className="border-r border-border/70 pr-2 sm:pr-0 pl-1 sm:pl-0">
+                <div className="flex items-center gap-1 sm:gap-1.5 text-foreground font-bold text-base sm:text-xl">
+                  <UserGroupIcon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" aria-hidden="true" />
                   <CountUp end={siteConfig.clinic.happyPatients} duration={2} suffix="+" />
                 </div>
-                <div className="text-xs text-muted-foreground font-medium mt-0.5">Patients Treated</div>
+                <div className="text-[11px] sm:text-xs text-muted-foreground font-medium mt-0.5">Patients</div>
               </div>
-              <div className="w-px h-10 bg-border/80"></div>
-              <div>
-                <div className="flex items-center gap-1.5 text-foreground font-bold text-xl">
-                  <Clock01Icon className="w-5 h-5 text-primary" aria-hidden="true" />
+              <div className="pl-1 sm:pl-0">
+                <div className="flex items-center gap-1 sm:gap-1.5 text-foreground font-bold text-base sm:text-xl">
+                  <Clock01Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" aria-hidden="true" />
                   <CountUp end={years} duration={2} suffix="+" />
                 </div>
-                <div className="text-xs text-muted-foreground font-medium mt-0.5">Years Clinical Exp</div>
+                <div className="text-[11px] sm:text-xs text-muted-foreground font-medium mt-0.5">{years} Yrs Exp</div>
               </div>
             </div>
 

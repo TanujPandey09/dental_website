@@ -12,12 +12,12 @@ import { images } from "@/config/images";
 gsap.registerPlugin(ScrollTrigger);
 
 const FEATURE_SPECS = [
-  "Board Certified · Ongoing Fellowship",
-  "0.02mm Optical Precision · 3D CBCT",
-  "Itemized Estimates · Zero Hidden Fees",
-  "Same-Day Reserved Urgent Slots",
-  "Acoustic Noise-Canceling · Zero Odor",
-  "Comprehensive Treatment Warranty",
+  "Board-Certified Specialists",
+  "Sub-Millimeter 3D CBCT Scans",
+  "100% Upfront Written Quotes",
+  "Same-Day Reserved Slots",
+  "Acoustic Noise-Canceling Suites",
+  "Full Clinical Warranty",
 ];
 
 export function WhyChooseUs() {
@@ -125,12 +125,10 @@ export function WhyChooseUs() {
                     </p>
                   </div>
 
-                  {/* Tactile Clinical Specification Pill */}
-                  <div className="pt-3 border-t border-border/60 flex items-center justify-between text-[11px] font-semibold text-primary">
-                    <span className="text-muted-foreground font-medium">Standard</span>
-                    <span className="bg-primary/10 px-2.5 py-0.5 rounded-full">
-                      {FEATURE_SPECS[index] || "Clinical Standard"}
-                    </span>
+                  {/* Clean Single-Line Clinical Specification */}
+                  <div className="pt-3.5 border-t border-border/60 flex items-center gap-2 text-xs font-semibold text-primary">
+                    <CheckmarkBadge01Icon className="w-3.5 h-3.5 text-primary shrink-0" aria-hidden="true" />
+                    <span className="truncate">{FEATURE_SPECS[index] || "Clinical Standard"}</span>
                   </div>
                 </div>
               </div>
