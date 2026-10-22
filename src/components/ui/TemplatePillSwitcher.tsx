@@ -61,12 +61,10 @@ export function TemplatePillSwitcher({
               className={cn(
                 "w-7 h-6 sm:w-8 sm:h-6 flex items-center justify-center rounded-full text-[11px] font-mono font-bold transition-all duration-200 cursor-pointer",
                 isActive
-                  ? isDarkTheme
-                    ? "bg-teal-500 text-slate-950 shadow-sm"
-                    : "bg-teal-700 text-white shadow-sm"
+                  ? "bg-primary text-primary-foreground shadow-sm"
                   : isDarkTheme
                     ? "text-white/70 hover:text-white hover:bg-white/10"
-                    : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
               )}
             >
               {num}

@@ -48,40 +48,40 @@ export function ServicesGrid({ services }: ServicesGridProps) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
-          className="relative bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-10 shadow-sm hover:shadow-xl hover:border-teal-600/40 transition-all duration-300 overflow-hidden group"
+          className="relative bg-card border border-border rounded-3xl p-6 sm:p-10 shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-300 overflow-hidden group"
         >
           {/* Subtle Decorative Background Contours */}
           <div
             aria-hidden="true"
-            className="absolute top-0 right-0 w-[450px] h-[450px] bg-[radial-gradient(circle_at_top_right,rgba(15,118,110,0.06)_0%,transparent_70%)] pointer-events-none"
+            className="absolute top-0 right-0 w-[450px] h-[450px] bg-[radial-gradient(circle_at_top_right,rgba(30,77,64,0.06)_0%,transparent_70%)] pointer-events-none"
           />
           <div
             aria-hidden="true"
-            className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full border border-teal-500/10 pointer-events-none"
+            className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full border border-primary/10 pointer-events-none"
           />
           <div
             aria-hidden="true"
-            className="absolute -bottom-10 -right-10 w-60 h-60 rounded-full border border-teal-500/10 pointer-events-none"
+            className="absolute -bottom-10 -right-10 w-60 h-60 rounded-full border border-primary/10 pointer-events-none"
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center relative z-10">
             {/* Left Column Info */}
             <div className="lg:col-span-7 space-y-4">
               <div className="flex flex-wrap items-center gap-2.5">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 text-teal-800 text-[11px] font-semibold tracking-wide border border-teal-200/60 font-mono uppercase">
-                  <SparklesIcon className="w-3.5 h-3.5 text-teal-600" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-muted text-primary text-[11px] font-semibold tracking-wide border border-border/80 font-mono uppercase">
+                  <SparklesIcon className="w-3.5 h-3.5 text-primary" />
                   Featured Treatment · {featured.category}
                 </span>
-                <span className="text-[11px] font-mono text-slate-500">
+                <span className="text-[11px] font-mono text-muted-foreground">
                   {SERVICE_SPECS[featured.id]?.duration || "Specialist Care"}
                 </span>
               </div>
 
-              <h2 className="text-2xl sm:text-4xl font-serif font-normal text-slate-900 tracking-tight leading-tight">
+              <h2 className="text-2xl sm:text-4xl font-serif font-normal text-foreground tracking-tight leading-tight">
                 {featured.title}
               </h2>
 
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl">
+              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-xl">
                 {featured.description}
               </p>
 
@@ -151,41 +151,41 @@ export function ServicesGrid({ services }: ServicesGridProps) {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3, delay: index * 0.04 }}
                 key={service.id}
-                className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-teal-600/40 transition-all duration-300 relative overflow-hidden group"
+                className="bg-card border border-border rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-primary/40 transition-all duration-300 relative overflow-hidden group"
               >
                 {/* Decorative Subtle Geometry Contour */}
                 <div
                   aria-hidden="true"
-                  className="absolute -right-8 -bottom-8 w-40 h-40 rounded-full border border-teal-500/10 pointer-events-none group-hover:scale-110 transition-transform duration-500"
+                  className="absolute -right-8 -bottom-8 w-40 h-40 rounded-full border border-primary/10 pointer-events-none group-hover:scale-110 transition-transform duration-500"
                 />
 
                 <div>
                   {/* Top Header Row */}
                   <div className="flex items-center justify-between gap-2 mb-4">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-teal-700 bg-teal-50 border border-teal-200/60 px-2.5 py-0.5 rounded-full font-semibold">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-primary bg-muted border border-border px-2.5 py-0.5 rounded-full font-semibold">
                       {service.category}
                     </span>
-                    <span className="text-[11px] font-mono text-slate-400">
+                    <span className="text-[11px] font-mono text-muted-foreground">
                       {spec?.duration || "Specialist Care"}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl sm:text-2xl font-serif font-medium text-slate-900 group-hover:text-teal-700 transition-colors mb-2.5 leading-snug">
+                  <h3 className="text-xl sm:text-2xl font-serif font-medium text-foreground group-hover:text-primary transition-colors mb-2.5 leading-snug">
                     {service.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-6">
+                  <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mb-6">
                     {service.description}
                   </p>
                 </div>
 
                 {/* Bottom Actions Row */}
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 relative z-10">
+                <div className="pt-4 border-t border-border/60 flex items-center justify-between gap-3 relative z-10">
                   <Link
                     href={`/services/${service.id}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-900 hover:text-teal-700 transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground hover:text-primary transition-colors"
                   >
                     <span>Details</span>
                     <ArrowUpRight01Icon className="w-3.5 h-3.5" />
@@ -193,7 +193,7 @@ export function ServicesGrid({ services }: ServicesGridProps) {
 
                   <button
                     onClick={() => openBooking()}
-                    className="px-3.5 py-1.5 rounded-full bg-slate-900 hover:bg-teal-700 text-white text-xs font-semibold transition-colors cursor-pointer"
+                    className="px-3.5 py-1.5 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold transition-colors cursor-pointer"
                   >
                     Book
                   </button>

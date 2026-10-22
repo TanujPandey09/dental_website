@@ -53,9 +53,9 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 w-full z-50 bg-white transition-[padding,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
+        "fixed top-0 w-full z-50 bg-background/95 backdrop-blur-md transition-[padding,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
         scrolled
-          ? "py-3 shadow-[0_4px_25px_rgba(15,23,42,0.08)] border-b border-border/80"
+          ? "py-3 shadow-[0_4px_20px_-2px_rgba(28,26,23,0.05)] border-b border-border/80"
           : "py-4 sm:py-5 border-b border-border/40"
       )}
     >

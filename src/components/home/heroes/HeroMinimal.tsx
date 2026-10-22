@@ -183,7 +183,7 @@ export function HeroMinimal() {
                       onClick={() => setActiveTab(tab.id)}
                       className={`px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition-[background-color,color,box-shadow] duration-200 cursor-pointer ${
                         isActive
-                          ? "bg-slate-900 text-white shadow-sm"
+                          ? "bg-primary text-primary-foreground shadow-sm"
                           : "bg-muted/60 text-muted-foreground hover:text-foreground hover:bg-muted border border-border/50"
                       }`}
                     >
@@ -268,7 +268,7 @@ export function HeroMinimal() {
           </div>
           <div>
             <p className="text-2xl sm:text-3xl font-heading font-bold text-foreground flex items-center gap-1.5">
-              4.9 <StarIcon className="w-5 h-5 text-primary fill-current" aria-hidden="true" />
+              4.9 <StarIcon className="w-5 h-5 text-rating fill-current" aria-hidden="true" />
             </p>
             <p className="text-[10px] sm:text-[11px] text-muted-foreground font-medium uppercase tracking-wider mt-1">
               From 1,200+ Verified Reviews

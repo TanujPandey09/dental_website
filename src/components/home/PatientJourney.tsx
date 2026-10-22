@@ -54,11 +54,11 @@ export function PatientJourney() {
       {/* Background ambient lighting */}
       <div
         aria-hidden="true"
-        className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-teal-500/10 rounded-full blur-[140px] pointer-events-none"
+        className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-primary/10 rounded-full blur-[140px] pointer-events-none"
       />
       <div
         aria-hidden="true"
-        className="absolute bottom-0 left-10 w-[500px] h-[300px] bg-teal-600/5 rounded-full blur-[120px] pointer-events-none"
+        className="absolute bottom-0 left-10 w-[500px] h-[300px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
@@ -66,8 +66,8 @@ export function PatientJourney() {
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 sm:gap-8 pb-12 sm:pb-16 border-b border-white/10">
           <div className="max-w-2xl">
             {/* The Patient Journey Eyebrow Badge */}
-            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-teal-500/15 text-teal-300 border border-teal-500/25 mb-4">
-              <SparklesIcon className="w-3.5 h-3.5 text-teal-400" />
+            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-accent/15 text-accent border border-accent/25 mb-4">
+              <SparklesIcon className="w-3.5 h-3.5 text-accent" />
               The Patient Journey
             </span>
 
@@ -77,7 +77,7 @@ export function PatientJourney() {
               className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-white tracking-tight leading-[1.15]"
             >
               From first question{" "}
-              <span className="italic text-teal-400 font-serif">to aftercare.</span>
+              <span className="italic text-accent font-serif">to aftercare.</span>
             </h2>
           </div>
 
@@ -117,8 +117,8 @@ export function PatientJourney() {
                         className={cn(
                           "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shrink-0 z-10 relative ring-4 ring-[#07142A]",
                           isFilled
-                            ? "bg-[#0F766E] text-white shadow-lg shadow-teal-900/50"
-                            : "bg-white text-slate-800 shadow-md group-hover:ring-teal-400/40"
+                            ? "bg-primary text-primary-foreground shadow-lg shadow-emerald-950/30"
+                            : "bg-card text-foreground shadow-sm group-hover:ring-primary/40"
                         )}
                       >
                         <StageIcon
@@ -135,7 +135,7 @@ export function PatientJourney() {
                         >
                           <div
                             className={cn(
-                              "h-full bg-teal-400 shadow-[0_0_10px_rgba(45,212,191,0.7)] transition-all duration-300 ease-out",
+                              "h-full bg-accent shadow-[0_0_10px_rgba(196,130,63,0.5)] transition-all duration-300 ease-out",
                               index < activeStep
                                 ? "w-full"
                                 : index === 0 && activeStep === 0
@@ -185,7 +185,7 @@ export function PatientJourney() {
             >
               {/* Active animated vertical fill */}
               <div
-                className="w-full bg-teal-400 shadow-[0_0_10px_rgba(45,212,191,0.6)] transition-[height] duration-300 ease-out"
+                className="w-full bg-accent shadow-[0_0_10px_rgba(196,130,63,0.5)] transition-[height] duration-300 ease-out"
                 style={{
                   height: activeStep === 0 ? "24px" : `${(activeStep / (steps.length - 1)) * 100}%`,
                 }}
@@ -205,8 +205,8 @@ export function PatientJourney() {
                     className={cn(
                       "absolute left-0 top-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors shadow-sm z-10 ring-4 ring-[#07142A]",
                       isFilled
-                        ? "bg-[#0F766E] text-white"
-                        : "bg-white text-slate-800"
+                        ? "bg-primary text-primary-foreground shadow-sm"
+                        : "bg-card text-foreground"
                     )}
                   >
                     <StageIcon

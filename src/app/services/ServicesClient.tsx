@@ -53,13 +53,13 @@ function ServicesClientContent() {
       });
 
   return (
-    <section className="pt-24 pb-12 sm:pt-28 sm:pb-16 bg-[#FAFAFA] min-h-screen">
+    <section className="pt-24 pb-12 sm:pt-28 sm:pb-16 bg-background min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 
         {/* Top Control Bar: Eyebrow Badge left, Floating Template Switcher right */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-6">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-teal-50 text-teal-800 border border-teal-200/60 font-sans w-fit">
-            <SparklesIcon className="w-3.5 h-3.5 text-teal-600" />
+          <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-muted text-primary border border-border/80 font-sans w-fit">
+            <SparklesIcon className="w-3.5 h-3.5 text-primary" />
             Clinical Care
           </span>
 
@@ -75,32 +75,32 @@ function ServicesClientContent() {
         </div>
 
         {/* Editorial Header Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-end pb-6 sm:pb-8 border-b border-slate-200">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-end pb-6 sm:pb-8 border-b border-border/80">
           {/* Left Title & Subtitle */}
           <div className="lg:col-span-7">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-slate-900 tracking-tight leading-[1.12]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-foreground tracking-tight leading-[1.12]">
               Treatment, <br />
-              <span className="italic text-teal-700 font-serif">thought through.</span>
+              <span className="italic text-primary font-serif">thought through.</span>
             </h1>
 
-            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mt-2.5 max-w-xl">
+            <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mt-2.5 max-w-xl">
               Six core areas of care, each starting with an assessment and a conversation. Explore the approach, the process, and what a consultation can tell you.
             </p>
           </div>
 
           {/* Right Clinical Disclaimer Card */}
           <div className="lg:col-span-5 flex justify-start lg:justify-end">
-            <div className="w-full max-w-md bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
-              <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed mb-3">
+            <div className="w-full max-w-md bg-card border border-border rounded-2xl p-4 sm:p-5 shadow-sm">
+              <p className="text-xs sm:text-[13px] text-muted-foreground leading-relaxed mb-3">
                 Treatment suitability is individual. Nothing on this page is a diagnosis or guarantee, or a substitute for clinical assessment.
               </p>
-              <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-slate-100 text-[10px] font-mono text-teal-700 font-semibold tracking-wider">
+              <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-border/60 text-[10px] font-mono text-primary font-semibold tracking-wider">
                 <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                   IN-PERSON ASSESSMENT
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                   CLEAR WRITTEN PLAN
                 </span>
               </div>
@@ -108,7 +108,7 @@ function ServicesClientContent() {
           </div>
         </div>
 
-        {/* Category Filter Pills (Visible for all views to match reference screenshots) */}
+        {/* Category Filter Pills */}
         <div className="flex flex-wrap gap-2 py-4 sm:py-5">
           {categories.map((category) => {
             const active = activeCategory === category;
@@ -120,8 +120,8 @@ function ServicesClientContent() {
                 className={cn(
                   "px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer shadow-sm",
                   active
-                    ? "bg-slate-900 text-white shadow-slate-900/10"
-                    : "bg-white text-slate-700 border border-slate-200 hover:border-slate-900 hover:text-slate-900"
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "bg-card text-muted-foreground border border-border hover:border-foreground hover:text-foreground"
                 )}
               >
                 {category}

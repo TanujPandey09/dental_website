@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "designSystem": {
+    "slug": "warm-editorial",
+    "path": "design-systems/warm-editorial"
+  },
+  "skill": {
+    "slug": "web-prototype-taste-editorial",
+    "path": "skills/web-prototype-taste-editorial",
+    "kind": "skill"
+  },
+  "craft": [
+    "anti-ai-slop",
+    "typography-hierarchy-editorial",
+    "color",
+    "animation-discipline",
+    "accessibility-baseline"
+  ],
+  "boundAt": "2026-10-22T08:35:00Z"
+}
