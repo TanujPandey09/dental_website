@@ -34,15 +34,15 @@ export function TemplatePillSwitcher({
       className={cn(
         "inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full text-xs transition-colors duration-200 select-none shadow-md",
         isDarkTheme
-          ? "bg-[#161513]/90 backdrop-blur-xl border border-white/15 text-white shadow-[0_8px_32px_rgba(0,0,0,0.36)]"
-          : "bg-card/95 backdrop-blur-xl border border-border text-foreground shadow-[0_4px_20px_rgba(28,26,23,0.06)]",
+          ? "bg-[#0B1528]/90 backdrop-blur-xl border border-white/15 text-white shadow-[0_8px_32px_rgba(0,0,0,0.36)]"
+          : "bg-white/95 backdrop-blur-xl border border-slate-200/90 text-slate-900 shadow-[0_4px_20px_rgba(15,23,42,0.06)]",
         className
       )}
     >
       <span
         className={cn(
           "text-[10px] tracking-[0.14em] uppercase font-bold pr-1 hidden sm:inline-block",
-          isDarkTheme ? "text-white/50" : "text-muted-foreground"
+          isDarkTheme ? "text-white/50" : "text-slate-400"
         )}
       >
         {label}
@@ -61,10 +61,12 @@ export function TemplatePillSwitcher({
               className={cn(
                 "w-7 h-6 sm:w-8 sm:h-6 flex items-center justify-center rounded-full text-[11px] font-mono font-bold transition-all duration-200 cursor-pointer",
                 isActive
-                  ? "bg-primary text-primary-foreground shadow-sm"
+                  ? isDarkTheme
+                    ? "bg-teal-500 text-slate-950 shadow-sm"
+                    : "bg-teal-700 text-white shadow-sm"
                   : isDarkTheme
                     ? "text-white/70 hover:text-white hover:bg-white/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
               )}
             >
               {num}
@@ -76,7 +78,7 @@ export function TemplatePillSwitcher({
       <span
         className={cn(
           "h-3.5 w-px mx-0.5",
-          isDarkTheme ? "bg-white/20" : "bg-border"
+          isDarkTheme ? "bg-white/20" : "bg-slate-200"
         )}
         aria-hidden="true"
       />

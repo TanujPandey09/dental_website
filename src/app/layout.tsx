@@ -53,6 +53,7 @@ export const viewport: Viewport = {
 import { BookingProvider } from "@/components/BookingContext";
 import { HeroStyleProvider } from "@/components/HeroStyleContext";
 import { CustomCursor } from "@/components/CustomCursor";
+import { MobileTemplateSwitcher } from "@/components/ui/MobileTemplateSwitcher";
 
 export default function RootLayout({
   children,
@@ -78,6 +79,7 @@ export default function RootLayout({
                   {children}
                 </main>
                 <Footer />
+                <MobileTemplateSwitcher />
               </HeroStyleProvider>
             </BookingProvider>
           </SmoothScroll>

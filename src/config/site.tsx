@@ -106,12 +106,12 @@ export interface DoctorConfig {
   qualifications: string;
   experience: string;
   specialty:
-    | "Cosmetic"
-    | "Implants"
-    | "Orthodontics"
-    | "Endodontics"
-    | "Pediatric"
-    | "General";
+  | "Cosmetic"
+  | "Implants"
+  | "Orthodontics"
+  | "Endodontics"
+  | "Pediatric"
+  | "General";
   specializations: string[];
   rating: number;
   reviews: number;
@@ -258,11 +258,11 @@ export const defaultSiteConfig: SiteConfig = {
     logoDark: "/dental/dark-logo.png",
     favicon: "/dental/favicon.png",
     ogImage: "/dental/og-image.png",
-    primaryColor: "#1E4D40",
-    secondaryColor: "#2C2825",
-    accentColor: "#C4823F",
-    backgroundColor: "#FAF8F5",
-    foregroundColor: "#1C1A17",
+    primaryColor: "#0F766E",
+    secondaryColor: "#07142A",
+    accentColor: "#14B8A6",
+    backgroundColor: "#F8FAFC",
+    foregroundColor: "#0F172A",
     yearsExperience: 15,
     happyPatients: 5000,
     certifiedDentists: 12,
@@ -469,7 +469,7 @@ export const defaultSiteConfig: SiteConfig = {
       specializations: ["Dental Implants", "Oral Surgery", "Bone Grafting"],
       rating: 4.9,
       reviews: 89,
-heroImage:
+      heroImage:
         images.doctors["dr-michael-chen"],
       heroDescription: "Transform your smile with the latest cosmetic dentistry techniques.",
       demo: false,

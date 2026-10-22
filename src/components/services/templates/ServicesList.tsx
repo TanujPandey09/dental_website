@@ -86,14 +86,14 @@ export function ServicesList({ services }: ServicesListProps) {
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.25, delay: index * 0.03 }}
               key={service.id}
-              className="bg-card border border-border rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-[0_2px_12px_rgba(28,26,23,0.02)] hover:border-primary/40 hover:shadow-xl transition-all duration-300 group"
+              className="bg-white border border-slate-200/90 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:border-teal-600/40 hover:shadow-xl transition-all duration-300 group"
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 sm:gap-6">
-                
+
                 {/* Left Section: Rounded Thumbnail + Title & Description */}
                 <div className="flex items-start sm:items-center gap-4 sm:gap-5 flex-1 min-w-0">
                   {/* Thumbnail with Soft Contour */}
-                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shrink-0 border border-border/80 bg-muted shadow-inner group-hover:scale-105 transition-transform duration-300">
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shrink-0 border border-slate-200/80 bg-slate-100 shadow-inner group-hover:scale-105 transition-transform duration-300">
                     <Image
                       src={service.image}
                       alt={service.title}
@@ -101,64 +101,64 @@ export function ServicesList({ services }: ServicesListProps) {
                       sizes="(max-width: 640px) 80px, 96px"
                       className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-tr from-black/25 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-tr from-slate-900/30 to-transparent" />
                   </div>
 
                   {/* Content Block */}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[10px] font-mono uppercase tracking-wider font-semibold text-primary bg-muted px-2.5 py-0.5 rounded-full border border-border/80">
+                      <span className="text-[10px] font-mono uppercase tracking-wider font-semibold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200/60">
                         {service.category}
                       </span>
                     </div>
 
-                    <h3 className="text-lg sm:text-2xl font-serif font-medium text-foreground group-hover:text-primary transition-colors leading-snug">
+                    <h3 className="text-lg sm:text-2xl font-serif font-medium text-slate-900 group-hover:text-teal-700 transition-colors leading-snug">
                       <Link href={`/services/${service.id}`}>
                         {service.title}
                       </Link>
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 mt-1 leading-relaxed max-w-xl">
+                    <p className="text-xs sm:text-sm text-slate-600 line-clamp-2 mt-1 leading-relaxed max-w-xl">
                       {service.description}
                     </p>
                   </div>
                 </div>
 
                 {/* Middle Section: Comparison Metadata Columns (Desktop) */}
-                <div className="grid grid-cols-3 gap-3 sm:gap-6 py-3 px-4 bg-muted/40 rounded-xl sm:rounded-2xl border border-border/60 shrink-0 lg:min-w-[320px]">
+                <div className="grid grid-cols-3 gap-3 sm:gap-6 py-3 px-4 bg-slate-50/80 rounded-xl sm:rounded-2xl border border-slate-100 shrink-0 lg:min-w-[320px]">
                   <div>
-                    <p className="text-[10px] font-mono uppercase tracking-wider font-semibold text-muted-foreground mb-0.5">
+                    <p className="text-[10px] font-mono uppercase tracking-wider font-semibold text-slate-400 mb-0.5">
                       Duration
                     </p>
-                    <p className="text-xs font-semibold text-foreground leading-tight">
+                    <p className="text-xs font-semibold text-slate-800 leading-tight">
                       {spec.duration}
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-[10px] font-mono uppercase tracking-wider font-semibold text-muted-foreground mb-0.5">
+                    <p className="text-[10px] font-mono uppercase tracking-wider font-semibold text-slate-400 mb-0.5">
                       Comfort
                     </p>
-                    <p className="text-xs font-semibold text-foreground leading-tight truncate">
+                    <p className="text-xs font-semibold text-slate-800 leading-tight truncate">
                       {spec.comfort}
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-[10px] font-mono uppercase tracking-wider font-semibold text-muted-foreground mb-0.5">
+                    <p className="text-[10px] font-mono uppercase tracking-wider font-semibold text-slate-400 mb-0.5">
                       Recovery
                     </p>
-                    <p className="text-xs font-semibold text-foreground leading-tight truncate">
+                    <p className="text-xs font-semibold text-slate-800 leading-tight truncate">
                       {spec.recovery}
                     </p>
                   </div>
                 </div>
 
                 {/* Right Section: Actions */}
-                <div className="flex items-center justify-end gap-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-border/60">
+                <div className="flex items-center justify-end gap-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
                   <Link
                     href={`/services/${service.id}`}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-primary px-3 py-1.5 transition-colors"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-slate-700 hover:text-teal-700 px-3 py-1.5 transition-colors"
                   >
                     <span>Details</span>
                     <ArrowRight01Icon className="w-3.5 h-3.5" />
@@ -166,7 +166,7 @@ export function ServicesList({ services }: ServicesListProps) {
 
                   <button
                     onClick={() => openBooking()}
-                    className="px-4 py-1.5 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold transition-colors cursor-pointer shadow-sm"
+                    className="px-4 py-1.5 rounded-full bg-slate-900 hover:bg-teal-700 text-white text-xs font-semibold transition-colors cursor-pointer shadow-sm"
                   >
                     Book
                   </button>

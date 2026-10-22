@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { SparklesIcon } from "hugeicons-react";
 import { ServicesGrid } from "@/components/services/templates/ServicesGrid";
@@ -25,82 +25,91 @@ const VIEW_OPTIONS: TemplateVariantOption[] = [
 
 function ServicesClientContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [activeCategory, setActiveCategory] = useState("All");
 
   const param = searchParams.get("view");
-  const viewStyle: ServicesView = VIEW_OPTIONS.some((o) => o.id === param)
+  const parsedView: ServicesView = VIEW_OPTIONS.some((o) => o.id === param)
     ? (param as ServicesView)
     : "grid";
 
-  const handleViewChange = (v: ServicesView) => {
-    const url = new URL(window.location.href);
-    if (v === "grid") {
-      url.searchParams.delete("view");
+  const [viewStyle, setViewStyle] = useState<ServicesView>(parsedView);
+
+  useEffect(() => {
+    if (VIEW_OPTIONS.some((o) => o.id === param)) {
+      setViewStyle(param as ServicesView);
     } else {
-      url.searchParams.set("view", v);
+      setViewStyle("grid");
     }
-    window.history.pushState({}, "", url.toString());
+  }, [param]);
+
+  const handleViewChange = (v: ServicesView) => {
+    setViewStyle(v);
+    const target = v === "grid" ? "/services" : `/services?view=${v}`;
+    router.replace(target, { scroll: false });
   };
 
   const filteredServices = activeCategory === "All"
     ? allServices
     : allServices.filter((service) => {
-        if (activeCategory === "Cosmetic") return service.category === "Cosmetic";
-        if (activeCategory === "Restorative") return service.category === "Restorative";
-        if (activeCategory === "Orthodontics") return service.id === "orthodontics";
-        if (activeCategory === "Preventive") return service.category === "General" || service.id === "general-dentistry";
-        return service.category === activeCategory;
-      });
+      if (activeCategory === "Cosmetic") return service.category === "Cosmetic";
+      if (activeCategory === "Restorative") return service.category === "Restorative";
+      if (activeCategory === "Orthodontics") return service.id === "orthodontics";
+      if (activeCategory === "Preventive") return service.category === "General" || service.id === "general-dentistry";
+      return service.category === activeCategory;
+    });
 
   return (
-    <section className="pt-24 pb-12 sm:pt-28 sm:pb-16 bg-background min-h-screen">
+    <section className="pt-24 pb-12 sm:pt-28 sm:pb-16 bg-[#FAFAFA] min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 
         {/* Top Control Bar: Eyebrow Badge left, Floating Template Switcher right */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-6">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-muted text-primary border border-border/80 font-sans w-fit">
-            <SparklesIcon className="w-3.5 h-3.5 text-primary" />
+          <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-teal-50 text-teal-800 border border-teal-200/60 font-sans w-fit">
+            <SparklesIcon className="w-3.5 h-3.5 text-teal-600" />
             Clinical Care
           </span>
 
           {siteConfig.ui.showTemplateSwitchers && (
-            <TemplatePillSwitcher
-              label="SERVICES"
-              variants={VIEW_OPTIONS}
-              activeId={viewStyle}
-              onSelect={(id) => handleViewChange(id as ServicesView)}
-              isDarkTheme={false}
-            />
+            <div className="hidden sm:block">
+              <TemplatePillSwitcher
+                label="SERVICES"
+                variants={VIEW_OPTIONS}
+                activeId={viewStyle}
+                onSelect={(id) => handleViewChange(id as ServicesView)}
+                isDarkTheme={false}
+              />
+            </div>
           )}
         </div>
 
         {/* Editorial Header Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-end pb-6 sm:pb-8 border-b border-border/80">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-end pb-6 sm:pb-8 border-b border-slate-200">
           {/* Left Title & Subtitle */}
           <div className="lg:col-span-7">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-foreground tracking-tight leading-[1.12]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-slate-900 tracking-tight leading-[1.12]">
               Treatment, <br />
-              <span className="italic text-primary font-serif">thought through.</span>
+              <span className="italic text-teal-700 font-serif">thought through.</span>
             </h1>
 
-            <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mt-2.5 max-w-xl">
+            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mt-2.5 max-w-xl">
               Six core areas of care, each starting with an assessment and a conversation. Explore the approach, the process, and what a consultation can tell you.
             </p>
           </div>
 
           {/* Right Clinical Disclaimer Card */}
           <div className="lg:col-span-5 flex justify-start lg:justify-end">
-            <div className="w-full max-w-md bg-card border border-border rounded-2xl p-4 sm:p-5 shadow-sm">
-              <p className="text-xs sm:text-[13px] text-muted-foreground leading-relaxed mb-3">
+            <div className="w-full max-w-md bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
+              <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed mb-3">
                 Treatment suitability is individual. Nothing on this page is a diagnosis or guarantee, or a substitute for clinical assessment.
               </p>
-              <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-border/60 text-[10px] font-mono text-primary font-semibold tracking-wider">
+              <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-slate-100 text-[10px] font-mono text-teal-700 font-semibold tracking-wider">
                 <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
                   IN-PERSON ASSESSMENT
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
                   CLEAR WRITTEN PLAN
                 </span>
               </div>
@@ -108,7 +117,7 @@ function ServicesClientContent() {
           </div>
         </div>
 
-        {/* Category Filter Pills */}
+        {/* Category Filter Pills (Visible for all views to match reference screenshots) */}
         <div className="flex flex-wrap gap-2 py-4 sm:py-5">
           {categories.map((category) => {
             const active = activeCategory === category;
@@ -120,8 +129,8 @@ function ServicesClientContent() {
                 className={cn(
                   "px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer shadow-sm",
                   active
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "bg-card text-muted-foreground border border-border hover:border-foreground hover:text-foreground"
+                    ? "bg-slate-900 text-white shadow-slate-900/10"
+                    : "bg-white text-slate-700 border border-slate-200 hover:border-slate-900 hover:text-slate-900"
                 )}
               >
                 {category}

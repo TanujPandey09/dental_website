@@ -60,7 +60,7 @@ function HeroStyleState({ children }: { children: ReactNode }) {
 // Rendered while useSearchParams() suspends during prerender. Children must
 // still receive a provider, otherwise useHeroStyle() throws in Navbar.
 function HeroStyleFallback({ children }: { children: ReactNode }) {
-  const setHeroStyle = () => {};
+  const setHeroStyle = () => { };
   return (
     <HeroStyleContext.Provider value={{ heroStyle: "cinematic", setHeroStyle }}>
       {children}

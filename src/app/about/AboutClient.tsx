@@ -1,7 +1,7 @@
 "use client";
 
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { AboutStory } from "@/components/about/templates/AboutStory";
@@ -39,22 +39,27 @@ const ABOUT_HERO_CONTENT: Record<AboutView, { badge: string; title: string; subt
 
 function AboutClientContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
-  // URL is the single source of truth: supports deep links, refresh and
-  // browser back/forward without mirroring state into an effect.
   const param = searchParams.get("view");
-  const viewStyle: AboutView = VIEW_OPTIONS.some((o) => o.id === param)
+  const parsedView: AboutView = VIEW_OPTIONS.some((o) => o.id === param)
     ? (param as AboutView)
     : "story";
 
-  const handleViewChange = (v: AboutView) => {
-    const url = new URL(window.location.href);
-    if (v === "story") {
-      url.searchParams.delete("view");
+  const [viewStyle, setViewStyle] = useState<AboutView>(parsedView);
+
+  useEffect(() => {
+    if (VIEW_OPTIONS.some((o) => o.id === param)) {
+      setViewStyle(param as AboutView);
     } else {
-      url.searchParams.set("view", v);
+      setViewStyle("story");
     }
-    window.history.pushState({}, "", url.toString());
+  }, [param]);
+
+  const handleViewChange = (v: AboutView) => {
+    setViewStyle(v);
+    const target = v === "story" ? "/about" : `/about?view=${v}`;
+    router.replace(target, { scroll: false });
   };
 
   const currentHero = ABOUT_HERO_CONTENT[viewStyle];
@@ -70,10 +75,9 @@ function AboutClientContent() {
 
       <section className="pt-6 pb-16 sm:pt-8 sm:pb-20 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          {/* Floating Template Pill Switcher — buyer preview control.
-              Rendered only when siteConfig.ui.showTemplateSwitchers is true. */}
+          {/* Floating Template Pill Switcher — buyer preview control (Desktop only) */}
           {siteConfig.ui.showTemplateSwitchers && (
-            <div className="flex justify-end mb-5 sm:mb-6">
+            <div className="hidden sm:flex justify-end mb-5 sm:mb-6">
               <TemplatePillSwitcher
                 label="ABOUT"
                 variants={VIEW_OPTIONS}
