@@ -423,12 +423,8 @@ export function ServiceClient({ slug }: { slug: string }) {
                           >
                             <div
                               className={cn(
-                                "h-full bg-primary shadow-[0_0_8px_rgba(15,118,110,0.5)] transition-all duration-300 ease-out",
-                                index < activeProcessStep
-                                  ? "w-full"
-                                  : index === 0 && activeProcessStep === 0
-                                    ? "w-10 sm:w-14"
-                                    : "w-0"
+                                "h-full bg-primary shadow-[0_0_8px_rgba(30,77,64,0.4)] transition-all duration-300 ease-out",
+                                index < activeProcessStep ? "w-full" : "w-0"
                               )}
                             />
                           </div>
