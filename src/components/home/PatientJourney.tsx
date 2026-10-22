@@ -136,11 +136,7 @@ export function PatientJourney() {
                           <div
                             className={cn(
                               "h-full bg-accent shadow-[0_0_10px_rgba(196,130,63,0.5)] transition-all duration-300 ease-out",
-                              index < activeStep
-                                ? "w-full"
-                                : index === 0 && activeStep === 0
-                                  ? "w-10 sm:w-14"
-                                  : "w-0"
+                              index < activeStep ? "w-full" : "w-0"
                             )}
                           />
                         </div>
@@ -187,7 +183,7 @@ export function PatientJourney() {
               <div
                 className="w-full bg-accent shadow-[0_0_10px_rgba(196,130,63,0.5)] transition-[height] duration-300 ease-out"
                 style={{
-                  height: activeStep === 0 ? "24px" : `${(activeStep / (steps.length - 1)) * 100}%`,
+                  height: `${(activeStep / (steps.length - 1)) * 100}%`,
                 }}
               />
             </div>

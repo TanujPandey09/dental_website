@@ -34,15 +34,15 @@ export function TemplatePillSwitcher({
       className={cn(
         "inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full text-xs transition-colors duration-200 select-none shadow-md",
         isDarkTheme
-          ? "bg-[#0B1528]/90 backdrop-blur-xl border border-white/15 text-white shadow-[0_8px_32px_rgba(0,0,0,0.36)]"
-          : "bg-white/95 backdrop-blur-xl border border-slate-200/90 text-slate-900 shadow-[0_4px_20px_rgba(15,23,42,0.06)]",
+          ? "bg-[#161513]/90 backdrop-blur-xl border border-white/15 text-white shadow-[0_8px_32px_rgba(0,0,0,0.36)]"
+          : "bg-card/95 backdrop-blur-xl border border-border text-foreground shadow-[0_4px_20px_rgba(28,26,23,0.06)]",
         className
       )}
     >
       <span
         className={cn(
           "text-[10px] tracking-[0.14em] uppercase font-bold pr-1 hidden sm:inline-block",
-          isDarkTheme ? "text-white/50" : "text-slate-400"
+          isDarkTheme ? "text-white/50" : "text-muted-foreground"
         )}
       >
         {label}
@@ -76,7 +76,7 @@ export function TemplatePillSwitcher({
       <span
         className={cn(
           "h-3.5 w-px mx-0.5",
-          isDarkTheme ? "bg-white/20" : "bg-slate-200"
+          isDarkTheme ? "bg-white/20" : "bg-border"
         )}
         aria-hidden="true"
       />
