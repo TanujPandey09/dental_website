@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, ReactNode, Suspense } from "react";
+import { createContext, useContext, ReactNode, Suspense, useState } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export type HeroStyle =
@@ -30,13 +30,25 @@ function HeroStyleState({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  // The URL is the single source of truth — no mirrored state, no sync effect.
   const heroParam = searchParams.get("hero");
-  const heroStyle: HeroStyle = HERO_STYLES.includes(heroParam as HeroStyle)
+  const initialStyle: HeroStyle = HERO_STYLES.includes(heroParam as HeroStyle)
     ? (heroParam as HeroStyle)
     : "cinematic";
 
+  const [heroStyle, setLocalHeroStyle] = useState<HeroStyle>(initialStyle);
+  const [prevHeroParam, setPrevHeroParam] = useState(heroParam);
+
+  // Sync state if URL query param changes externally without useEffect
+  if (heroParam !== prevHeroParam) {
+    setPrevHeroParam(heroParam);
+    const resolvedStyle: HeroStyle = heroParam && HERO_STYLES.includes(heroParam as HeroStyle)
+      ? (heroParam as HeroStyle)
+      : "cinematic";
+    setLocalHeroStyle(resolvedStyle);
+  }
+
   const setHeroStyle = (style: HeroStyle) => {
+    setLocalHeroStyle(style);
     if (pathname === "/") {
       const url = new URL(window.location.href);
       if (style === "cinematic") {

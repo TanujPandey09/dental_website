@@ -4,7 +4,7 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Button, ButtonBadge } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowRight01Icon, CheckmarkCircle01Icon, UserIcon, Mail01Icon, Call02Icon } from "hugeicons-react";
+import { CheckmarkCircle01Icon, UserIcon, Mail01Icon, Call02Icon } from "hugeicons-react";
 import siteConfig from "@/config/site";
 
 const formSchema = z.object({

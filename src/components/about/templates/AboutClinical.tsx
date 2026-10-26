@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useBooking } from "@/components/BookingContext";
-import { Button, ButtonBadge } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import siteConfig from "@/config/site";
 import { images } from "@/config/images";
 import {
@@ -12,7 +12,6 @@ import {
   DentalToothIcon,
   MicroscopeIcon,
   Certificate01Icon,
-  ArrowRight01Icon,
   Calendar01Icon,
 } from "hugeicons-react";
 
@@ -26,7 +25,7 @@ interface ClinicalPillar {
   specs: { label: string; value: string }[];
 }
 
-const CLINICAL_PILLARS: ClinicalPillar[] = [
+const DEFAULT_CLINICAL_PILLARS: ClinicalPillar[] = [
   {
     title: "Class-B Vacuum Autoclave Sterilization",
     badge: "Sterilization Standard",
@@ -77,36 +76,24 @@ const CLINICAL_PILLARS: ClinicalPillar[] = [
   },
 ];
 
-const ACCREDITATIONS = [
-  {
-    name: "American Dental Association (ADA)",
-    desc: "Full active member clinic in continuous standing since 2012, adhering to ADA ethics and standards.",
-  },
-  {
-    name: "American Academy of Cosmetic Dentistry (AACD)",
-    desc: "Sustaining member dedicated to natural aesthetics, bio-emulation, and precision smile design.",
-  },
-  {
-    name: "International Congress of Oral Implantologists (ICOI)",
-    desc: "Fellowship certified in computer-guided 3D implant placement and tissue regeneration.",
-  },
-  {
-    name: "Occupational Safety & Health (OSHA / CDC)",
-    desc: "Adheres to all recommended infection control guidelines and cross-contamination safeguards.",
-  },
+const PILLAR_ICONS = [
+  <Shield01Icon key="shield" className="w-4 h-4" />,
+  <HealthIcon key="health" className="w-4 h-4" />,
+  <DentalToothIcon key="tooth" className="w-4 h-4" />,
+  <MicroscopeIcon key="microscope" className="w-4 h-4" />,
 ];
+
+const ACCREDITATIONS = siteConfig.accreditations;
 
 export function AboutClinical() {
   const { openBooking } = useBooking();
+  const reduceMotion = useReducedMotion();
+  const clinicalPillars = siteConfig.clinic.clinicalPillars || DEFAULT_CLINICAL_PILLARS;
 
   return (
     <div className="space-y-16 sm:space-y-24">
-      {/* 1. Header with Eyebrow */}
+      {/* 1. Header */}
       <div className="text-center max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-4">
-          <Shield01Icon className="w-4 h-4 text-primary" />
-          <span>Clinical Safety &amp; Technology Standards</span>
-        </div>
         <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground mb-4 leading-tight">
           Our Four Pillars of Clinical Safety.
         </h2>
@@ -117,14 +104,14 @@ export function AboutClinical() {
 
       {/* 2. Tactile Visual Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-        {CLINICAL_PILLARS.map((pillar, index) => (
+        {clinicalPillars.map((pillar, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 15 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.45, delay: index * 0.08, ease: [0.32, 0.72, 0, 1] }}
-            className="p-2 sm:p-2.5 rounded-3xl bg-muted/40 border border-border/80 shadow-sm flex flex-col group hover:-translate-y-1 transition-all duration-300"
+            transition={{ duration: reduceMotion ? 0 : 0.45, delay: reduceMotion ? 0 : index * 0.08, ease: [0.32, 0.72, 0, 1] }}
+            className="p-2 sm:p-2.5 rounded-3xl bg-muted/40 border border-border/80 shadow-sm flex flex-col group hover:-translate-y-1 transition-all duration-300 min-h-[360px]"
           >
             <div className="rounded-[calc(1.5rem-2px)] bg-card p-6 sm:p-7 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-xl hover:border-primary/40 transition-all duration-300">
               <div>
@@ -144,7 +131,7 @@ export function AboutClinical() {
                     {pillar.badge}
                   </div>
                   <div className="absolute top-3 right-3 w-8 h-8 rounded-full backdrop-blur-md bg-primary text-primary-foreground flex items-center justify-center shadow-md">
-                    {pillar.icon}
+                    {PILLAR_ICONS[index % PILLAR_ICONS.length]}
                   </div>
                 </div>
 

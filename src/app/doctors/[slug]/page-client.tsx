@@ -13,24 +13,21 @@ import {
   Calendar01Icon,
   Location01Icon,
   QuoteDownIcon,
-  ArrowRight01Icon,
   CheckmarkBadge01Icon,
-  SparklesIcon,
-  Doctor01Icon,
   Call02Icon,
 } from "hugeicons-react";
 import { useBooking } from "@/components/BookingContext";
-import { Button, ButtonBadge } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { images } from "@/config/images";
 import siteConfig from "@/config/site";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const defaultCredentials = [
-  { year: "2010", title: "DDS, Harvard School of Dental Medicine", desc: "Graduated with honors, focusing on restorative and aesthetic smile design." },
-  { year: "2013", title: "Specialization in Prosthodontics", desc: "Completed 3-year advanced residency in full-arch rehabilitation at Mayo Clinic." },
-  { year: "2015", title: "Board Certification", desc: "Diplomate of the American Board of Prosthodontics." },
-  { year: "2020", title: "Fellowship Award", desc: "Fellow of the International Congress of Oral Implantologists (ICOI)." }
+  { year: "2010", title: "DDS, Accredited School of Dental Medicine", desc: "Graduated with honors, focusing on restorative and aesthetic smile design." },
+  { year: "2013", title: "Specialization in Prosthodontics", desc: "Completed 3-year advanced residency in full-arch rehabilitation." },
+  { year: "2015", title: "Board Certification", desc: "Diplomate of the National Board of Prosthodontics." },
+  { year: "2020", title: "Fellowship Award", desc: "Fellow of the International Dental Implantology Council." }
 ];
 
 const defaultExpertise = [
@@ -146,10 +143,9 @@ export function DoctorClient({ slug }: { slug: string }) {
 
           <div className="lg:col-span-5 order-2 lg:order-1 space-y-6 sm:space-y-8">
             <div className="space-y-3 sm:space-y-4">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold">
-                <Doctor01Icon className="w-3.5 h-3.5" />
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-primary font-semibold mb-2">
                 {role}
-              </span>
+              </p>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground leading-tight">
                 {name}
               </h1>
@@ -169,7 +165,7 @@ export function DoctorClient({ slug }: { slug: string }) {
               <div className="border-r border-border/70 pr-2 sm:pr-0">
                 <div className="flex items-center gap-1 sm:gap-1.5 text-foreground font-bold text-base sm:text-xl">
                   <StarIcon className="w-4 h-4 sm:w-5 sm:h-5 fill-rating text-rating" aria-hidden="true" />
-                  <span>{rating}</span>
+                  <span>{rating.toFixed(1)}</span>
                 </div>
                 <div className="text-[11px] sm:text-xs text-muted-foreground font-medium mt-0.5">{reviews}+ Reviews</div>
               </div>
@@ -245,10 +241,6 @@ export function DoctorClient({ slug }: { slug: string }) {
             {/* Philosophy & Skill Bars */}
             <div className="space-y-8">
               <div>
-                <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-primary/10 text-primary border border-primary/20 mb-3">
-                  <SparklesIcon className="w-3.5 h-3.5" />
-                  Clinical Dedication
-                </span>
                 <h2 className="text-3xl sm:text-5xl font-bold font-heading text-foreground mb-4 leading-tight">
                   Care Philosophy.
                 </h2>

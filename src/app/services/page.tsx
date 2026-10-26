@@ -1,12 +1,12 @@
-import { PageHero } from "@/components/layout/PageHero";
 import { ServicesClient } from "./ServicesClient";
 import { CTA } from "@/components/home/CTA";
 import { CheckmarkCircle02Icon } from "hugeicons-react";
 import Image from "next/image";
 import { images } from "@/config/images";
+import siteConfig from "@/config/site";
 
 export const metadata = {
-  title: "Our Services | Lumina Dental Care",
+  title: `Our Services | ${siteConfig.clinic.name}`,
   description: "Comprehensive dental services including cosmetic dentistry, implants, and orthodontics.",
 };
 
@@ -29,18 +29,18 @@ export default function ServicesPage() {
             </div>
             <div>
               <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground mb-6">
-                Advanced Technology for Superior Results
+                Clinical Technology Grounded in Patient Comfort
               </h2>
-              <p className="text-muted-foreground mb-6">
-                We continually invest in the latest dental technology to make your visits faster, more comfortable, and highly effective. Our 3D imaging and laser dentistry ensure precise diagnostics and treatments.
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+                We replace outdated dental equipment with whisper-quiet, low-radiation digital systems designed to eliminate discomfort, eliminate impression goop, and give you clear visual co-diagnosis before any treatment begins.
               </p>
               <ul className="space-y-4">
                 {[
-                  "Low-Dose Digital X-Rays",
-                  "3D Cone Beam Imaging",
-                  "Intraoral Digital Cameras",
-                  "Gentle Laser Dentistry",
-                  "Comfort-Focused Anesthesia Delivery"
+                  "Low-Dose Digital X-Rays (80% less radiation)",
+                  "3D Cone Beam Volumetric Imaging (Sub-millimeter mapping)",
+                  "Digital Intraoral Cameras (You see what your doctor sees)",
+                  "Computerized Gentle Anesthesia (Pain-free delivery)",
+                  "Precision Soft-Tissue Laser (Rapid healing, zero stitches)"
                 ].map((tech, i) => (
                   <li key={i} className="flex items-center gap-3 text-foreground font-medium">
                     <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">

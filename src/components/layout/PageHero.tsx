@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { CheckmarkCircle02Icon, SparklesIcon } from "hugeicons-react";
+import { CheckmarkCircle02Icon } from "hugeicons-react";
 
 interface PageHeroProps {
   title: string;
@@ -103,15 +103,14 @@ export function PageHero({
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl relative z-10">
 
         {badge && (
-          <motion.div
+          <motion.p
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: reduce ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-primary/10 text-primary border border-primary/20 mb-3"
+            className="text-xs font-mono uppercase tracking-[0.22em] text-primary font-semibold mb-3"
           >
-            <SparklesIcon className="w-3.5 h-3.5 text-primary" />
-            <span>{badge}</span>
-          </motion.div>
+            {badge}
+          </motion.p>
         )}
 
         <motion.h1

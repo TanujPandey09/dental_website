@@ -4,18 +4,15 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import {
-  SmileIcon,
   Shield01Icon,
-  SparklesIcon,
+  Sun01Icon,
   StarIcon,
-  ArrowRight01Icon,
-  CheckmarkBadge01Icon,
   Invoice01Icon,
   Calendar01Icon,
 } from "hugeicons-react";
 import { images } from "@/config/images";
 import siteConfig from "@/config/site";
-import { Button, ButtonBadge } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { useBooking } from "@/components/BookingContext";
 
 export function AboutStory() {
@@ -45,10 +42,6 @@ export function AboutStory() {
             className="space-y-6 sm:space-y-8"
           >
             <div>
-              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-primary/10 text-primary border border-primary/20 mb-3">
-                <SmileIcon className="w-3.5 h-3.5" />
-                Our Philosophy &amp; Sanctuary
-              </span>
               <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground leading-tight">
                 Dentistry, <br />
                 Reimagined.
@@ -70,7 +63,7 @@ export function AboutStory() {
             <div className="pt-6 border-t border-border/60 flex items-center gap-8">
               <div>
                 <div className="text-3xl font-heading font-bold text-foreground mb-1">
-                  {siteConfig.clinic.yearsExperience}+
+                  {siteConfig.clinic.stats.yearsExperience}+
                 </div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">
                   Years of experience
@@ -79,7 +72,7 @@ export function AboutStory() {
               <div className="h-10 w-px bg-border/60" />
               <div>
                 <div className="text-3xl font-heading font-bold text-foreground mb-1">
-                  {Math.round(siteConfig.clinic.happyPatients / 1000)}k+
+                  {siteConfig.clinic.stats.patientsTreated}
                 </div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">
                   Smiles transformed
@@ -88,7 +81,7 @@ export function AboutStory() {
               <div className="h-10 w-px bg-border/60 hidden sm:block" />
               <div className="hidden sm:block">
                 <div className="text-3xl font-heading font-bold text-foreground mb-1">
-                  99.4%
+                  {siteConfig.clinic.stats.satisfactionScore}%
                 </div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">
                   Patient comfort index
@@ -133,10 +126,6 @@ export function AboutStory() {
         <div className="rounded-[calc(2.5rem-0.75rem)] bg-card/60 p-6 sm:p-10 lg:p-12 border border-border/40">
           {/* Section Header */}
           <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-primary/10 text-primary border border-primary/20 mb-3">
-              <SparklesIcon className="w-3.5 h-3.5" />
-              Award-Winning Healthcare Philosophy
-            </span>
             <h3 className="text-2xl sm:text-4xl font-heading font-bold text-foreground mb-3">
               Our Core Philosophy &amp; Ethos
             </h3>
@@ -149,11 +138,11 @@ export function AboutStory() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-stretch">
             {/* Card 1: Anchor Hero Card (Span 8 on desktop, span 12 on mobile) */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-              className="col-span-1 md:col-span-12 lg:col-span-8 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col group"
+              transition={{ duration: reduceMotion ? 0 : 0.5, ease: [0.32, 0.72, 0, 1] }}
+              className="col-span-1 md:col-span-12 lg:col-span-8 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col group min-h-[360px]"
             >
               <div className="relative rounded-[calc(1.5rem-2px)] overflow-hidden min-h-[360px] sm:min-h-[420px] p-6 sm:p-10 flex flex-col justify-between flex-1 text-white">
                 <Image
@@ -203,11 +192,11 @@ export function AboutStory() {
 
             {/* Card 2: Micro-Precision 3D Diagnostics (Span 4 on desktop) */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.08, ease: [0.32, 0.72, 0, 1] }}
-              className="col-span-1 md:col-span-6 lg:col-span-4 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col"
+              transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.08, ease: [0.32, 0.72, 0, 1] }}
+              className="col-span-1 md:col-span-6 lg:col-span-4 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col min-h-[360px]"
             >
               <div className="rounded-[calc(1.5rem-2px)] bg-card p-6 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-lg transition-all duration-300 group">
                 <div>
@@ -226,7 +215,7 @@ export function AboutStory() {
                   <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1 block">
                     Diagnostic Standard
                   </span>
-                  <h4 className="text-xl font-heading font-bold text-foreground mb-2">
+                  <h4 className="text-xl font-heading font-bold text-foreground mb-2 leading-snug pt-0.5">
                     Micro-Precision 3D Scans
                   </h4>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
@@ -243,21 +232,21 @@ export function AboutStory() {
 
             {/* Card 3: Spa-Grade Sanctuary Amenities (Span 4) */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.16, ease: [0.32, 0.72, 0, 1] }}
-              className="col-span-1 md:col-span-6 lg:col-span-4 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col"
+              transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.16, ease: [0.32, 0.72, 0, 1] }}
+              className="col-span-1 md:col-span-6 lg:col-span-4 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col min-h-[300px] overflow-visible"
             >
-              <div className="rounded-[calc(1.5rem-2px)] bg-card p-6 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-lg transition-all duration-300 group">
-                <div>
+              <div className="rounded-[calc(1.5rem-2px)] bg-card p-6 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-lg transition-all duration-300 group overflow-visible">
+                <div className="pt-1">
                   <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-                    <SparklesIcon className="w-6 h-6" />
+                    <Sun01Icon className="w-6 h-6" />
                   </div>
-                  <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1 block">
+                  <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1.5 block">
                     Sensory Protocol
                   </span>
-                  <h4 className="text-xl font-heading font-bold text-foreground mb-2">
+                  <h4 className="text-xl font-heading font-bold text-foreground mb-2 leading-snug pt-0.5">
                     Spa-Grade Hospitality
                   </h4>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
@@ -274,21 +263,21 @@ export function AboutStory() {
 
             {/* Card 4: 100% Biocompatible Materials (Span 4) */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.24, ease: [0.32, 0.72, 0, 1] }}
-              className="col-span-1 md:col-span-6 lg:col-span-4 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col"
+              transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.24, ease: [0.32, 0.72, 0, 1] }}
+              className="col-span-1 md:col-span-6 lg:col-span-4 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col min-h-[300px] overflow-visible"
             >
-              <div className="rounded-[calc(1.5rem-2px)] bg-card p-6 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-lg transition-all duration-300 group">
-                <div>
+              <div className="rounded-[calc(1.5rem-2px)] bg-card p-6 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-lg transition-all duration-300 group overflow-visible">
+                <div className="pt-1">
                   <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                     <Shield01Icon className="w-6 h-6" />
                   </div>
-                  <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1 block">
+                  <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1.5 block">
                     Material Purity
                   </span>
-                  <h4 className="text-xl font-heading font-bold text-foreground mb-2">
+                  <h4 className="text-xl font-heading font-bold text-foreground mb-2 leading-snug pt-0.5">
                     Biocompatible Materials
                   </h4>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
@@ -305,21 +294,21 @@ export function AboutStory() {
 
             {/* Card 5: Radical Ethics & Transparency (Span 4) */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.32, ease: [0.32, 0.72, 0, 1] }}
-              className="col-span-1 md:col-span-6 lg:col-span-4 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col"
+              transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.32, ease: [0.32, 0.72, 0, 1] }}
+              className="col-span-1 md:col-span-6 lg:col-span-4 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col min-h-[300px] overflow-visible"
             >
-              <div className="rounded-[calc(1.5rem-2px)] bg-card p-6 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-lg transition-all duration-300 group">
-                <div>
+              <div className="rounded-[calc(1.5rem-2px)] bg-card p-6 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-lg transition-all duration-300 group overflow-visible">
+                <div className="pt-1">
                   <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
                     <Invoice01Icon className="w-6 h-6" />
                   </div>
-                  <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1 block">
+                  <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1.5 block">
                     Patient Bill of Rights
                   </span>
-                  <h4 className="text-xl font-heading font-bold text-foreground mb-2">
+                  <h4 className="text-xl font-heading font-bold text-foreground mb-2 leading-snug pt-0.5">
                     Zero-Surprise Pricing
                   </h4>
                   <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
@@ -344,9 +333,6 @@ export function AboutStory() {
 
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-14 items-center relative z-10">
             <div className="lg:col-span-5 space-y-6">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] bg-accent/20 text-accent border border-accent/30">
-                Architectural Sanctuary
-              </span>
               <h3 className="text-2xl sm:text-4xl font-heading font-bold text-secondary-foreground leading-tight">
                 Designed for Peace of Mind &amp; Clinical Precision.
               </h3>

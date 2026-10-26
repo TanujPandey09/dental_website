@@ -1,7 +1,8 @@
 import { LegalPage } from "@/components/legal/LegalPage";
+import siteConfig from "@/config/site";
 
 export const metadata = {
-  title: "Terms of Service | Lumina Dental Care",
+  title: `Terms of Service | ${siteConfig.clinic.name}`,
   description:
     "The terms that govern your use of our website and the information and services offered through it.",
 };

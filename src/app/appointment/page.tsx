@@ -1,11 +1,11 @@
 import { BookingForm } from "@/components/appointment/BookingForm";
 import { PageHero } from "@/components/layout/PageHero";
-import { CheckmarkBadge01Icon, Shield01Icon, StarIcon, Location01Icon, Clock01Icon, ArrowRight01Icon, SparklesIcon, Call02Icon } from "hugeicons-react";
+import { CheckmarkBadge01Icon, Shield01Icon, StarIcon, Location01Icon, Clock01Icon, ArrowRight01Icon, Call02Icon } from "hugeicons-react";
 import siteConfig from "@/config/site";
 
 export const metadata = {
-  title: "Schedule Consultation | Lumina Dental Care",
-  description: "Reserve your private dental suite and consultation with board-certified dental specialists in Manhattan.",
+  title: `Schedule Consultation | ${siteConfig.clinic.name}`,
+  description: "Reserve your private dental suite and consultation with board-certified dental specialists.",
 };
 
 export default function AppointmentPage() {
@@ -39,10 +39,6 @@ export default function AppointmentPage() {
               <div className="p-1.5 rounded-3xl bg-muted/40 border border-border/70 shadow-sm">
                 <div className="rounded-2xl bg-card border border-border/60 p-6 sm:p-7 space-y-6">
                   <div>
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-3">
-                      <SparklesIcon className="w-3.5 h-3.5" />
-                      <span>The Lumina Standard</span>
-                    </div>
                     <h3 className="text-xl font-heading font-bold text-foreground tracking-tight">
                       Why Choose {siteConfig.clinic.name}?
                     </h3>
@@ -56,7 +52,7 @@ export default function AppointmentPage() {
                       <div>
                         <h4 className="font-bold text-sm text-foreground">Verified Clinical Excellence</h4>
                         <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
-                          Over {siteConfig.clinic.happyPatients.toLocaleString()}+ verified patient smiles treated with zero-compromise biocompatible materials.
+                          Over {siteConfig.clinic.stats.patientsTreated} verified patient smiles treated with zero-compromise biocompatible materials.
                         </p>
                       </div>
                     </div>
@@ -80,7 +76,7 @@ export default function AppointmentPage() {
                       <div>
                         <h4 className="font-bold text-sm text-foreground">Board-Certified Specialists</h4>
                         <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
-                          Ivy-league trained prosthodontists, periodontists, and aesthetic dentists under one clinical roof.
+                          Fellowship-trained prosthodontists, periodontists, and aesthetic dentists under one clinical roof.
                         </p>
                       </div>
                     </div>
@@ -116,7 +112,7 @@ export default function AppointmentPage() {
                 <div className="rounded-2xl bg-card border border-border/60 p-6 space-y-4 text-xs">
                   <div className="flex items-center gap-2 font-bold text-foreground text-sm">
                     <Location01Icon className="w-4 h-4 text-primary" />
-                    <span>Manhattan Clinic Location</span>
+                    <span>{siteConfig.contact.locationBadge || "Clinic Location"}</span>
                   </div>
                   <p className="text-muted-foreground leading-relaxed whitespace-pre-line font-medium">
                     {siteConfig.contact.address}

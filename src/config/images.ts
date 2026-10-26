@@ -20,14 +20,16 @@ export const images = {
   hero: "/dental/images/hero.jpg",
   /** Cinematic hero suite background. */
   heroCinematic: "/dental/images/hero-cinematic.jpg",
+  /** Cinematic ambient video background. */
+  heroVideo: "/dental/videos/clinic-tour.mp4",
   /** Architectural luxury suite background. */
   heroArchitectural: "/dental/images/hero-architectural.jpg",
   /** Swiss minimalist operatory equipment close-up. */
   heroSwissOperatory: "/dental/images/hero-swiss-operatory.jpg",
   /** Call-to-action section background (tinted dark overlay is applied). */
   ctaBackground: "/dental/images/cta-background.jpg",
-  /** "Why Choose Us" clinic interior (home page, desktop only). */
-  clinicInterior: "/dental/images/clinic-interior.jpg",
+  /** "Why Choose Us" luxury clinic interior (home page, desktop only). */
+  clinicInterior: "/dental/images/luxury-operatory-suite.jpg",
   /** Services page "Advanced Technology" feature image. */
   servicesTechnology: "/dental/images/services-technology.jpg",
 

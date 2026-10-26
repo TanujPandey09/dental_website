@@ -1,7 +1,8 @@
 import { LegalPage } from "@/components/legal/LegalPage";
+import siteConfig from "@/config/site";
 
 export const metadata = {
-  title: "Privacy Policy | Lumina Dental Care",
+  title: `Privacy Policy | ${siteConfig.clinic.name}`,
   description:
     "How we collect, use, and protect the personal information you share with our dental practice.",
 };

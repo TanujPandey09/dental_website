@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Location01Icon, Call02Icon, Mail01Icon, Clock01Icon, Facebook01Icon, InstagramIcon, TwitterIcon, ArrowRight01Icon, Shield01Icon } from "hugeicons-react";
+import { Location01Icon, Call02Icon, Mail01Icon, Clock01Icon, Facebook01Icon, InstagramIcon, TwitterIcon, Shield01Icon } from "hugeicons-react";
 import siteConfig from "@/config/site";
 import { Button } from "@/components/ui/button";
 
@@ -25,7 +25,7 @@ export function Footer() {
                   Experiencing acute pain or dental trauma? Direct doctor on-call line:
                 </p>
                 <p className="text-secondary-foreground/70 text-xs sm:text-sm mt-0.5">
-                  Reserved daily emergency priority treatment slots at our Rockefeller Center suites.
+                  Reserved daily emergency priority treatment slots at our {siteConfig.contact.cityArea || "clinic"} suites.
                 </p>
               </div>
             </div>
@@ -60,7 +60,7 @@ export function Footer() {
             </p>
             <div className="hidden md:flex items-center gap-2 text-xs text-secondary-foreground/60 pt-1">
               <Shield01Icon className="w-4 h-4 text-accent shrink-0" aria-hidden="true" />
-              <span>ADA Accredited & OSHA Class-B Compliant</span>
+              <span>{siteConfig.clinic.compliance.footerBadge}</span>
             </div>
           </div>
 

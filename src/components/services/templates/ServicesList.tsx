@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useBooking } from "@/components/BookingContext";
-import { ArrowRight01Icon, ArrowUpRight01Icon } from "hugeicons-react";
+import { ArrowRight01Icon } from "hugeicons-react";
 
 interface ServiceItem {
   id: string;
@@ -67,6 +67,7 @@ const SERVICE_SPECS: Record<
 
 export function ServicesList({ services }: ServicesListProps) {
   const { openBooking } = useBooking();
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <div className="space-y-4">
@@ -81,10 +82,10 @@ export function ServicesList({ services }: ServicesListProps) {
           return (
             <motion.div
               layout
-              initial={{ opacity: 0, y: 15 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.25, delay: index * 0.03 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, y: -15 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.25, delay: index * 0.03 }}
               key={service.id}
               className="bg-white border border-slate-200/90 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-[0_2px_12px_rgba(0,0,0,0.02)] hover:border-teal-600/40 hover:shadow-xl transition-all duration-300 group"
             >
@@ -106,8 +107,8 @@ export function ServicesList({ services }: ServicesListProps) {
 
                   {/* Content Block */}
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[10px] font-mono uppercase tracking-wider font-semibold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200/60">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider font-semibold text-teal-700 bg-teal-50 border border-teal-200/60 leading-normal">
                         {service.category}
                       </span>
                     </div>

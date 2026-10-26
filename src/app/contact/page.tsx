@@ -1,12 +1,12 @@
 import { PageHero } from "@/components/layout/PageHero";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ClinicMap } from "@/components/contact/ClinicMap";
-import { Location01Icon, Call02Icon, Mail01Icon, ArrowDown01Icon, Clock01Icon, SparklesIcon } from "hugeicons-react";
+import { Location01Icon, Call02Icon, Mail01Icon, ArrowDown01Icon, Clock01Icon } from "hugeicons-react";
 import { CTA } from "@/components/home/CTA";
 import siteConfig from "@/config/site";
 
 export const metadata = {
-  title: "Contact Us | Lumina Dental Care",
+  title: `Contact Us | ${siteConfig.clinic.name}`,
   description: "Schedule your visit and connect with our world-class dental specialists.",
 };
 
@@ -34,9 +34,9 @@ export default function ContactPage() {
     <>
       <PageHero 
         title="Get in touch" 
-        subtitle="Experience world-class dentistry. Connect with our dedicated patient coordinators to schedule your personalized consultation."
+        subtitle="Direct clinical guidance and unhurried appointment coordination. Connect with our patient team for transparent estimates, records transfers, or emergency triage."
         badge="Contact Support"
-        trustItems={["Prompt 2-Hour Response", "Emergency Same-Day Dispatch", "Rockefeller Center Location"]}
+        trustItems={["Prompt 2-Hour Response", "Emergency Same-Day Dispatch", siteConfig.contact.locationBadge]}
       />
 
       <section className="pt-8 pb-16 sm:pt-10 sm:pb-24 bg-background relative overflow-hidden">
@@ -50,10 +50,6 @@ export default function ContactPage() {
             {/* Left: Double-Bezel SaaS Style Info Cards */}
             <div className="lg:col-span-5 space-y-8">
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-4">
-                  <SparklesIcon className="w-3.5 h-3.5" aria-hidden="true" />
-                  <span>Direct Clinical Dispatch</span>
-                </div>
                 <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground mb-4 tracking-tight leading-tight">
                   How can we help?
                 </h2>
@@ -144,7 +140,7 @@ export default function ContactPage() {
                         </p>
                         <div className="mt-3 pt-3 border-t border-border/50 flex items-center gap-1.5 text-xs text-muted-foreground">
                           <Clock01Icon className="w-3.5 h-3.5 text-primary shrink-0" aria-hidden="true" />
-                          <span>Subway: B/D/F/M at 47-50 St Rockefeller</span>
+                          <span>{siteConfig.contact.transitInfo}</span>
                         </div>
                       </div>
                     </div>
@@ -182,10 +178,6 @@ export default function ContactPage() {
       <section className="py-16 sm:py-24 bg-muted/30 border-t border-border/40 relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl relative z-10">
           <div className="text-center mb-8 sm:mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-3">
-              <SparklesIcon className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Patient Clarity</span>
-            </div>
             <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground mb-3 sm:mb-4 tracking-tight">
               Frequently Asked Questions
             </h2>

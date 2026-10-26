@@ -1,18 +1,20 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ArrowRight01Icon, Calendar01Icon, Call02Icon } from "hugeicons-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Calendar01Icon, Call02Icon } from "hugeicons-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useBooking } from "@/components/BookingContext";
 import siteConfig from "@/config/site";
 import { images } from "@/config/images";
+import { cn } from "@/lib/utils";
 
-export function CTA() {
+export function CTA({ className }: { className?: string } = {}) {
   const { openBooking } = useBooking();
+  const reduce = useReducedMotion();
 
   return (
-    <section className="py-16 sm:py-24 relative overflow-hidden bg-background">
+    <section className={cn("py-12 sm:py-20 relative overflow-hidden bg-background", className)}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
         {/* Double-Bezel Outer Shell */}
         <div className="p-2 sm:p-3 rounded-[2.5rem] bg-muted/40 border border-border/80 shadow-2xl relative overflow-hidden">
@@ -26,21 +28,20 @@ export function CTA() {
 
             <div className="max-w-2xl mx-auto relative z-10">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={reduce ? false : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+                transition={{ duration: reduce ? 0 : 0.6, ease: [0.32, 0.72, 0, 1] }}
               >
-                <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-white/15 text-white border border-white/20 mb-4 shadow-sm">
-                  <Calendar01Icon className="w-3.5 h-3.5" />
+                <p className="text-xs font-mono uppercase tracking-[0.2em] text-white/75 font-semibold mb-4">
                   Begin Your Smile Journey
-                </span>
+                </p>
 
-                <h2 className="text-3xl sm:text-5xl font-heading font-bold text-white mb-4 sm:mb-6 leading-tight">
+                <h2 className="text-3xl sm:text-5xl font-heading font-bold text-white mb-4 sm:mb-6 leading-tight pb-1">
                   Start with an Unhurried Conversation.
                 </h2>
 
-                <p className="text-base sm:text-lg text-white/90 mb-8 sm:mb-10 leading-relaxed font-normal">
+                <p className="text-base sm:text-lg text-white/90 mb-8 sm:mb-10 leading-relaxed font-normal pt-0.5">
                   Tell us what you want to achieve. We provide clear, itemized options with zero pressure and complete clinical transparency.
                 </p>
 

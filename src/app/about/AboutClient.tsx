@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 import { AboutStory } from "@/components/about/templates/AboutStory";
 import { AboutClinical } from "@/components/about/templates/AboutClinical";
@@ -32,8 +32,8 @@ const ABOUT_HERO_CONTENT: Record<AboutView, { badge: string; title: string; subt
   },
   timeline: {
     badge: "Our Heritage & Milestones",
-    title: "A Decade of Patient-Centered Care",
-    subtitle: "From a boutique two-chair founding practice in 2011 to a premier multi-specialty dental destination caring for thousands of patients.",
+    title: "15 Years of Patient-Centered Care",
+    subtitle: "From a boutique founding clinic in 2011 to a premier multi-specialty dental destination caring for thousands of patients.",
   },
 };
 
@@ -42,22 +42,12 @@ function AboutClientContent() {
   const router = useRouter();
 
   const param = searchParams.get("view");
-  const parsedView: AboutView = VIEW_OPTIONS.some((o) => o.id === param)
+  const viewStyle: AboutView = VIEW_OPTIONS.some((o) => o.id === param)
     ? (param as AboutView)
     : "story";
-
-  const [viewStyle, setViewStyle] = useState<AboutView>(parsedView);
-
-  useEffect(() => {
-    if (VIEW_OPTIONS.some((o) => o.id === param)) {
-      setViewStyle(param as AboutView);
-    } else {
-      setViewStyle("story");
-    }
-  }, [param]);
+  const reduceMotion = useReducedMotion();
 
   const handleViewChange = (v: AboutView) => {
-    setViewStyle(v);
     const target = v === "story" ? "/about" : `/about?view=${v}`;
     router.replace(target, { scroll: false });
   };
@@ -70,14 +60,18 @@ function AboutClientContent() {
         badge={currentHero.badge}
         title={currentHero.title}
         subtitle={currentHero.subtitle}
-        trustItems={["Founded 2011 · Manhattan", "Patient-Led Clinical Care", "15,000+ Smiles Treated"]}
+        trustItems={[
+          `${siteConfig.clinic.stats.yearsExperience}+ Years Clinical Excellence`,
+          "Patient-Led Clinical Care",
+          `${siteConfig.clinic.stats.patientsTreated} Smiles Treated`,
+        ]}
       />
 
       <section className="pt-6 pb-16 sm:pt-8 sm:pb-20 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          {/* Floating Template Pill Switcher — buyer preview control (Desktop only) */}
+          {/* Floating Template Pill Switcher — buyer preview control */}
           {siteConfig.ui.showTemplateSwitchers && (
-            <div className="hidden sm:flex justify-end mb-5 sm:mb-6">
+            <div className="flex justify-end mb-5 sm:mb-6">
               <TemplatePillSwitcher
                 label="ABOUT"
                 variants={VIEW_OPTIONS}
@@ -93,10 +87,10 @@ function AboutClientContent() {
             {viewStyle === "story" && (
               <motion.div
                 key="story"
-                initial={{ opacity: 0, y: 15 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.3 }}
+                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -15 }}
+                transition={{ duration: reduceMotion ? 0 : 0.3 }}
               >
                 <AboutStory />
               </motion.div>
@@ -105,10 +99,10 @@ function AboutClientContent() {
             {viewStyle === "clinical" && (
               <motion.div
                 key="clinical"
-                initial={{ opacity: 0, y: 15 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.3 }}
+                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -15 }}
+                transition={{ duration: reduceMotion ? 0 : 0.3 }}
               >
                 <AboutClinical />
               </motion.div>
@@ -117,10 +111,10 @@ function AboutClientContent() {
             {viewStyle === "timeline" && (
               <motion.div
                 key="timeline"
-                initial={{ opacity: 0, y: 15 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.3 }}
+                exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -15 }}
+                transition={{ duration: reduceMotion ? 0 : 0.3 }}
               >
                 <AboutTimeline />
               </motion.div>

@@ -52,7 +52,6 @@ export const viewport: Viewport = {
 
 import { BookingProvider } from "@/components/BookingContext";
 import { HeroStyleProvider } from "@/components/HeroStyleContext";
-import { CustomCursor } from "@/components/CustomCursor";
 import { MobileTemplateSwitcher } from "@/components/ui/MobileTemplateSwitcher";
 
 export default function RootLayout({
@@ -61,9 +60,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn(fraunces.variable, inter.variable, "antialiased")}>
-      <body className="min-h-screen bg-background font-body flex flex-col overflow-x-hidden">
-        <CustomCursor />
+    <html lang="en" suppressHydrationWarning className={cn(fraunces.variable, inter.variable, "antialiased")}>
+      <body suppressHydrationWarning className="min-h-screen bg-background font-body flex flex-col overflow-x-hidden">
         <MotionConfig reducedMotion="user">
           <SmoothScroll>
             <BookingProvider>

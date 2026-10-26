@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { StarIcon, QuoteUpIcon, FilterIcon, SparklesIcon, CheckmarkBadge01Icon } from "hugeicons-react";
+import { StarIcon, QuoteUpIcon, FilterIcon, Shield01Icon, CheckmarkBadge01Icon } from "hugeicons-react";
 import siteConfig from "@/config/site";
 
 const categories = [
@@ -31,8 +31,12 @@ export function TestimonialsClient() {
               <div className="flex justify-center gap-1 text-rating mb-2" role="img" aria-label="5 out of 5 stars">
                 {[...Array(5)].map((_, i) => <StarIcon key={i} className="w-4 h-4 fill-current" aria-hidden="true" />)}
               </div>
-              <div className="text-white font-bold text-lg sm:text-xl font-heading">4.9/5 Star Rating</div>
-              <div className="text-secondary-foreground/75 text-xs font-medium">Verified Patient Reviews</div>
+              <div className="text-white font-bold text-lg sm:text-xl font-heading">
+                {siteConfig.clinic.stats.rating.toFixed(1)}/5 Star Rating
+              </div>
+              <div className="text-secondary-foreground/75 text-xs font-medium">
+                From {siteConfig.clinic.stats.reviewsCount}+ Patient Reviews
+              </div>
             </div>
 
             <div className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 text-center min-w-[200px]">
@@ -46,7 +50,7 @@ export function TestimonialsClient() {
 
             <div className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/10 text-center min-w-[200px]">
               <div className="flex items-center justify-center gap-1.5 text-accent font-bold text-sm mb-1.5">
-                <SparklesIcon className="w-4 h-4" />
+                <Shield01Icon className="w-4 h-4" />
                 <span>Clinical Governance</span>
               </div>
               <div className="text-white font-bold text-xl sm:text-2xl font-heading mb-0.5">Healthgrades</div>

@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { SparklesIcon } from "hugeicons-react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ServicesGrid } from "@/components/services/templates/ServicesGrid";
 import { ServicesList } from "@/components/services/templates/ServicesList";
 import { ServicesBento } from "@/components/services/templates/ServicesBento";
@@ -29,22 +28,11 @@ function ServicesClientContent() {
   const [activeCategory, setActiveCategory] = useState("All");
 
   const param = searchParams.get("view");
-  const parsedView: ServicesView = VIEW_OPTIONS.some((o) => o.id === param)
+  const viewStyle: ServicesView = VIEW_OPTIONS.some((o) => o.id === param)
     ? (param as ServicesView)
     : "grid";
 
-  const [viewStyle, setViewStyle] = useState<ServicesView>(parsedView);
-
-  useEffect(() => {
-    if (VIEW_OPTIONS.some((o) => o.id === param)) {
-      setViewStyle(param as ServicesView);
-    } else {
-      setViewStyle("grid");
-    }
-  }, [param]);
-
   const handleViewChange = (v: ServicesView) => {
-    setViewStyle(v);
     const target = v === "grid" ? "/services" : `/services?view=${v}`;
     router.replace(target, { scroll: false });
   };
@@ -59,19 +47,17 @@ function ServicesClientContent() {
       return service.category === activeCategory;
     });
 
+  const shouldReduceMotion = useReducedMotion();
+
   return (
-    <section className="pt-24 pb-12 sm:pt-28 sm:pb-16 bg-[#FAFAFA] min-h-screen">
+    <section className="pt-[66px] sm:pt-[72px] pb-12 sm:pb-16 bg-[#FAFAFA] min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 
-        {/* Top Control Bar: Eyebrow Badge left, Floating Template Switcher right */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-6">
-          <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-teal-50 text-teal-800 border border-teal-200/60 font-sans w-fit">
-            <SparklesIcon className="w-3.5 h-3.5 text-teal-600" />
-            Clinical Care
-          </span>
+        {/* Top Control Bar */}
+        <div className="flex flex-wrap items-center justify-end gap-2.5 mb-3 sm:mb-4">
 
           {siteConfig.ui.showTemplateSwitchers && (
-            <div className="hidden sm:block">
+            <div className="flex items-center">
               <TemplatePillSwitcher
                 label="SERVICES"
                 variants={VIEW_OPTIONS}
@@ -145,10 +131,10 @@ function ServicesClientContent() {
             {viewStyle === "grid" && (
               <motion.div
                 key="grid"
-                initial={{ opacity: 0, y: 15 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.3 }}
+                exit={shouldReduceMotion ? undefined : { opacity: 0, y: -15 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.3 }}
               >
                 <ServicesGrid services={filteredServices} />
               </motion.div>
@@ -157,10 +143,10 @@ function ServicesClientContent() {
             {viewStyle === "list" && (
               <motion.div
                 key="list"
-                initial={{ opacity: 0, y: 15 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.3 }}
+                exit={shouldReduceMotion ? undefined : { opacity: 0, y: -15 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.3 }}
               >
                 <ServicesList services={filteredServices} />
               </motion.div>
@@ -169,10 +155,10 @@ function ServicesClientContent() {
             {viewStyle === "bento" && (
               <motion.div
                 key="bento"
-                initial={{ opacity: 0, y: 15 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.3 }}
+                exit={shouldReduceMotion ? undefined : { opacity: 0, y: -15 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.3 }}
               >
                 <ServicesBento services={allServices} activeCategory={activeCategory} />
               </motion.div>

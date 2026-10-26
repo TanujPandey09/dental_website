@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, animate } from "framer-motion";
-import { StarIcon, QuoteUpIcon, ArrowLeft01Icon, ArrowRight01Icon, SparklesIcon } from "hugeicons-react";
+import { StarIcon, QuoteUpIcon, ArrowLeft01Icon, ArrowRight01Icon } from "hugeicons-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -78,10 +78,6 @@ export function Testimonials() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mb-8 sm:mb-16 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 testimonial-header">
           <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-accent/20 text-accent border border-accent/30 mb-3">
-              <SparklesIcon className="w-3.5 h-3.5" />
-              Verified Patient Experiences
-            </span>
             <h2 className="text-3xl sm:text-5xl font-heading font-bold text-white leading-tight">
               Stories of Confident, <br className="hidden sm:inline" />
               Healthy Smiles.

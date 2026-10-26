@@ -12,7 +12,7 @@ import {
   Call02Icon,
   Calendar01Icon,
   ArrowRight01Icon,
-  SparklesIcon,
+  Layers01Icon,
 } from "hugeicons-react";
 import { cn } from "@/lib/utils";
 import { useBooking } from "@/components/BookingContext";
@@ -59,8 +59,8 @@ export function Navbar() {
       className={cn(
         "fixed top-0 w-full z-50 bg-white transition-[padding,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
         scrolled
-          ? "py-3 shadow-[0_4px_25px_rgba(15,23,42,0.08)] border-b border-border/80"
-          : "py-4 sm:py-5 border-b border-border/40"
+          ? "py-2 shadow-[0_4px_25px_rgba(15,23,42,0.08)] border-b border-border/80"
+          : "py-2 sm:py-2 border-b border-border/40"
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between">
@@ -73,9 +73,9 @@ export function Navbar() {
           <Image
             src={siteConfig.clinic.logoLight}
             alt={siteConfig.clinic.name}
-            width={150}
-            height={59}
-            className="h-10 w-auto sm:h-11 transition-transform duration-300 group-hover:scale-[1.02]"
+            width={185}
+            height={72}
+            className="h-12 w-auto sm:h-13 transition-transform duration-300 group-hover:scale-[1.02]"
             priority
           />
         </Link>
@@ -129,26 +129,14 @@ export function Navbar() {
 
         {/* Tablet & Mobile Right Actions */}
         <div className="flex items-center gap-2 sm:gap-3 lg:hidden">
-          {siteConfig.ui.showTemplateSwitchers && (
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(true)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-[11px] font-mono font-medium tracking-wide bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              aria-label="Preview Template Variations"
-            >
-              <SparklesIcon className="w-3.5 h-3.5 text-accent" />
-              <span>11 Layouts</span>
-            </button>
-          )}
-
           <Button
             size="sm"
             variant="cta"
             onClick={openBooking}
-            className="hidden sm:inline-flex"
+            className="inline-flex text-xs px-3 h-9"
           >
             <Calendar01Icon className="size-3.5 shrink-0" aria-hidden="true" />
-            <span>Book Now</span>
+            <span>Book</span>
           </Button>
 
           <button
@@ -235,7 +223,7 @@ export function Navbar() {
                     <div className="rounded-2xl border border-border/80 bg-muted/40 p-4 space-y-3.5 my-1">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1.5">
-                          <SparklesIcon className="w-3.5 h-3.5 text-accent" />
+                          <Layers01Icon className="w-3.5 h-3.5 text-accent" />
                           <span className="text-xs font-mono font-semibold uppercase tracking-wider text-foreground">
                             11 Template Layouts
                           </span>

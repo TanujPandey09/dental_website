@@ -3,11 +3,8 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { useBooking } from "@/components/BookingContext";
-import { Button, ButtonBadge } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
-  Time01Icon,
-  ArrowRight01Icon,
-  SparklesIcon,
   Calendar01Icon,
 } from "hugeicons-react";
 import siteConfig from "@/config/site";
@@ -23,7 +20,7 @@ interface Milestone {
   imageAlt: string;
 }
 
-const MILESTONES: Milestone[] = [
+const DEFAULT_MILESTONES: Milestone[] = [
   {
     year: "2011",
     badge: "The Founding",
@@ -75,17 +72,14 @@ export function AboutTimeline() {
   const { openBooking } = useBooking();
   const founder = siteConfig.doctors[0];
   const reduceMotion = useReducedMotion();
+  const milestones = siteConfig.clinic.milestones || DEFAULT_MILESTONES;
 
   return (
     <div className="space-y-16 sm:space-y-24">
-      {/* 1. Header with Eyebrow */}
+      {/* 1. Header */}
       <div className="text-center max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-4">
-          <Time01Icon className="w-4 h-4 text-primary" />
-          <span>Our Journey &amp; Milestones</span>
-        </div>
         <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground mb-4 leading-tight">
-          A Decade of Patient-Centered Care.
+          {siteConfig.clinic.yearsExperience} Years of Patient-Centered Care.
         </h2>
         <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
           Follow the journey that transformed an ambitious vision into one of the most respected, patient-centered dental practices in the country.
@@ -98,7 +92,7 @@ export function AboutTimeline() {
         <div className="absolute left-6 sm:left-1/2 top-6 bottom-6 w-0.5 bg-gradient-to-b from-primary via-border to-primary/40 -translate-x-1/2" />
 
         <div className="space-y-10 sm:space-y-14">
-          {MILESTONES.map((m, idx) => {
+          {milestones.map((m, idx) => {
             const isEven = idx % 2 === 0;
 
             return (
@@ -111,13 +105,9 @@ export function AboutTimeline() {
                 className={`relative flex flex-col sm:flex-row items-start sm:items-center ${isEven ? "sm:flex-row-reverse" : ""
                   }`}
               >
-                {/* Illuminated Stepper Node */}
-                <div className="absolute left-6 sm:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-primary text-primary-foreground font-bold text-xs flex items-center justify-center ring-4 ring-primary/20 shadow-lg shadow-primary/25 z-10 shrink-0">
-                  {m.year === "Today" ? (
-                    <SparklesIcon className="w-5 h-5 text-primary-foreground" />
-                  ) : (
-                    <span>{m.year}</span>
-                  )}
+                {/* Stepper Node */}
+                <div className="absolute left-6 sm:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-primary text-primary-foreground font-mono font-bold text-xs flex items-center justify-center ring-4 ring-primary/20 shadow-lg shadow-primary/25 z-10 shrink-0">
+                  <span>{m.year}</span>
                 </div>
 
                 {/* Double-Bezel Visual Card */}
@@ -181,9 +171,9 @@ export function AboutTimeline() {
               />
             </div>
             <div className="space-y-4 text-center sm:text-left flex-1">
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.2em] font-bold bg-primary/10 text-primary border border-primary/20">
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-primary font-semibold mb-1">
                 Founder&apos;s Pledge
-              </span>
+              </p>
               <h3 className="text-2xl sm:text-3xl font-heading font-bold text-foreground leading-snug">
                 &ldquo;We measure success in genuine smiles, not procedure volume.&rdquo;
               </h3>

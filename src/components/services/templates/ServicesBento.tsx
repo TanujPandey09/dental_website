@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useBooking } from "@/components/BookingContext";
-import { ArrowRight01Icon, ArrowUpRight01Icon, SparklesIcon, DentalToothIcon, DentalBracesIcon, Sun01Icon, Shield01Icon, MicroscopeIcon } from "hugeicons-react";
+import { ArrowRight01Icon, ArrowUpRight01Icon, DentalToothIcon, DentalBracesIcon, Sun01Icon, Shield01Icon, MicroscopeIcon } from "hugeicons-react";
 
 interface ServiceItem {
   id: string;
@@ -21,6 +21,7 @@ interface ServicesBentoProps {
 
 export function ServicesBento({ services, activeCategory = "All" }: ServicesBentoProps) {
   const { openBooking } = useBooking();
+  const reduceMotion = useReducedMotion();
 
   // Match key services
   const cosmetic = services.find((s) => s.id === "cosmetic-dentistry") || services[0];
@@ -55,31 +56,30 @@ export function ServicesBento({ services, activeCategory = "All" }: ServicesBent
         {/* 01. Flagship Scale 1: Cosmetic Dentistry (5 cols) */}
         {cosmetic && (
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
             animate={{ opacity: isMatch(cosmetic) ? 1 : 0.35, y: 0 }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: reduceMotion ? 0 : 0.35 }}
             className="lg:col-span-5 bg-gradient-to-br from-[#1E293B] via-[#131D2E] to-[#0A0F1D] text-white rounded-3xl p-6 sm:p-9 border border-slate-800 shadow-md hover:border-teal-500/50 hover:shadow-2xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between min-h-[380px] sm:min-h-[420px]"
           >
             {/* Delicate Wireframe Contour Rings */}
             <div
               aria-hidden="true"
-              className="absolute -right-16 -top-16 w-64 h-64 rounded-full border border-teal-500/10 pointer-events-none group-hover:scale-105 transition-transform duration-700"
+              className="absolute -right-16 -top-16 w-64 h-64 rounded-full border border-teal-500/10 pointer-events-none group-hover:scale-105 transition-transform duration-700 z-0"
             />
             <div
               aria-hidden="true"
-              className="absolute -right-6 -top-6 w-44 h-44 rounded-full border border-teal-500/10 pointer-events-none"
+              className="absolute -right-6 -top-6 w-44 h-44 rounded-full border border-teal-500/10 pointer-events-none z-0"
             />
             <div
               aria-hidden="true"
-              className="absolute right-8 bottom-8 w-40 h-40 rounded-full bg-teal-500/5 blur-2xl pointer-events-none"
+              className="absolute right-8 top-12 w-40 h-40 rounded-full bg-teal-500/5 blur-2xl pointer-events-none z-0"
             />
 
-            {/* Top Wireframe Badge */}
+            {/* Top Eyebrow */}
             <div className="relative z-10 flex items-center justify-between">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-teal-300 text-[10px] font-mono tracking-wider uppercase border border-white/10">
-                <SparklesIcon className="w-3.5 h-3.5 text-teal-300" />
+              <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-teal-300 font-semibold">
                 Featured · {cosmetic.category}
-              </span>
+              </p>
             </div>
 
             {/* Content & Action */}
@@ -103,7 +103,7 @@ export function ServicesBento({ services, activeCategory = "All" }: ServicesBent
 
                 <button
                   onClick={() => openBooking()}
-                  className="px-4 py-1.5 rounded-full bg-white/10 hover:bg-white text-white hover:text-slate-950 text-xs font-semibold backdrop-blur-sm transition-all cursor-pointer border border-white/20"
+                  className="px-4 py-1.5 rounded-full bg-white/10 hover:bg-white text-white hover:text-slate-950 text-xs font-semibold backdrop-blur-sm transition-all cursor-pointer border border-white/20 relative z-20"
                 >
                   Book
                 </button>
@@ -115,22 +115,22 @@ export function ServicesBento({ services, activeCategory = "All" }: ServicesBent
         {/* 02. Dental Implants (4 cols) */}
         {implants && (
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
             animate={{ opacity: isMatch(implants) ? 1 : 0.35, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.05 }}
+            transition={{ duration: reduceMotion ? 0 : 0.35, delay: reduceMotion ? 0 : 0.05 }}
             className="lg:col-span-4 bg-gradient-to-br from-[#182232] via-[#0F172A] to-[#0A0E1A] text-white rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-md hover:border-teal-500/50 hover:shadow-2xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between min-h-[380px] sm:min-h-[420px]"
           >
             {/* Center Tooth Wireframe Illustration */}
             <div
               aria-hidden="true"
-              className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-700"
+              className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-700 z-0"
             >
               <DentalToothIcon className="w-40 h-40 text-teal-400" />
             </div>
 
             {/* Top Badge */}
             <div className="relative z-10 flex items-center justify-between">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-teal-300 bg-white/10 px-2.5 py-1 rounded-full border border-white/10">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider text-teal-300 bg-white/10 border border-white/10 leading-normal">
                 {implants.category}
               </span>
             </div>
@@ -156,7 +156,7 @@ export function ServicesBento({ services, activeCategory = "All" }: ServicesBent
 
                 <button
                   onClick={() => openBooking()}
-                  className="px-4 py-1.5 rounded-full bg-white/10 hover:bg-white text-white hover:text-slate-950 text-xs font-semibold backdrop-blur-sm transition-all cursor-pointer border border-white/20"
+                  className="px-4 py-1.5 rounded-full bg-white/10 hover:bg-white text-white hover:text-slate-950 text-xs font-semibold backdrop-blur-sm transition-all cursor-pointer border border-white/20 relative z-20"
                 >
                   Book
                 </button>
@@ -171,14 +171,14 @@ export function ServicesBento({ services, activeCategory = "All" }: ServicesBent
           {/* Teeth Whitening */}
           {whitening && (
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
               animate={{ opacity: isMatch(whitening) ? 1 : 0.35, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.1 }}
+              transition={{ duration: reduceMotion ? 0 : 0.35, delay: reduceMotion ? 0 : 0.1 }}
               className="bg-gradient-to-br from-[#1E293B] to-[#0F172A] text-white rounded-3xl p-5 sm:p-6 border border-slate-800 shadow-md hover:border-teal-500/50 transition-all duration-300 relative overflow-hidden group flex flex-col justify-between flex-1 min-h-[180px]"
             >
               <div
                 aria-hidden="true"
-                className="absolute -right-6 -bottom-6 w-28 h-28 rounded-full border border-teal-500/10 pointer-events-none group-hover:scale-110 transition-transform"
+                className="absolute -right-6 -top-6 w-28 h-28 rounded-full border border-teal-500/10 pointer-events-none group-hover:scale-110 transition-transform z-0"
               />
 
               <div className="flex items-center justify-between relative z-10">
@@ -205,14 +205,14 @@ export function ServicesBento({ services, activeCategory = "All" }: ServicesBent
           {/* Orthodontics */}
           {ortho && (
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
               animate={{ opacity: isMatch(ortho) ? 1 : 0.35, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.15 }}
+              transition={{ duration: reduceMotion ? 0 : 0.35, delay: reduceMotion ? 0 : 0.15 }}
               className="bg-gradient-to-br from-[#1E293B] to-[#0F172A] text-white rounded-3xl p-5 sm:p-6 border border-slate-800 shadow-md hover:border-teal-500/50 transition-all duration-300 relative overflow-hidden group flex flex-col justify-between flex-1 min-h-[180px]"
             >
               <div
                 aria-hidden="true"
-                className="absolute -right-6 -bottom-6 w-28 h-28 rounded-full border border-teal-500/10 pointer-events-none group-hover:scale-110 transition-transform"
+                className="absolute -right-6 -top-6 w-28 h-28 rounded-full border border-teal-500/10 pointer-events-none group-hover:scale-110 transition-transform z-0"
               />
 
               <div className="flex items-center justify-between relative z-10">
@@ -247,19 +247,19 @@ export function ServicesBento({ services, activeCategory = "All" }: ServicesBent
         {/* 05. Oral Surgery (4 cols) */}
         {surgery && (
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
             animate={{ opacity: isMatch(surgery) ? 1 : 0.35, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.2 }}
+            transition={{ duration: reduceMotion ? 0 : 0.35, delay: reduceMotion ? 0 : 0.2 }}
             className="lg:col-span-4 bg-gradient-to-br from-[#1A2333] to-[#0F172A] text-white rounded-3xl p-6 sm:p-7 border border-slate-800 shadow-md hover:border-teal-500/50 transition-all duration-300 relative overflow-hidden group flex flex-col justify-between min-h-[220px]"
           >
             <div
               aria-hidden="true"
-              className="absolute -right-8 -bottom-8 w-36 h-36 rounded-full border border-teal-500/10 pointer-events-none group-hover:scale-110 transition-transform"
+              className="absolute -right-8 -top-8 w-36 h-36 rounded-full border border-teal-500/10 pointer-events-none group-hover:scale-110 transition-transform z-0"
             />
 
             <div className="flex items-center justify-between relative z-10">
               <Shield01Icon className="w-4 h-4 text-teal-400" />
-              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Specialty</span>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-slate-300 bg-white/10 border border-white/10 leading-normal">Specialty</span>
             </div>
 
             <div className="relative z-10 mt-auto pt-6">
@@ -284,19 +284,19 @@ export function ServicesBento({ services, activeCategory = "All" }: ServicesBent
         {/* 06. Preventive / General Dentistry (4 cols) */}
         {preventive && (
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
             animate={{ opacity: isMatch(preventive) ? 1 : 0.35, y: 0 }}
-            transition={{ duration: 0.35, delay: 0.25 }}
+            transition={{ duration: reduceMotion ? 0 : 0.35, delay: reduceMotion ? 0 : 0.25 }}
             className="lg:col-span-4 bg-gradient-to-br from-[#1A2333] to-[#0F172A] text-white rounded-3xl p-6 sm:p-7 border border-slate-800 shadow-md hover:border-teal-500/50 transition-all duration-300 relative overflow-hidden group flex flex-col justify-between min-h-[220px]"
           >
             <div
               aria-hidden="true"
-              className="absolute -right-8 -bottom-8 w-36 h-36 rounded-full border border-teal-500/10 pointer-events-none group-hover:scale-110 transition-transform"
+              className="absolute -right-8 -top-8 w-36 h-36 rounded-full border border-teal-500/10 pointer-events-none group-hover:scale-110 transition-transform z-0"
             />
 
             <div className="flex items-center justify-between relative z-10">
               <MicroscopeIcon className="w-4 h-4 text-teal-400" />
-              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Preventive Care</span>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-slate-300 bg-white/10 border border-white/10 leading-normal">Preventive Care</span>
             </div>
 
             <div className="relative z-10 mt-auto pt-6">
@@ -320,13 +320,13 @@ export function ServicesBento({ services, activeCategory = "All" }: ServicesBent
 
         {/* 07. The Light "Not Sure" Card (4 cols) - Matches Mockup 03 perfectly */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.3 }}
+          transition={{ duration: reduceMotion ? 0 : 0.35, delay: reduceMotion ? 0 : 0.3 }}
           className="lg:col-span-4 bg-white border border-slate-200/90 text-slate-900 rounded-3xl p-6 sm:p-7 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-teal-600/40 transition-all duration-300 flex flex-col justify-between min-h-[220px] group"
         >
           <div>
-            <span className="text-[10px] font-mono uppercase tracking-wider text-teal-700 font-semibold bg-teal-50 border border-teal-200/60 px-2.5 py-0.5 rounded-full inline-block mb-3">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider text-teal-700 font-semibold bg-teal-50 border border-teal-200/60 leading-normal mb-3">
               Not sure where to start?
             </span>
 
@@ -342,7 +342,7 @@ export function ServicesBento({ services, activeCategory = "All" }: ServicesBent
           <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
             <button
               onClick={() => openBooking()}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-900 hover:bg-teal-700 text-white text-xs font-semibold transition-colors cursor-pointer shadow-sm"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-900 hover:bg-teal-700 text-white text-xs font-semibold transition-colors cursor-pointer shadow-sm relative z-20"
             >
               <span>Book a visit</span>
               <ArrowRight01Icon className="w-3.5 h-3.5" />

@@ -1,7 +1,7 @@
 "use client";
 
 import siteConfig from "@/config/site";
-import { Location01Icon, Call02Icon, ArrowRight01Icon, Clock01Icon, Navigation03Icon } from "hugeicons-react";
+import { Location01Icon, Call02Icon, ArrowRight01Icon, Clock01Icon } from "hugeicons-react";
 import { Button } from "@/components/ui/button";
 
 export function ClinicMap() {
@@ -23,12 +23,8 @@ export function ClinicMap() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-2">
-              <Navigation03Icon className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Location & Access</span>
-            </div>
             <h2 className="text-2xl sm:text-4xl font-heading font-bold text-foreground tracking-tight">
-              Visit Our Manhattan Sanctuary
+              Visit Our {siteConfig.contact.cityArea || "Clinic"} Sanctuary
             </h2>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">

@@ -1,9 +1,10 @@
 import { PageHero } from "@/components/layout/PageHero";
 import { DoctorsClient } from "./DoctorsClient";
 import { CTA } from "@/components/home/CTA";
+import siteConfig from "@/config/site";
 
 export const metadata = {
-  title: "Our Doctors | Lumina Dental Care",
+  title: `Our Doctors | ${siteConfig.clinic.name}`,
   description: "Meet our world-class team of dental specialists.",
 };
 
@@ -12,14 +13,14 @@ export default function DoctorsPage() {
     <>
       <PageHero 
         title="World-Class Specialists" 
-        subtitle="Our team consists of board-certified specialists who have trained at the world's most prestigious dental institutions. We believe in continuous education to bring you the best care possible."
+        subtitle="Board-certified specialists across cosmetic, restorative, orthodontic, and surgical disciplines—collaborating to deliver gentle, unhurried treatment plans tailored to your life."
         badge="Our Team"
-        trustItems={["Columbia & NYU Trained", "Board-Certified Specialists", "Multidisciplinary Care"]}
+        trustItems={["Fellowship-Trained Specialists", "Board-Certified Faculty", "Multidisciplinary Care"]}
       />
 
       <DoctorsClient />
       
-      <CTA />
+      <CTA className="pt-0 sm:pt-2 pb-16 sm:pb-24" />
     </>
   );
 }

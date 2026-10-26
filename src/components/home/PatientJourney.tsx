@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight01Icon, Calendar01Icon, SparklesIcon } from "hugeicons-react";
+import { ArrowRight01Icon, Calendar01Icon } from "hugeicons-react";
 import { useBooking } from "@/components/BookingContext";
 import siteConfig from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -65,12 +65,6 @@ export function PatientJourney() {
         {/* Header Row: Left Eyebrow & Title, Right Editorial Subtext */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 sm:gap-8 pb-12 sm:pb-16 border-b border-white/10">
           <div className="max-w-2xl">
-            {/* The Patient Journey Eyebrow Badge */}
-            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-teal-500/15 text-teal-300 border border-teal-500/25 mb-4">
-              <SparklesIcon className="w-3.5 h-3.5 text-teal-400" />
-              The Patient Journey
-            </span>
-
             {/* From first question to aftercare. */}
             <h2
               id="patient-journey-heading"

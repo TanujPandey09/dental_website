@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { ArrowRight01Icon, ArrowUpRight01Icon, StarIcon, Location01Icon, Calendar01Icon, SparklesIcon } from "hugeicons-react";
+import { ArrowRight01Icon, ArrowUpRight01Icon, StarIcon, Location01Icon, Calendar01Icon } from "hugeicons-react";
 import Link from "next/link";
 import Image from "next/image";
 import gsap from "gsap";
@@ -54,10 +54,6 @@ export function MeetDentists() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-10 sm:mb-16">
           <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-primary/10 text-primary border border-primary/20 mb-3">
-              <SparklesIcon className="w-3.5 h-3.5" />
-              Clinical Leadership
-            </span>
             <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground leading-tight">
               World-Class Specialists.
             </h2>
@@ -108,7 +104,7 @@ export function MeetDentists() {
                   {/* Rating Pill Top-Right */}
                   <div className="absolute top-3.5 right-3.5 backdrop-blur-md bg-white/95 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm border border-white/20">
                     <StarIcon className="w-3.5 h-3.5 fill-rating text-rating" aria-hidden="true" />
-                    <span className="text-xs font-bold text-slate-950">{doctor.rating}</span>
+                    <span className="text-xs font-bold text-slate-950">{doctor.rating.toFixed(1)}</span>
                     <span className="text-[10px] text-muted-foreground font-medium">({doctor.reviews})</span>
                   </div>
 

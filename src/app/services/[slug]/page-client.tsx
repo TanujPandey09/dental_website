@@ -10,20 +10,18 @@ import CountUp from "react-countup";
 import {
   CheckmarkBadge01Icon,
   Shield01Icon,
-  Award01Icon,
   Call02Icon,
   PlusSignIcon,
   MinusSignIcon,
   ArrowRight01Icon,
   Clock01Icon,
-  SparklesIcon,
   MicroscopeIcon,
   Sofa01Icon,
   Invoice01Icon,
   Calendar01Icon,
 } from "hugeicons-react";
 import { useBooking } from "@/components/BookingContext";
-import { Button, ButtonBadge } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { images } from "@/config/images";
 import siteConfig, { type DoctorConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -42,7 +40,7 @@ const PROCESS_STEP_ICONS = [
   Calendar01Icon,
   MicroscopeIcon,
   Invoice01Icon,
-  SparklesIcon,
+  CheckmarkBadge01Icon,
   Shield01Icon,
 ];
 
@@ -219,10 +217,9 @@ export function ServiceClient({ slug }: { slug: string }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div className="space-y-6 sm:space-y-8">
             <div className="space-y-3 sm:space-y-4">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold">
-                <CheckmarkBadge01Icon className="w-3.5 h-3.5" />
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-primary font-semibold mb-2">
                 {service?.category ?? "Specialist Care"}
-              </span>
+              </p>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-foreground leading-tight">
                 {service?.detailTitle ? `${service.detailTitle} — ` : "Advanced "}
                 <span className="text-primary">{title}</span>
@@ -338,7 +335,7 @@ export function ServiceClient({ slug }: { slug: string }) {
 
             <div className="p-3 sm:p-4 rounded-2xl bg-muted/40 border border-border/50 flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <SparklesIcon className="w-5 h-5" />
+                <Shield01Icon className="w-5 h-5" />
               </div>
               <div className="min-w-0">
                 <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Biocompatibility</p>
@@ -363,10 +360,6 @@ export function ServiceClient({ slug }: { slug: string }) {
       <section className="py-14 sm:py-24 bg-background">
         <div className="container mx-auto px-4 md:px-8 max-w-7xl">
           <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-primary/10 text-primary border border-primary/20 mb-3">
-              <Clock01Icon className="w-3.5 h-3.5" />
-              Step-by-Step Care
-            </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-foreground mb-3 leading-tight">
               Your Treatment Process<span className="italic font-serif text-primary">.</span>
             </h2>
@@ -463,10 +456,6 @@ export function ServiceClient({ slug }: { slug: string }) {
       <section className="py-14 sm:py-24 bg-card relative overflow-hidden border-t border-border/60">
         <div className="container mx-auto px-4 md:px-8 max-w-7xl relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-[11px] uppercase tracking-[0.2em] font-semibold bg-primary/10 text-primary border border-primary/20 mb-3">
-              <SparklesIcon className="w-3.5 h-3.5" />
-              Clinical Advantages
-            </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-foreground mb-3 leading-tight">
               Why Choose Us for {title}?
             </h2>

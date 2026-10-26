@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useWatch } from "react-hook-form";
 import * as z from "zod";
-import { Button, ButtonBadge } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -21,7 +21,7 @@ import {
   ArrowLeft01Icon,
   CheckmarkCircle01Icon,
   Shield01Icon,
-  SparklesIcon,
+  SmileIcon,
   Sun01Icon,
   Sun02Icon,
   Moon02Icon,
@@ -65,7 +65,7 @@ const SERVICE_META: Record<string, {
   badge: string;
   duration: string;
   desc: string;
-  icon: typeof SparklesIcon;
+  icon: typeof SmileIcon;
 }> = {
   general: {
     badge: "Preventative",
@@ -77,7 +77,7 @@ const SERVICE_META: Record<string, {
     badge: "Aesthetic",
     duration: "45 mins",
     desc: "Custom porcelain veneers, composite bonding & digital 3D smile design mockups.",
-    icon: SparklesIcon,
+    icon: SmileIcon,
   },
   implants: {
     badge: "Restorative",
@@ -88,7 +88,7 @@ const SERVICE_META: Record<string, {
   whitening: {
     badge: "Popular",
     duration: "60 mins",
-    desc: "Philips Zoom in-office laser whitening — up to 8 shades brighter in one session.",
+    desc: "Advanced in-office laser whitening — up to 8 shades brighter in one session.",
     icon: Sun01Icon,
   },
   emergency: {
@@ -278,7 +278,7 @@ export function BookingForm() {
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Location:</span>
-              <span className="font-semibold text-foreground">Rockefeller Center, Suite 100</span>
+              <span className="font-semibold text-foreground">{siteConfig.contact.landmark}</span>
             </div>
           </div>
 
@@ -684,7 +684,7 @@ export function BookingForm() {
               </h3>
             </div>
             <span className="text-xs text-muted-foreground hidden sm:inline-block">
-              HIPAA Encrypted
+              {siteConfig.clinic.compliance.formSecurityBadge}
             </span>
           </div>
 
@@ -824,7 +824,7 @@ export function BookingForm() {
             </span>
             <span className="inline-flex items-center gap-1">
               <Shield01Icon className="w-3.5 h-3.5 text-primary" />
-              <span>256-bit HIPAA encryption</span>
+              <span>{siteConfig.clinic.compliance.encryptionNotice}</span>
             </span>
             <span className="inline-flex items-center gap-1">
               <Clock01Icon className="w-3.5 h-3.5 text-primary" />
