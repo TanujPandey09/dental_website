@@ -2,11 +2,11 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useHeroStyle, HeroStyle } from "@/components/HeroStyleContext";
+import { HeroCinematic } from "@/components/home/heroes/HeroCinematic";
+import { HeroDentix } from "@/components/home/heroes/HeroDentix";
+import { HeroLuma } from "@/components/home/heroes/HeroLuma";
 import { HeroBookingSplit } from "@/components/home/heroes/HeroBookingSplit";
 import { HeroSpecialistSplit } from "@/components/home/heroes/HeroSpecialistSplit";
-import { HeroCinematic } from "@/components/home/heroes/HeroCinematic";
-import { HeroMinimal } from "@/components/home/heroes/HeroMinimal";
-import { HeroImmersive } from "@/components/home/heroes/HeroImmersive";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowLeft01Icon, ArrowRight01Icon } from "hugeicons-react";
 
@@ -18,11 +18,11 @@ export interface HeroVariantItem {
 }
 
 const HERO_VARIANTS: HeroVariantItem[] = [
-  { id: "booking", title: "Booking Concierge", num: "01", component: HeroBookingSplit },
-  { id: "specialist", title: "Specialist Editorial", num: "02", component: HeroSpecialistSplit },
-  { id: "cinematic", title: "Cinematic Film", num: "03", component: HeroCinematic },
-  { id: "minimal", title: "Minimal Swiss", num: "04", component: HeroMinimal },
-  { id: "immersive", title: "Spatial Sanctuary", num: "05", component: HeroImmersive },
+  { id: "cinematic", title: "Aveline Signature", num: "01", component: HeroCinematic },
+  { id: "dentix", title: "Dentix Surgical", num: "02", component: HeroDentix },
+  { id: "luma", title: "Luma Humane Care", num: "03", component: HeroLuma },
+  { id: "booking", title: "Booking Concierge", num: "04", component: HeroBookingSplit },
+  { id: "specialist", title: "Specialist Editorial", num: "05", component: HeroSpecialistSplit },
 ];
 
 export function Hero() {
@@ -62,19 +62,19 @@ export function Hero() {
     setHeroStyle(HERO_VARIANTS[index].id);
   }, [activeIndex, setHeroStyle]);
 
-  // Autoplay: 7 seconds interval, pauses on hover, focus, or when paused manually
+  // Autoplay
   useEffect(() => {
     if (shouldReduceMotion || !isPlaying || isHovered || isFocused) {
       return;
     }
     const timer = setInterval(() => {
       handleNext();
-    }, 7000);
+    }, 8000);
 
     return () => clearInterval(timer);
   }, [shouldReduceMotion, isPlaying, isHovered, isFocused, handleNext]);
 
-  // Keyboard navigation: Left / Right arrow keys
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
@@ -133,7 +133,7 @@ export function Hero() {
       onTouchEnd={handleTouchEnd}
       className="relative overflow-hidden bg-background"
     >
-      {/* 1. Distinct Hero Variant Carousel with Directional Slide Transition */}
+      {/* 1. Distinct Hero Variant Carousel */}
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={currentVariant.id}
@@ -141,18 +141,18 @@ export function Hero() {
           initial={
             shouldReduceMotion
               ? false
-              : { opacity: 0, x: direction > 0 ? 50 : -50 }
+              : { opacity: 0, x: direction > 0 ? 30 : -30 }
           }
           animate={{ opacity: 1, x: 0 }}
           exit={
             shouldReduceMotion
               ? undefined
-              : { opacity: 0, x: direction > 0 ? -50 : 50 }
+              : { opacity: 0, x: direction > 0 ? -30 : 30 }
           }
           transition={
             shouldReduceMotion
               ? { duration: 0 }
-              : { duration: 0.45, ease: [0.32, 0.72, 0, 1] }
+              : { duration: 0.35, ease: [0.32, 0.72, 0, 1] }
           }
           aria-label={`Slide ${activeIndex + 1} of ${totalVariants}: ${currentVariant.title}`}
         >
@@ -160,26 +160,24 @@ export function Hero() {
         </motion.div>
       </AnimatePresence>
 
-      {/* 2. Bottom Unified Floating Carousel Dock — Leaves Hero UI 100% Unobstructed */}
-      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-30 pointer-events-auto">
-        <div className="flex items-center gap-2 sm:gap-3 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-slate-950/85 backdrop-blur-2xl border border-white/20 text-white shadow-[0_16px_40px_rgba(0,0,0,0.5)] select-none">
-          
+      {/* 2. Sleek Floating 5-Hero Carousel Dock */}
+      <div className="absolute bottom-2.5 sm:bottom-4 left-1/2 -translate-x-1/2 z-30 pointer-events-auto w-max max-w-[calc(100vw-24px)] px-1">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1.5 sm:px-3.5 sm:py-1.5 rounded-full bg-slate-950/90 backdrop-blur-xl border border-white/20 text-white shadow-xl select-none">
+
           {/* Play / Pause Toggle Button */}
           <button
             type="button"
             onClick={() => setIsPlaying(!isPlaying)}
             aria-label={isPlaying ? "Pause layout carousel" : "Start layout carousel"}
-            className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center text-white transition-all cursor-pointer active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="w-7 h-7 sm:w-6 sm:h-6 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center text-white transition-all cursor-pointer active:scale-90 touch-manipulation shrink-0"
           >
             {isPlaying ? (
-              // Pause Icon
-              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+              <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24" aria-hidden="true">
                 <rect x="6" y="5" width="4" height="14" rx="1" />
                 <rect x="14" y="5" width="4" height="14" rx="1" />
               </svg>
             ) : (
-              // Play Icon
-              <svg className="w-3.5 h-3.5 fill-current ml-0.5" viewBox="0 0 24 24" aria-hidden="true">
+              <svg className="w-3 h-3 fill-current ml-0.5" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M7 5.5v13a1 1 0 0 0 1.55.83l10-6.5a1 1 0 0 0 0-1.66l-10-6.5A1 1 0 0 0 7 5.5z" />
               </svg>
             )}
@@ -190,24 +188,24 @@ export function Hero() {
             type="button"
             onClick={handlePrev}
             aria-label="Previous layout"
-            className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center text-white transition-all active:scale-90 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="w-7 h-7 sm:w-6 sm:h-6 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center text-white transition-all active:scale-90 cursor-pointer touch-manipulation shrink-0"
           >
-            <ArrowLeft01Icon className="w-4 h-4" />
+            <ArrowLeft01Icon className="w-3.5 h-3.5" />
           </button>
 
           {/* Counter & Current Layout Name */}
-          <div className="flex items-center gap-1.5 sm:gap-2 px-1">
-            <span className="text-[11px] font-mono text-white/50 tracking-wider">
+          <div className="flex items-center gap-1.5 px-1 min-w-0">
+            <span className="text-[10px] font-mono text-white/50 tracking-wider shrink-0">
               {currentVariant.num}/0{totalVariants}
             </span>
-            <span className="text-white/25">·</span>
-            <span className="text-xs font-mono font-bold tracking-wider uppercase text-white whitespace-nowrap">
+            <span className="text-white/25 shrink-0">·</span>
+            <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase text-white truncate max-w-[110px] xs:max-w-none">
               {currentVariant.title}
             </span>
           </div>
 
           {/* Direct Selection Progress Dots */}
-          <div className="hidden sm:flex items-center gap-1.5 px-1" role="tablist" aria-label="Select hero variant">
+          <div className="hidden sm:flex items-center gap-1 px-1 shrink-0" role="tablist" aria-label="Select hero variant">
             {HERO_VARIANTS.map((variant, idx) => (
               <button
                 key={variant.id}
@@ -216,11 +214,10 @@ export function Hero() {
                 onClick={() => handleJump(idx)}
                 aria-label={`Switch to layout ${variant.num}: ${variant.title}`}
                 aria-selected={idx === activeIndex}
-                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  idx === activeIndex
-                    ? "w-5 bg-teal-400 shadow-sm shadow-teal-400/50"
+                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer touch-manipulation ${idx === activeIndex
+                    ? "w-4 bg-teal-400 shadow-xs"
                     : "w-1.5 bg-white/30 hover:bg-white/60"
-                }`}
+                  }`}
               />
             ))}
           </div>
@@ -230,9 +227,9 @@ export function Hero() {
             type="button"
             onClick={handleNext}
             aria-label="Next layout"
-            className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center text-white transition-all active:scale-90 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="w-7 h-7 sm:w-6 sm:h-6 rounded-full bg-white/10 hover:bg-white/25 flex items-center justify-center text-white transition-all active:scale-90 cursor-pointer touch-manipulation shrink-0"
           >
-            <ArrowRight01Icon className="w-4 h-4" />
+            <ArrowRight01Icon className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>

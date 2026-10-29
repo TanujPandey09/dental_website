@@ -60,18 +60,18 @@ export function AboutStory() {
               </p>
             </div>
 
-            <div className="pt-6 border-t border-border/60 flex items-center gap-8">
+            <div className="pt-6 border-t border-border/60 grid grid-cols-2 sm:flex sm:items-center gap-4 sm:gap-8">
               <div>
-                <div className="text-3xl font-heading font-bold text-foreground mb-1">
+                <div className="text-2xl sm:text-3xl font-heading font-bold text-foreground mb-1">
                   {siteConfig.clinic.stats.yearsExperience}+
                 </div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">
                   Years of experience
                 </div>
               </div>
-              <div className="h-10 w-px bg-border/60" />
+              <div className="h-10 w-px bg-border/60 hidden sm:block" />
               <div>
-                <div className="text-3xl font-heading font-bold text-foreground mb-1">
+                <div className="text-2xl sm:text-3xl font-heading font-bold text-foreground mb-1">
                   {siteConfig.clinic.stats.patientsTreated}
                 </div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">
@@ -79,8 +79,8 @@ export function AboutStory() {
                 </div>
               </div>
               <div className="h-10 w-px bg-border/60 hidden sm:block" />
-              <div className="hidden sm:block">
-                <div className="text-3xl font-heading font-bold text-foreground mb-1">
+              <div className="col-span-2 sm:col-span-1 border-t border-border/40 pt-3 sm:border-0 sm:pt-0">
+                <div className="text-2xl sm:text-3xl font-heading font-bold text-foreground mb-1">
                   {siteConfig.clinic.stats.satisfactionScore}%
                 </div>
                 <div className="text-xs sm:text-sm text-muted-foreground font-medium">
@@ -122,213 +122,200 @@ export function AboutStory() {
       </div>
 
       {/* 2. Asymmetrical Bento Grid — Core Philosophy & Standards */}
-      <div className="p-2 sm:p-3 rounded-[2.5rem] bg-muted/30 border border-border/70 shadow-sm">
-        <div className="rounded-[calc(2.5rem-0.75rem)] bg-card/60 p-6 sm:p-10 lg:p-12 border border-border/40">
-          {/* Section Header */}
-          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-            <h3 className="text-2xl sm:text-4xl font-heading font-bold text-foreground mb-3">
-              Our Core Philosophy &amp; Ethos
-            </h3>
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-              The foundational principles that guide every interaction, clinical protocol, and unhurried appointment we deliver.
-            </p>
-          </div>
+      <div>
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+          <h3 className="text-2xl sm:text-4xl font-heading font-bold text-foreground mb-3">
+            Our Core Philosophy &amp; Ethos
+          </h3>
+          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+            The foundational principles that guide every interaction, clinical protocol, and unhurried appointment we deliver.
+          </p>
+        </div>
 
-          {/* Asymmetrical Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-stretch">
-            {/* Card 1: Anchor Hero Card (Span 8 on desktop, span 12 on mobile) */}
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: reduceMotion ? 0 : 0.5, ease: [0.32, 0.72, 0, 1] }}
-              className="col-span-1 md:col-span-12 lg:col-span-8 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col group min-h-[360px]"
-            >
-              <div className="relative rounded-[calc(1.5rem-2px)] overflow-hidden min-h-[360px] sm:min-h-[420px] p-6 sm:p-10 flex flex-col justify-between flex-1 text-white">
+        {/* Asymmetrical Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+          {/* Card 1: Anchor Hero Card (Span 8 on desktop, span 12 on mobile) */}
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: reduceMotion ? 0 : 0.5, ease: [0.32, 0.72, 0, 1] }}
+            className="col-span-1 md:col-span-12 lg:col-span-8 relative rounded-2xl overflow-hidden min-h-[360px] sm:min-h-[420px] p-6 sm:p-10 flex flex-col justify-between group shadow-xs border border-border/60 text-white"
+          >
+            <Image
+              src={images.about.clinicInterior}
+              alt="Flagship Operatory Architecture"
+              fill
+              sizes="(max-width: 1024px) 100vw, 66vw"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+            {/* Gradient Scrim */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/65 to-slate-950/30 z-10" />
+
+            {/* Top Badge Row */}
+            <div className="relative z-20 flex flex-wrap items-center justify-between gap-3">
+              <div className="backdrop-blur-md bg-white/15 border border-white/20 text-white px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 shadow-sm">
+                <StarIcon className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
+                <span>Flagship Operatory Philosophy</span>
+              </div>
+              <span className="text-[11px] font-bold tracking-wider uppercase text-emerald-300 bg-emerald-950/70 border border-emerald-500/30 px-3 py-1 rounded-full backdrop-blur-sm">
+                Radical Empathy
+              </span>
+            </div>
+
+            {/* Bottom Story Content */}
+            <div className="relative z-20 pt-16">
+              <h4 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-white leading-snug mb-3">
+                Radical Empathy Meets Architectural Serenity.
+              </h4>
+              <p className="text-sm sm:text-base text-white/85 leading-relaxed max-w-2xl mb-6 font-normal">
+                We designed every square foot of {siteConfig.clinic.name} around human nervous systems—replacing clinical intimidation with unhurried doctor consultations, acoustic privacy, and compassionate specialist care.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                <span className="backdrop-blur-md bg-white/10 border border-white/20 text-white/90 text-xs font-medium px-3 py-1 rounded-full">
+                  99.4% Comfort Score
+                </span>
+                <span className="backdrop-blur-md bg-white/10 border border-white/20 text-white/90 text-xs font-medium px-3 py-1 rounded-full">
+                  Unhurried Consultations
+                </span>
+                <span className="backdrop-blur-md bg-white/10 border border-white/20 text-white/90 text-xs font-medium px-3 py-1 rounded-full">
+                  Private Acoustic Suites
+                </span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Card 2: Micro-Precision 3D Diagnostics (Span 4 on desktop) */}
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.08, ease: [0.32, 0.72, 0, 1] }}
+            className="col-span-1 md:col-span-6 lg:col-span-4 rounded-2xl bg-card p-6 flex flex-col justify-between border border-border/70 hover:shadow-md hover:border-primary/40 transition-all duration-300 group shadow-xs"
+          >
+            <div>
+              <div className="relative h-36 sm:h-40 w-full rounded-xl overflow-hidden mb-5 border border-border/50">
                 <Image
-                  src={images.about.clinicInterior}
-                  alt="Flagship Operatory Architecture"
+                  src={images.about.dentalTechnology}
+                  alt="Digital 3D Intraoral Technology"
                   fill
-                  sizes="(max-width: 1024px) 100vw, 66vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                {/* Gradient Scrim */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/65 to-slate-950/30 z-10" />
-
-                {/* Top Badge Row */}
-                <div className="relative z-20 flex flex-wrap items-center justify-between gap-3">
-                  <div className="backdrop-blur-md bg-white/15 border border-white/20 text-white px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 shadow-sm">
-                    <StarIcon className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
-                    <span>Flagship Operatory Philosophy</span>
-                  </div>
-                  <span className="text-[11px] font-bold tracking-wider uppercase text-emerald-300 bg-emerald-950/70 border border-emerald-500/30 px-3 py-1 rounded-full backdrop-blur-sm">
-                    Radical Empathy
-                  </span>
-                </div>
-
-                {/* Bottom Story Content */}
-                <div className="relative z-20 pt-16">
-                  <h4 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-white leading-snug mb-3">
-                    Radical Empathy Meets Architectural Serenity.
-                  </h4>
-                  <p className="text-sm sm:text-base text-white/85 leading-relaxed max-w-2xl mb-6 font-normal">
-                    We designed every square foot of {siteConfig.clinic.name} around human nervous systems—replacing clinical intimidation with unhurried doctor consultations, acoustic privacy, and compassionate specialist care.
-                  </p>
-
-                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
-                    <span className="backdrop-blur-md bg-white/10 border border-white/20 text-white/90 text-xs font-medium px-3 py-1 rounded-full">
-                      99.4% Comfort Score
-                    </span>
-                    <span className="backdrop-blur-md bg-white/10 border border-white/20 text-white/90 text-xs font-medium px-3 py-1 rounded-full">
-                      Unhurried Consultations
-                    </span>
-                    <span className="backdrop-blur-md bg-white/10 border border-white/20 text-white/90 text-xs font-medium px-3 py-1 rounded-full">
-                      Private Acoustic Suites
-                    </span>
-                  </div>
+                <div className="absolute top-2.5 right-2.5 backdrop-blur-md bg-background/90 text-foreground text-[10px] font-bold px-2.5 py-1 rounded-full border border-border/60">
+                  0.02mm Accuracy
                 </div>
               </div>
-            </motion.div>
+              <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1 block">
+                Diagnostic Standard
+              </span>
+              <h4 className="text-xl font-heading font-bold text-foreground mb-2 leading-snug pt-0.5">
+                Micro-Precision 3D Scans
+              </h4>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                Sub-millimeter optical scanning eliminates uncomfortable putty impressions while providing instantaneous 3D digital simulations of your smile.
+              </p>
+            </div>
 
-            {/* Card 2: Micro-Precision 3D Diagnostics (Span 4 on desktop) */}
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.08, ease: [0.32, 0.72, 0, 1] }}
-              className="col-span-1 md:col-span-6 lg:col-span-4 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col min-h-[360px]"
-            >
-              <div className="rounded-[calc(1.5rem-2px)] bg-card p-6 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-lg transition-all duration-300 group">
-                <div>
-                  <div className="relative h-36 sm:h-40 w-full rounded-2xl overflow-hidden mb-5 border border-border/50">
-                    <Image
-                      src={images.about.dentalTechnology}
-                      alt="Digital 3D Intraoral Technology"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute top-2.5 right-2.5 backdrop-blur-md bg-background/90 text-foreground text-[10px] font-bold px-2.5 py-1 rounded-full border border-border/60">
-                      0.02mm Accuracy
-                    </div>
-                  </div>
-                  <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1 block">
-                    Diagnostic Standard
-                  </span>
-                  <h4 className="text-xl font-heading font-bold text-foreground mb-2 leading-snug pt-0.5">
-                    Micro-Precision 3D Scans
-                  </h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    Sub-millimeter optical scanning eliminates uncomfortable putty impressions while providing instantaneous 3D digital simulations of your smile.
-                  </p>
-                </div>
+            <div className="mt-5 pt-3 border-t border-border/60 flex items-center justify-between text-xs font-semibold text-primary">
+              <span>Diagnostic Spec</span>
+              <span className="bg-primary/10 px-2.5 py-0.5 rounded-full">Cone Beam 3D</span>
+            </div>
+          </motion.div>
 
-                <div className="mt-5 pt-3 border-t border-border/60 flex items-center justify-between text-xs font-semibold text-primary">
-                  <span>Diagnostic Spec</span>
-                  <span className="bg-primary/10 px-2.5 py-0.5 rounded-full">Cone Beam 3D</span>
-                </div>
+          {/* Card 3: Spa-Grade Sanctuary Amenities (Span 4) */}
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.16, ease: [0.32, 0.72, 0, 1] }}
+            className="col-span-1 md:col-span-6 lg:col-span-4 rounded-2xl bg-card p-6 flex flex-col justify-between border border-border/70 hover:shadow-md hover:border-primary/40 transition-all duration-300 group shadow-xs"
+          >
+            <div className="pt-1">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                <Sun01Icon className="w-6 h-6" />
               </div>
-            </motion.div>
+              <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1.5 block">
+                Sensory Protocol
+              </span>
+              <h4 className="text-xl font-heading font-bold text-foreground mb-2 leading-snug pt-0.5">
+                Spa-Grade Hospitality
+              </h4>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                Aromatherapy lounge suites, noise-canceling headphones with curated playlists, and warm lavender towels designed to neutralize appointment tension.
+              </p>
+            </div>
 
-            {/* Card 3: Spa-Grade Sanctuary Amenities (Span 4) */}
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.16, ease: [0.32, 0.72, 0, 1] }}
-              className="col-span-1 md:col-span-6 lg:col-span-4 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col min-h-[300px] overflow-visible"
-            >
-              <div className="rounded-[calc(1.5rem-2px)] bg-card p-6 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-lg transition-all duration-300 group overflow-visible">
-                <div className="pt-1">
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-                    <Sun01Icon className="w-6 h-6" />
-                  </div>
-                  <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1.5 block">
-                    Sensory Protocol
-                  </span>
-                  <h4 className="text-xl font-heading font-bold text-foreground mb-2 leading-snug pt-0.5">
-                    Spa-Grade Hospitality
-                  </h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    Aromatherapy lounge suites, noise-canceling headphones with curated playlists, and warm lavender towels designed to neutralize appointment tension.
-                  </p>
-                </div>
+            <div className="mt-5 pt-3 border-t border-border/60 flex items-center justify-between text-xs font-semibold text-primary">
+              <span>Sensory Metric</span>
+              <span className="bg-primary/10 px-2.5 py-0.5 rounded-full">Zero Clinical Odor</span>
+            </div>
+          </motion.div>
 
-                <div className="mt-5 pt-3 border-t border-border/60 flex items-center justify-between text-xs font-semibold text-primary">
-                  <span>Sensory Metric</span>
-                  <span className="bg-primary/10 px-2.5 py-0.5 rounded-full">Zero Clinical Odor</span>
-                </div>
+          {/* Card 4: 100% Biocompatible Materials (Span 4) */}
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.24, ease: [0.32, 0.72, 0, 1] }}
+            className="col-span-1 md:col-span-6 lg:col-span-4 rounded-2xl bg-card p-6 flex flex-col justify-between border border-border/70 hover:shadow-md hover:border-primary/40 transition-all duration-300 group shadow-xs"
+          >
+            <div className="pt-1">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                <Shield01Icon className="w-6 h-6" />
               </div>
-            </motion.div>
+              <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1.5 block">
+                Material Purity
+              </span>
+              <h4 className="text-xl font-heading font-bold text-foreground mb-2 leading-snug pt-0.5">
+                Biocompatible Materials
+              </h4>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                We strictly utilize metal-free Swiss zirconia ceramics, BPA-free composite resins, and medical Grade-5 titanium engineered for lifetime biocompatibility.
+              </p>
+            </div>
 
-            {/* Card 4: 100% Biocompatible Materials (Span 4) */}
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.24, ease: [0.32, 0.72, 0, 1] }}
-              className="col-span-1 md:col-span-6 lg:col-span-4 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col min-h-[300px] overflow-visible"
-            >
-              <div className="rounded-[calc(1.5rem-2px)] bg-card p-6 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-lg transition-all duration-300 group overflow-visible">
-                <div className="pt-1">
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-                    <Shield01Icon className="w-6 h-6" />
-                  </div>
-                  <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1.5 block">
-                    Material Purity
-                  </span>
-                  <h4 className="text-xl font-heading font-bold text-foreground mb-2 leading-snug pt-0.5">
-                    Biocompatible Materials
-                  </h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    We strictly utilize metal-free Swiss zirconia ceramics, BPA-free composite resins, and medical Grade-5 titanium engineered for lifetime biocompatibility.
-                  </p>
-                </div>
+            <div className="mt-5 pt-3 border-t border-border/60 flex items-center justify-between text-xs font-semibold text-primary">
+              <span>Safety Testing</span>
+              <span className="bg-primary/10 px-2.5 py-0.5 rounded-full">Swiss Ceramic Pure</span>
+            </div>
+          </motion.div>
 
-                <div className="mt-5 pt-3 border-t border-border/60 flex items-center justify-between text-xs font-semibold text-primary">
-                  <span>Safety Testing</span>
-                  <span className="bg-primary/10 px-2.5 py-0.5 rounded-full">Swiss Ceramic Pure</span>
-                </div>
+          {/* Card 5: Radical Ethics & Transparency (Span 4) */}
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.32, ease: [0.32, 0.72, 0, 1] }}
+            className="col-span-1 md:col-span-6 lg:col-span-4 rounded-2xl bg-card p-6 flex flex-col justify-between border border-border/70 hover:shadow-md hover:border-primary/40 transition-all duration-300 group shadow-xs"
+          >
+            <div className="pt-1">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                <Invoice01Icon className="w-6 h-6" />
               </div>
-            </motion.div>
+              <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1.5 block">
+                Patient Bill of Rights
+              </span>
+              <h4 className="text-xl font-heading font-bold text-foreground mb-2 leading-snug pt-0.5">
+                Zero-Surprise Pricing
+              </h4>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                High-resolution intraoral photos accompany every treatment plan. You see what we see, with clear itemized pricing reviewed before any procedure begins.
+              </p>
+            </div>
 
-            {/* Card 5: Radical Ethics & Transparency (Span 4) */}
-            <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.32, ease: [0.32, 0.72, 0, 1] }}
-              className="col-span-1 md:col-span-6 lg:col-span-4 p-2 rounded-3xl bg-muted/60 border border-border/80 shadow-sm flex flex-col min-h-[300px] overflow-visible"
-            >
-              <div className="rounded-[calc(1.5rem-2px)] bg-card p-6 flex flex-col justify-between flex-1 border border-border/60 hover:shadow-lg transition-all duration-300 group overflow-visible">
-                <div className="pt-1">
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-                    <Invoice01Icon className="w-6 h-6" />
-                  </div>
-                  <span className="text-[11px] font-bold text-primary uppercase tracking-wider mb-1.5 block">
-                    Patient Bill of Rights
-                  </span>
-                  <h4 className="text-xl font-heading font-bold text-foreground mb-2 leading-snug pt-0.5">
-                    Zero-Surprise Pricing
-                  </h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    High-resolution intraoral photos accompany every treatment plan. You see what we see, with clear itemized pricing reviewed before any procedure begins.
-                  </p>
-                </div>
-
-                <div className="mt-5 pt-3 border-t border-border/60 flex items-center justify-between text-xs font-semibold text-primary">
-                  <span>Billing Ethics</span>
-                  <span className="bg-primary/10 px-2.5 py-0.5 rounded-full">100% Upfront Estimates</span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+            <div className="mt-5 pt-3 border-t border-border/60 flex items-center justify-between text-xs font-semibold text-primary">
+              <span>Billing Ethics</span>
+              <span className="bg-primary/10 px-2.5 py-0.5 rounded-full">100% Upfront Estimates</span>
+            </div>
+          </motion.div>
         </div>
       </div>
 
       {/* 3. Sanctuary Clinic Tour Gallery */}
-      <div className="p-2 sm:p-3 rounded-[2.5rem] bg-secondary/80 text-secondary-foreground border border-border/60 shadow-lg relative overflow-hidden">
-        <div className="rounded-[calc(2.5rem-0.75rem)] bg-secondary p-6 sm:p-12 relative overflow-hidden">
+      <div className="rounded-2xl sm:rounded-3xl bg-secondary text-secondary-foreground border border-border/60 shadow-lg p-6 sm:p-12 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/15 rounded-full blur-[140px] pointer-events-none" />
 
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-14 items-center relative z-10">
@@ -360,6 +347,7 @@ export function AboutStory() {
                   size="lg"
                   variant="cta"
                   onClick={() => openBooking()}
+                  className="w-full sm:w-auto h-12 text-sm sm:text-base touch-manipulation"
                 >
                   <Calendar01Icon className="size-4 shrink-0" aria-hidden="true" />
                   <span>Experience The Practice</span>
@@ -418,7 +406,6 @@ export function AboutStory() {
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>

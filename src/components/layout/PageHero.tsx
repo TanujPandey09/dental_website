@@ -100,16 +100,16 @@ export function PageHero({
         </svg>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl relative z-10">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl relative z-10">
 
         {badge && (
           <motion.p
             initial={reduce ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: reduce ? 0 : 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="text-xs font-mono uppercase tracking-[0.22em] text-primary font-semibold mb-3"
+            className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-3"
           >
-            {badge}
+            {badge.endsWith("/") ? badge : `${badge} /`}
           </motion.p>
         )}
 
@@ -117,7 +117,7 @@ export function PageHero({
           initial={reduce ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: reduce ? 0 : 0.6, delay: reduce ? 0 : 0.08, ease: [0.16, 1, 0.3, 1] }}
-          className="text-3xl sm:text-5xl md:text-6xl font-heading font-bold text-foreground mb-4 sm:mb-5 tracking-tight leading-[1.1] text-balance"
+          className="text-3xl sm:text-5xl md:text-6xl font-sans font-medium text-foreground mb-4 sm:mb-5 tracking-[-0.03em] leading-[1.1] text-balance"
         >
           {title}
         </motion.h1>

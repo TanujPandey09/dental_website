@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/button";
 
 export function Footer() {
   return (
-    <footer className="bg-secondary text-secondary-foreground pt-16 sm:pt-20 pb-10 sm:pb-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+    <footer className="bg-secondary text-secondary-foreground pt-16 sm:pt-20 pb-28 sm:pb-12">
+      <div className="shell">
 
-        {/* Emergency Clinician Direct Access Banner - Double Bezel */}
-        <div className="p-1.5 rounded-3xl bg-white/5 border border-white/10 mb-12 md:mb-16 shadow-2xl">
-          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-5 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        {/* Emergency Clinician Direct Access Banner - Single Frosted Card */}
+        <div className="mb-12 md:mb-16">
+          <div className="rounded-3xl bg-white/5 border border-white/10 p-5 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-lg">
             <div className="flex items-start sm:items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-accent/20 border border-accent/30 flex items-center justify-center text-accent shrink-0">
                 <Call02Icon className="w-6 h-6" aria-hidden="true" />
@@ -19,9 +19,9 @@ export function Footer() {
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-xs uppercase tracking-wider font-bold text-accent">24/7 Urgent Triage Line</span>
+                  <span className="text-[11px] font-mono uppercase tracking-wider font-bold text-accent">24/7 Urgent Triage Line</span>
                 </div>
-                <p className="font-heading font-bold text-white text-base sm:text-xl">
+                <p className="font-sans font-medium text-white text-base sm:text-xl tracking-tight leading-snug">
                   Experiencing acute pain or dental trauma? Direct doctor on-call line:
                 </p>
                 <p className="text-secondary-foreground/70 text-xs sm:text-sm mt-0.5">
@@ -66,7 +66,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h2 className="font-heading font-semibold text-base md:text-lg mb-4 md:mb-6">Quick Links</h2>
+            <h3 className="font-sans font-medium text-white text-base md:text-lg tracking-tight mb-4 md:mb-6">Quick Links</h3>
             <ul className="space-y-3 md:space-y-4">
               {siteConfig.navigation.footer.quickLinks.map((link) => (
                 <li key={link.name}>
@@ -81,7 +81,7 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h2 className="font-heading font-semibold text-base md:text-lg mb-4 md:mb-6">Our Services</h2>
+            <h3 className="font-sans font-medium text-white text-base md:text-lg tracking-tight mb-4 md:mb-6">Our Services</h3>
             <ul className="space-y-3 md:space-y-4">
               {siteConfig.navigation.footer.services.map((service) => {
                 const match = siteConfig.services.find(
@@ -102,7 +102,7 @@ export function Footer() {
 
           {/* Contact */}
           <div className="col-span-2 lg:col-span-1">
-            <h2 className="font-heading font-semibold text-base md:text-lg mb-4 md:mb-6">Contact Info</h2>
+            <h3 className="font-sans font-medium text-white text-base md:text-lg tracking-tight mb-4 md:mb-6">Contact Info</h3>
             <ul className="space-y-3 md:space-y-4">
               <li className="flex items-start gap-3 text-secondary-foreground/70 text-sm">
                 <Location01Icon className="w-5 h-5 text-accent shrink-0 mt-0.5" />

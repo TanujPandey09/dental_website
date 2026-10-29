@@ -20,7 +20,7 @@ export function ClinicMap() {
 
   return (
     <section aria-label="Clinic location and directions" className="py-16 sm:py-24 bg-background border-t border-border/40 relative">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div className="shell">
         <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
           <div>
             <h2 className="text-2xl sm:text-4xl font-heading font-bold text-foreground tracking-tight">

@@ -144,6 +144,32 @@ export interface HeroSlide {
   categoryName: string;
 }
 
+/**
+ * One entry per slide of the cinematic story carousel (default hero).
+ *
+ * Every slide swaps the full visual story: background photo, eyebrow badge,
+ * headline, supporting copy, CTAs, highlighted treatment chip and the
+ * featured-specialist card — all driven from this one block of config.
+ */
+export interface HeroCarouselSlide {
+  id: string;
+  eyebrow: string;
+  headline: string;
+  headlineAccent: string;
+  description: string;
+  primaryCtaText: string;
+  secondaryCtaText: string;
+  secondaryCtaHref: string;
+  /** Label of the procedure chip that appears active for this slide. */
+  chip: string;
+  image: string;
+  imageAlt: string;
+  /** object-position of the cover crop, e.g. "70% 50%". */
+  imagePosition: string;
+  /** Doctor `id` featured in the floating specialist card. */
+  featuredDoctorId: string;
+}
+
 export interface HeroConfig {
   badge: string;
   headline: string;
@@ -198,6 +224,10 @@ export interface DoctorConfig {
   testimonials?: { id: number; text: string; author: string; rating: number; platform: string }[];
   heroDescription?: string;
   demo: boolean;
+  licenseNumber?: string;
+  clinicLocation?: string;
+  consultFee?: string;
+  nextAvailable?: string;
 }
 
 export interface TestimonialConfig {
@@ -322,6 +352,7 @@ export interface SiteConfig {
   awards: string[];
   accreditations: AccreditationConfig[];
   heroSlides: HeroSlide[];
+  heroCarousel: HeroCarouselSlide[];
 }
 
 // =============================================================================
@@ -496,6 +527,56 @@ export const defaultSiteConfig: SiteConfig = {
       categoryName: "Spatial Sanctuary",
     },
   ],
+  heroCarousel: [
+    {
+      id: "consult",
+      eyebrow: "Open today · until 19:00",
+      headline: "Modern dentistry",
+      headlineAccent: "with a gentle touch.",
+      description:
+        "Meet your specialist in a private acoustic suite. Examines, 3D scans, and a clear written plan — zero sales pressure, transparent estimates, in-network with major PPO plans.",
+      primaryCtaText: "Book an appointment",
+      secondaryCtaText: "Explore treatments",
+      secondaryCtaHref: "/services",
+      chip: "Dental check-ups",
+      image: images.heroAveline,
+      imageAlt: "Dentist reviewing a mirror-checked smile with a patient seated in a Lumina treatment chair",
+      imagePosition: "70% 50%",
+      featuredDoctorId: "dr-sarah-jenkins",
+    },
+    {
+      id: "treatment",
+      eyebrow: "Computer-guided implant suites",
+      headline: "Unhurried treatment,",
+      headlineAccent: "engineered for calm.",
+      description:
+        "Sub-millimeter clinical precision paired with absolute nervous system calm — HEPA-14 air, under-32 dB suites, and margins crafted to 0.02 mm tolerance.",
+      primaryCtaText: "Book an appointment",
+      secondaryCtaText: "Meet the specialists",
+      secondaryCtaHref: "/doctors",
+      chip: "Dental implants",
+      image: images.heroCinematic,
+      imageAlt: "Private Lumina operatory suite prepared for computer-guided implant treatment",
+      imagePosition: "50% 50%",
+      featuredDoctorId: "dr-michael-chen",
+    },
+    {
+      id: "result",
+      eyebrow: "Same-day appointments available",
+      headline: "Confidence you can see",
+      headlineAccent: "every time you smile.",
+      description:
+        "Gentle whitening and cosmetic detail work, finished with a mirror moment you'll love. Transparent estimates up front and a two-minute booking for your first visit.",
+      primaryCtaText: "Book your first visit",
+      secondaryCtaText: "Call (555) 123-4567",
+      secondaryCtaHref: "tel:(555) 123-4567",
+      chip: "Teeth whitening",
+      image: images.heroDentix,
+      imageAlt: "Confident patient smiling with natural results while checking their smile in a hand mirror",
+      imagePosition: "70% 20%",
+      featuredDoctorId: "dr-robert-taylor",
+    },
+  ],
   services: [
     {
       id: "cosmetic-dentistry",
@@ -642,6 +723,10 @@ export const defaultSiteConfig: SiteConfig = {
       heroImage:
         images.doctors["dr-sarah-jenkins"],
       heroDescription: "Elevate your natural smile with ultra-thin porcelain veneers and facial aesthetic harmony.",
+      licenseNumber: "DDS · TX LIC. 21844",
+      clinicLocation: "South Congress Flagship",
+      consultFee: "$120 · Free with scan",
+      nextAvailable: "Today, 2:30 PM",
       demo: false,
       philosophy:
         "I believe aesthetic dentistry should enhance your natural facial architecture, not create artificial-looking teeth. Every veneer and smile makeover begins with listening to how you smile in real life.",
@@ -697,6 +782,10 @@ export const defaultSiteConfig: SiteConfig = {
       heroImage:
         images.doctors["dr-michael-chen"],
       heroDescription: "Permanent, computer-guided dental implants restoring full chewing function and natural smile beauty.",
+      licenseNumber: "DMD · TX LIC. 24983",
+      clinicLocation: "Westlake Surgical Suite",
+      consultFee: "In-Network · Free 3D Triage",
+      nextAvailable: "Tomorrow, 10:15 AM",
       demo: false,
       philosophy:
         "Computer-guided implantology eliminates guesswork. By mapping bone density and neural pathways in 3D prior to surgery, we minimize tissue trauma, accelerate healing, and ensure lifelong stability.",
@@ -750,6 +839,10 @@ export const defaultSiteConfig: SiteConfig = {
       heroImage:
         images.doctors["dr-emily-rodriguez"],
       heroDescription: "Discreet clear aligners and modern orthodontics for healthy alignment, balanced bites, and lifelong jaw comfort.",
+      licenseNumber: "DDS, MS · TX LIC. 28410",
+      clinicLocation: "Mueller Ortho Hub",
+      consultFee: "Complimentary Aligner Scan",
+      nextAvailable: "Today, 4:00 PM",
       philosophy:
         "A straight smile is more than aesthetics—it protects your bite, jaw joints, and enamel wear for decades. We design discreet digital aligner paths tailored seamlessly around your professional and personal lifestyle.",
       demo: false,
@@ -803,6 +896,10 @@ export const defaultSiteConfig: SiteConfig = {
       heroImage:
         images.doctors["dr-james-wilson"],
       heroDescription: "Painless, single-visit root canal therapy and microsurgical tooth preservation.",
+      licenseNumber: "DMD · TX LIC. 30192",
+      clinicLocation: "Downtown Endodontic Center",
+      consultFee: "Emergency Triage Covered",
+      nextAvailable: "Same-Day Emergency",
       philosophy:
         "Tooth pain should never be endured. With computerized local anesthesia, acoustic suites, and rotary micro-instruments, root canal therapy is as quiet, comfortable, and routine as a simple filling.",
       demo: false,
@@ -855,6 +952,10 @@ export const defaultSiteConfig: SiteConfig = {
       heroImage:
         images.doctors["dr-amanda-lee"],
       heroDescription: "Warm, joyful, and fear-free dental visits creating lifelong healthy oral habits for children and teens.",
+      licenseNumber: "DDS · TX LIC. 29331",
+      clinicLocation: "Mueller Family & Pediatric",
+      consultFee: "Child Wellness In-Network",
+      nextAvailable: "Thursday, 9:00 AM",
       philosophy:
         "Early dental experiences shape a child's relationship with healthcare for life. We use playful curiosity, patient pacing, and positive reinforcement so kids genuinely look forward to every visit.",
       demo: false,
@@ -907,6 +1008,10 @@ export const defaultSiteConfig: SiteConfig = {
       heroImage:
         images.doctors["dr-robert-taylor"],
       heroDescription: "Comprehensive oral wellness, gentle hygiene cleanings, and non-invasive restorative dentistry.",
+      licenseNumber: "DDS · TX LIC. 18274",
+      clinicLocation: "South Congress Flagship",
+      consultFee: "Included in Checkup",
+      nextAvailable: "Today, 3:15 PM",
       philosophy:
         "The best dental work is the work you never need. Through thorough, gentle preventive hygiene and early digital detection, we help patients preserve their natural teeth for a lifetime.",
       demo: false,
@@ -1162,7 +1267,7 @@ export const defaultSiteConfig: SiteConfig = {
   },
   ui: {
     showTemplateSwitchers: true,
-    showSampleContentNotices: true,
+    showSampleContentNotices: false,
   },
   awards: [
     "American Dental Association (ADA)",

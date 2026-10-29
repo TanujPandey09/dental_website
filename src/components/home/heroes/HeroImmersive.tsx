@@ -84,7 +84,7 @@ export function HeroImmersive() {
   };
 
   return (
-    <section className="relative min-h-[82vh] lg:min-h-[85vh] pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-32 lg:pb-24 overflow-hidden bg-[#07142A] text-white flex flex-col justify-center">
+    <section className="relative min-h-[80vh] lg:min-h-[85vh] pt-16 sm:pt-28 pb-24 sm:pb-20 lg:pt-32 lg:pb-24 overflow-hidden bg-[#07142A] text-white flex flex-col justify-center">
       {/* Full-bleed Architectural Clinic Photography */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -106,7 +106,7 @@ export function HeroImmersive() {
         />
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+      <div className="shell relative z-10">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -118,10 +118,10 @@ export function HeroImmersive() {
             {/* Architectural Eyebrow Badge */}
             <motion.div
               variants={itemVariants}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 backdrop-blur-md text-white/90 text-xs font-semibold mb-4 shadow-sm"
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/10 border border-white/15 backdrop-blur-md text-white/90 text-xs font-semibold mb-3 shadow-xs"
             >
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-              <span className="tracking-wide uppercase text-[11px] font-mono">
+              <span className="tracking-wide uppercase text-[10px] sm:text-[11px] font-mono">
                 {immersiveSlide?.badge || "ACOUSTIC SANCTUARY ARCHITECTURE"}
               </span>
             </motion.div>
@@ -129,7 +129,7 @@ export function HeroImmersive() {
             {/* Headline */}
             <motion.h1
               variants={itemVariants}
-              className="text-3xl sm:text-4xl lg:text-[2.85rem] font-heading font-bold text-white leading-[1.08] tracking-tight mb-4 text-balance"
+              className="text-2xl xs:text-3xl sm:text-4xl lg:text-[2.85rem] font-heading font-bold text-white leading-[1.12] tracking-tight mb-3 text-balance"
             >
               {immersiveSlide?.headline || "Space to breathe."} <br />
               <span className="italic font-normal text-accent font-serif">
@@ -140,57 +140,55 @@ export function HeroImmersive() {
             {/* Subtitle - Short, Scannable Outcome Line */}
             <motion.p
               variants={itemVariants}
-              className="text-sm sm:text-base text-white/80 leading-relaxed mb-6 max-w-lg font-normal"
+              className="text-sm sm:text-base text-white/80 leading-relaxed mb-5 max-w-lg font-normal"
             >
               {immersiveSlide?.description ||
                 "Hospital-grade HEPA-14 air filtration, natural daylight operatory suites, and acoustic wall dampening designed around nervous patients."}
             </motion.p>
 
-            {/* Dual CTAs with Button-in-Button Trailing Icon */}
+            {/* Dual CTAs — Rectangular rounded-lg with inline pixel-perfect icons */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto mb-7"
+              className="flex flex-row items-center gap-2.5 sm:gap-3 mb-5"
             >
               <Button
-                size="lg"
+                size="default"
                 onClick={openBooking}
-                className="rounded-full bg-white text-slate-950 hover:bg-slate-100 font-semibold shadow-xl shadow-black/25 px-6 h-12 flex items-center gap-2.5 cursor-pointer group"
+                className="rounded-lg bg-white text-slate-950 hover:bg-slate-100 font-semibold shadow-md px-3.5 sm:px-5 h-10 sm:h-11 flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer group touch-manipulation text-xs sm:text-sm shrink-0"
               >
-                <span>{immersiveSlide?.primaryCtaText || "Reserve Private Suite"}</span>
-                <span className="w-6 h-6 rounded-full bg-slate-950/10 flex items-center justify-center transition-transform group-hover:translate-x-0.5">
-                  <ArrowRight01Icon className="size-3.5 text-slate-950" aria-hidden="true" />
-                </span>
+                <span>{immersiveSlide?.primaryCtaText || "Reserve Suite"}</span>
+                <ArrowRight01Icon className="size-3.5 sm:size-4 shrink-0 text-slate-950 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
               </Button>
 
               <Button
                 asChild
-                size="lg"
+                size="default"
                 variant="outline"
-                className="rounded-full border-white/20 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-6 h-12 font-semibold cursor-pointer"
+                className="rounded-lg border-white/20 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white px-3.5 sm:px-5 h-10 sm:h-11 font-semibold cursor-pointer touch-manipulation text-xs sm:text-sm justify-center shrink-0"
               >
                 <Link href={immersiveSlide?.secondaryCtaHref || "/about"}>
-                  <span>{immersiveSlide?.secondaryCtaText || "Take 360° Virtual Tour"}</span>
+                  <span>Virtual Tour</span>
                 </Link>
               </Button>
             </motion.div>
 
-            {/* Live Clinic Open Status Pill */}
+            {/* Live Clinic Open Status */}
             <motion.div
               variants={itemVariants}
-              className="flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-xs text-white/80"
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-md bg-white/5 border border-white/10 backdrop-blur-md text-xs text-white/80"
             >
               <span className="flex items-center gap-1.5 font-medium">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
                 <span className="text-white font-semibold">Open Today</span> Until 7:00 PM
               </span>
-              <span className="w-px h-3.5 bg-white/20" aria-hidden="true" />
-              <span className="text-[11px] text-accent font-mono uppercase tracking-wider">
+              <span className="w-px h-3 bg-white/20" aria-hidden="true" />
+              <span className="text-[10px] text-accent font-mono uppercase tracking-wider">
                 Suites Available Today
               </span>
             </motion.div>
           </div>
 
-          {/* Right Column: Interactive Double-Bezel Architectural Suite Engineering Matrix (Auto-cycles, pauses on hover) */}
+          {/* Right Column: Architectural Suite Engineering Matrix (Clean Single Frame) */}
           <motion.div
             variants={itemVariants}
             className="lg:col-span-5 relative w-full"
@@ -198,7 +196,7 @@ export function HeroImmersive() {
             onMouseLeave={() => setIsPaused(false)}
           >
             {/* Top Interactive Feature Selector Tabs */}
-            <div className="flex items-center gap-1.5 mb-3 p-1 rounded-xl bg-white/[0.06] border border-white/10 backdrop-blur-md">
+            <div className="flex items-center gap-1.5 mb-2.5 p-1 rounded-lg bg-white/[0.06] border border-white/10 backdrop-blur-md">
               {architecturalPillars.map((pillar) => {
                 const isActive = pillar.id === activePillarId;
                 return (
@@ -206,13 +204,13 @@ export function HeroImmersive() {
                     key={pillar.id}
                     type="button"
                     onClick={() => setActivePillarId(pillar.id)}
-                    className={`relative overflow-hidden flex-1 py-1.5 px-2 text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase rounded-lg transition-all cursor-pointer text-center ${
+                    className={`relative overflow-hidden flex-1 min-h-[36px] sm:min-h-[38px] py-1 px-1 sm:px-2 text-[9px] xs:text-[10px] sm:text-[11px] font-mono font-bold tracking-tight sm:tracking-wider uppercase rounded-md transition-all cursor-pointer text-center touch-manipulation flex items-center justify-center ${
                       isActive
-                        ? "bg-white text-slate-950 shadow-md"
-                        : "text-white/60 hover:text-white hover:bg-white/10"
+                        ? "bg-white text-slate-950 shadow-xs font-extrabold"
+                        : "text-white/70 hover:text-white hover:bg-white/10"
                     }`}
                   >
-                    <span className="relative z-10">{pillar.tabLabel}</span>
+                    <span className="relative z-10 truncate">{pillar.tabLabel}</span>
                     {isActive && !isPaused && !reduceMotion && (
                       <motion.div
                         key={pillar.id}
@@ -227,52 +225,49 @@ export function HeroImmersive() {
               })}
             </div>
 
-            {/* Double-Bezel Outer Card */}
-            <div className="p-2 sm:p-2.5 rounded-[2rem] bg-white/[0.04] border border-white/15 backdrop-blur-xl shadow-[0_30px_70px_rgba(0,0,0,0.6)]">
-              {/* Inner Core Container */}
-              <div className="relative aspect-[3/4] sm:aspect-[4/5] max-h-[460px] rounded-[calc(2rem-0.625rem)] overflow-hidden bg-slate-900 group mx-auto w-full">
-                <Image
-                  src={images.heroArchitectural || images.clinicInterior}
-                  alt="Architectural Suite Interior"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover object-center scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/35 to-transparent pointer-events-none" />
+            {/* Clean Single Frame */}
+            <div className="relative aspect-[3/4] sm:aspect-[4/5] max-h-[440px] rounded-xl overflow-hidden bg-slate-900 border border-white/15 shadow-2xl group mx-auto w-full">
+              <Image
+                src={images.heroArchitectural || images.clinicInterior}
+                alt="Architectural Suite Interior"
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover object-center scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/35 to-transparent pointer-events-none" />
 
-                {/* Top-Right Pill */}
-                <div className="absolute top-3.5 right-3.5 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/75 backdrop-blur-md border border-white/20 text-white text-[10px] font-semibold uppercase tracking-wider shadow-sm z-10">
-                  <CheckmarkBadge01Icon className="w-3.5 h-3.5 text-accent" aria-hidden="true" />
-                  <span>Hospital-Grade</span>
-                </div>
+              {/* Top-Right Badge */}
+              <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-950/75 backdrop-blur-md border border-white/20 text-white text-[10px] font-semibold uppercase tracking-wider shadow-xs z-10">
+                <CheckmarkBadge01Icon className="w-3.5 h-3.5 text-accent" aria-hidden="true" />
+                <span>Hospital-Grade</span>
+              </div>
 
-                {/* Bottom Floating Engineering Spec Card */}
-                <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 bg-slate-950/85 backdrop-blur-xl border border-white/20 rounded-2xl p-4 shadow-2xl z-10">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={currentPillar.id}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.25 }}
-                    >
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-[10px] font-mono text-accent uppercase tracking-widest font-semibold">
-                          {currentPillar.tag}
-                        </span>
-                        <span className="text-xs font-mono font-bold text-emerald-400">
-                          {currentPillar.stat}
-                        </span>
-                      </div>
-                      <h3 className="text-base sm:text-lg font-heading font-bold text-white mb-1">
-                        {currentPillar.title}
-                      </h3>
-                      <p className="text-xs text-white/80 leading-relaxed font-normal">
-                        {currentPillar.desc}
-                      </p>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
+              {/* Bottom Floating Engineering Spec Card */}
+              <div className="absolute bottom-3 left-3 right-3 bg-slate-950/85 backdrop-blur-xl border border-white/20 rounded-lg p-3 sm:p-3.5 shadow-xl z-10">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentPillar.id}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[10px] font-mono text-accent uppercase tracking-widest font-semibold">
+                        {currentPillar.tag}
+                      </span>
+                      <span className="text-xs font-mono font-bold text-emerald-400">
+                        {currentPillar.stat}
+                      </span>
+                    </div>
+                    <h3 className="text-sm sm:text-base font-heading font-bold text-white mb-0.5">
+                      {currentPillar.title}
+                    </h3>
+                    <p className="text-xs text-white/80 leading-relaxed font-normal">
+                      {currentPillar.desc}
+                    </p>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
           </motion.div>

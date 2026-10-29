@@ -63,7 +63,7 @@ export function Navbar() {
           : "py-2 sm:py-2 border-b border-border/40"
       )}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between">
+      <div className="shell flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
@@ -75,7 +75,7 @@ export function Navbar() {
             alt={siteConfig.clinic.name}
             width={185}
             height={72}
-            className="h-12 w-auto sm:h-13 transition-transform duration-300 group-hover:scale-[1.02]"
+            className="h-9 xs:h-10 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-[1.02]"
             priority
           />
         </Link>
@@ -106,11 +106,20 @@ export function Navbar() {
           </ul>
 
           <div className="flex items-center gap-3 xl:gap-4 border-l border-border pl-4 xl:pl-6">
+            {/* Live Clinic Open Status Badge (from Aveline & Luma references) */}
+            <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 text-xs font-semibold shrink-0">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span>Open now · until 19:00</span>
+            </div>
+
             <a
               href={`tel:${siteConfig.contact.phone}`}
               className="group/call hidden xl:flex items-center gap-2.5 text-sm font-medium text-muted-foreground hover:text-primary transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 whitespace-nowrap"
             >
-              <span className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover/call:bg-primary group-hover/call:text-white transition-colors">
+              <span className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover/call:bg-primary group-hover/call:text-white transition-colors">
                 <Call02Icon className="w-3.5 h-3.5" aria-hidden="true" />
               </span>
               <span>{siteConfig.contact.phone}</span>
@@ -120,9 +129,10 @@ export function Navbar() {
               size="default"
               variant="cta"
               onClick={openBooking}
+              className="rounded-lg h-10 px-4 text-xs font-semibold"
             >
               <Calendar01Icon className="size-4 shrink-0" aria-hidden="true" />
-              <span>Book Appointment</span>
+              <span>Book Visit</span>
             </Button>
           </div>
         </nav>
@@ -133,14 +143,14 @@ export function Navbar() {
             size="sm"
             variant="cta"
             onClick={openBooking}
-            className="inline-flex text-xs px-3 h-9"
+            className="inline-flex text-xs px-3 h-9 font-semibold touch-manipulation rounded-lg"
           >
             <Calendar01Icon className="size-3.5 shrink-0" aria-hidden="true" />
             <span>Book</span>
           </Button>
 
           <button
-            className="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center rounded-lg border border-border/70 bg-card/60 text-foreground hover:text-primary hover:border-primary/50 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+            className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-lg border border-border/70 bg-card/80 text-foreground hover:text-primary hover:border-primary/50 transition-colors cursor-pointer touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-95"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
@@ -185,7 +195,7 @@ export function Navbar() {
                   className="h-8 w-auto"
                 />
                 <button
-                  className="p-2 text-foreground/80 hover:text-foreground bg-muted/50 hover:bg-muted rounded-full transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+                  className="min-w-[44px] min-h-[44px] flex items-center justify-center text-foreground/80 hover:text-foreground bg-muted/60 hover:bg-muted rounded-lg transition-colors cursor-pointer touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-95"
                   onClick={() => setMobileMenuOpen(false)}
                   aria-label="Close menu"
                 >
@@ -299,6 +309,28 @@ export function Navbar() {
                         </div>
                       </div>
 
+                      {/* Doctors Page (2 Views) */}
+                      <div className="space-y-1.5 pt-2 border-t border-border/60">
+                        <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+                          Doctors Page (2)
+                        </div>
+                        <div className="grid grid-cols-2 gap-1.5">
+                          {[
+                            { href: "/doctors", label: "01 Clinicians" },
+                            { href: "/doctors?view=dentix", label: "02 Dentix" },
+                          ].map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="py-1 px-1.5 rounded-lg text-[11px] font-mono text-center bg-card border border-border/70 text-foreground/80 hover:border-primary/50 hover:text-primary transition-all truncate"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+
                       {/* About Page (3 Views) */}
                       <div className="space-y-1.5 pt-2 border-t border-border/60">
                         <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
@@ -325,10 +357,10 @@ export function Navbar() {
                   )}
 
                   {/* Mobile Drawer Bottom Contact & Action */}
-                  <div className="space-y-3 pt-3 border-t border-border">
+                  <div className="space-y-3 pt-3 border-t border-border pb-[max(1.5rem,env(safe-area-inset-bottom))]">
                     <a
                       href={`tel:${siteConfig.contact.phone}`}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-muted/40 hover:bg-muted/70 text-sm font-medium transition-colors"
+                      className="flex items-center gap-3 p-3 rounded-xl bg-muted/40 hover:bg-muted/70 text-sm font-medium transition-colors touch-manipulation active:scale-[0.98]"
                     >
                       <span className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
                         <Call02Icon className="w-4 h-4" />
@@ -339,7 +371,7 @@ export function Navbar() {
                     <Button
                       size="lg"
                       variant="cta"
-                      className="w-full justify-center"
+                      className="w-full justify-center h-12 text-sm font-semibold touch-manipulation"
                       onClick={() => {
                         setMobileMenuOpen(false);
                         openBooking();

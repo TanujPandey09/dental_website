@@ -19,6 +19,10 @@ export interface BookingDraft {
   fullName?: string;
   /** Phone number as typed; sanitized before storage. */
   phone?: string;
+  /** Preferred appointment date string (e.g. YYYY-MM-DD). */
+  preferredDate?: string;
+  /** Initial message or notes from patient. */
+  message?: string;
 }
 
 interface BookingContextType {
@@ -77,6 +81,12 @@ function sanitizeDraft(draft?: BookingDraft | null): BookingDraft | null {
 
   const phone = cleanText(draft.phone, 40).replace(/[^\d()+\-. ]/g, "").slice(0, 20);
   if (phone) clean.phone = phone;
+
+  const preferredDate = cleanText(draft.preferredDate, 20);
+  if (preferredDate) clean.preferredDate = preferredDate;
+
+  const message = cleanText(draft.message, 500);
+  if (message) clean.message = message;
 
   return Object.keys(clean).length > 0 ? clean : null;
 }

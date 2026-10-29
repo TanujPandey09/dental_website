@@ -53,6 +53,8 @@ export const viewport: Viewport = {
 import { BookingProvider } from "@/components/BookingContext";
 import { HeroStyleProvider } from "@/components/HeroStyleContext";
 import { MobileTemplateSwitcher } from "@/components/ui/MobileTemplateSwitcher";
+import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
+import { ScreenLoader } from "@/components/ui/ScreenLoader";
 
 export default function RootLayout({
   children,
@@ -63,6 +65,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={cn(fraunces.variable, inter.variable, "antialiased")}>
       <body suppressHydrationWarning className="min-h-screen bg-background font-body flex flex-col overflow-x-hidden">
         <MotionConfig reducedMotion="user">
+          <ScreenLoader />
           <SmoothScroll>
             <BookingProvider>
               <HeroStyleProvider>
@@ -77,6 +80,7 @@ export default function RootLayout({
                   {children}
                 </main>
                 <Footer />
+                <MobileStickyBar />
                 <MobileTemplateSwitcher />
               </HeroStyleProvider>
             </BookingProvider>

@@ -10,6 +10,8 @@ import type { NextConfig } from "next";
  *     remotePatterns: [{ protocol: "https", hostname: "images.example.com" }],
  *   },
  */
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  devIndicators: false,
+};
 
 export default nextConfig;

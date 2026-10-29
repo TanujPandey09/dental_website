@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { images } from "@/config/images";
 import siteConfig, { type DoctorConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { CTA } from "@/components/home/CTA";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -213,16 +214,18 @@ export function ServiceClient({ slug }: { slug: string }) {
     <div className="bg-background min-h-screen pt-20 sm:pt-24 pb-0 overflow-x-clip">
 
       {/* 1. Hero Section with Double-Bezel Image Framing */}
-      <section className="container mx-auto px-4 md:px-8 pt-4 sm:pt-6 lg:pt-8 pb-10 sm:pb-16 max-w-7xl">
+      <section className="shell pt-4 sm:pt-6 lg:pt-8 pb-10 sm:pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div className="space-y-6 sm:space-y-8">
             <div className="space-y-3 sm:space-y-4">
-              <p className="text-xs font-mono uppercase tracking-[0.2em] text-primary font-semibold mb-2">
-                {service?.category ?? "Specialist Care"}
+              <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-2">
+                {service?.category ? `${service.category} /` : "Specialist Care /"}
               </p>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-foreground leading-tight">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-sans font-medium text-foreground tracking-[-0.03em] leading-tight">
                 {service?.detailTitle ? `${service.detailTitle} — ` : "Advanced "}
-                <span className="text-primary">{title}</span>
+                <span className="inline-block rounded-md bg-primary/20 text-foreground px-2 py-0.5 font-normal">
+                  {title}
+                </span>
               </h1>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl">
                 {service?.detailSubtitle
@@ -243,12 +246,12 @@ export function ServiceClient({ slug }: { slug: string }) {
             </ul>
 
             {/* Button Actions */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
               <Button
                 size="lg"
                 variant="cta"
                 onClick={openBooking}
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto h-12 text-sm sm:text-base touch-manipulation"
               >
                 <Calendar01Icon className="size-4 shrink-0" aria-hidden="true" />
                 <span>{siteConfig.hero.ctaTextPlain}</span>
@@ -258,7 +261,7 @@ export function ServiceClient({ slug }: { slug: string }) {
                 asChild
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto h-12 text-sm sm:text-base touch-manipulation"
               >
                 <a href={`tel:${siteConfig.contact.phone}`}>
                   <Call02Icon className="size-4" aria-hidden="true" />
@@ -268,41 +271,39 @@ export function ServiceClient({ slug }: { slug: string }) {
             </div>
           </div>
 
-          {/* Double-Bezel Image Showcase */}
-          <div className="p-2 sm:p-2.5 rounded-[2.5rem] bg-muted/40 border border-border/80 shadow-2xl">
-            <div className="relative h-[340px] sm:h-[460px] lg:h-[520px] rounded-[calc(2.5rem-0.5rem)] overflow-hidden shadow-lg">
-              <div className="absolute inset-0 z-0 bg-muted" ref={heroImageRef}>
-                <Image
-                  src={heroImage}
-                  alt={title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover scale-105"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent" />
-              </div>
+          {/* Crisp Single-Card Image Showcase */}
+          <div className="relative h-[300px] xs:h-[360px] sm:h-[460px] lg:h-[520px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-border/70">
+            <div className="absolute inset-0 z-0 bg-muted" ref={heroImageRef}>
+              <Image
+                src={heroImage}
+                alt={title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover scale-105"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent" />
+            </div>
 
-              {/* Bottom Metrics Bar */}
-              <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 backdrop-blur-md bg-card/90 border border-border/80 p-3 sm:p-5 rounded-2xl shadow-xl z-10 grid grid-cols-3 gap-2 sm:gap-4 divide-x divide-border">
-                <div className="text-center">
-                  <div className="text-lg sm:text-2xl font-bold font-heading text-foreground">
-                    {reduceMotion ? `${siteConfig.clinic.happyPatients}+` : <CountUp end={siteConfig.clinic.happyPatients} duration={2} separator="," suffix="+" enableScrollSpy />}
-                  </div>
-                  <div className="text-[10px] sm:text-xs text-muted-foreground font-medium mt-0.5">Happy Patients</div>
+            {/* Bottom Metrics Bar */}
+            <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 backdrop-blur-md bg-card/90 border border-border/80 p-3 sm:p-5 rounded-xl sm:rounded-2xl shadow-xl z-10 grid grid-cols-3 gap-2 sm:gap-4 divide-x divide-border">
+              <div className="text-center">
+                <div className="text-lg sm:text-2xl font-bold font-heading text-foreground">
+                  {reduceMotion ? `${siteConfig.clinic.happyPatients}+` : <CountUp end={siteConfig.clinic.happyPatients} duration={2} separator="," suffix="+" enableScrollSpy />}
                 </div>
-                <div className="text-center">
-                  <div className="text-lg sm:text-2xl font-bold font-heading text-foreground">
-                    {reduceMotion ? `${siteConfig.clinic.treatmentsCompleted}+` : <CountUp end={siteConfig.clinic.treatmentsCompleted} duration={2} suffix="+" enableScrollSpy />}
-                  </div>
-                  <div className="text-[10px] sm:text-xs text-muted-foreground font-medium mt-0.5">Procedures</div>
+                <div className="text-[10px] sm:text-xs text-muted-foreground font-medium mt-0.5">Happy Patients</div>
+              </div>
+              <div className="text-center">
+                <div className="text-lg sm:text-2xl font-bold font-heading text-foreground">
+                  {reduceMotion ? `${siteConfig.clinic.treatmentsCompleted}+` : <CountUp end={siteConfig.clinic.treatmentsCompleted} duration={2} suffix="+" enableScrollSpy />}
                 </div>
-                <div className="text-center">
-                  <div className="text-lg sm:text-2xl font-bold font-heading text-foreground">
-                    {reduceMotion ? `${siteConfig.clinic.yearsExperience}+` : <CountUp end={siteConfig.clinic.yearsExperience} duration={2} suffix="+" enableScrollSpy />}
-                  </div>
-                  <div className="text-[10px] sm:text-xs text-muted-foreground font-medium mt-0.5">Years Practice</div>
+                <div className="text-[10px] sm:text-xs text-muted-foreground font-medium mt-0.5">Procedures</div>
+              </div>
+              <div className="text-center">
+                <div className="text-lg sm:text-2xl font-bold font-heading text-foreground">
+                  {reduceMotion ? `${siteConfig.clinic.yearsExperience}+` : <CountUp end={siteConfig.clinic.yearsExperience} duration={2} suffix="+" enableScrollSpy />}
                 </div>
+                <div className="text-[10px] sm:text-xs text-muted-foreground font-medium mt-0.5">Years Practice</div>
               </div>
             </div>
           </div>
@@ -310,45 +311,45 @@ export function ServiceClient({ slug }: { slug: string }) {
       </section>
 
       {/* 2. Tactile Clinical Protocol Specification Bar */}
-      <section className="border-y border-border/60 bg-card py-6 sm:py-8">
-        <div className="container mx-auto px-4 md:px-8 max-w-7xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            <div className="p-3 sm:p-4 rounded-2xl bg-muted/40 border border-border/50 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <Clock01Icon className="w-5 h-5" />
+      <section className="border-y border-border/60 bg-card py-5 sm:py-8">
+        <div className="shell">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-6">
+            <div className="p-2.5 sm:p-4 rounded-2xl bg-muted/40 border border-border/50 flex items-center gap-2.5 sm:gap-3">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <Clock01Icon className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <div className="min-w-0">
-                <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Duration</p>
+                <p className="text-[9px] sm:text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Duration</p>
                 <p className="text-xs sm:text-sm font-bold text-foreground truncate">{protocol.duration}</p>
               </div>
             </div>
 
-            <div className="p-3 sm:p-4 rounded-2xl bg-muted/40 border border-border/50 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <Shield01Icon className="w-5 h-5" />
+            <div className="p-2.5 sm:p-4 rounded-2xl bg-muted/40 border border-border/50 flex items-center gap-2.5 sm:gap-3">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <Shield01Icon className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <div className="min-w-0">
-                <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Comfort Standard</p>
+                <p className="text-[9px] sm:text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Comfort Standard</p>
                 <p className="text-xs sm:text-sm font-bold text-foreground truncate">{protocol.comfort}</p>
               </div>
             </div>
 
-            <div className="p-3 sm:p-4 rounded-2xl bg-muted/40 border border-border/50 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <Shield01Icon className="w-5 h-5" />
+            <div className="p-2.5 sm:p-4 rounded-2xl bg-muted/40 border border-border/50 flex items-center gap-2.5 sm:gap-3">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <Shield01Icon className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <div className="min-w-0">
-                <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Biocompatibility</p>
+                <p className="text-[9px] sm:text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Biocompatibility</p>
                 <p className="text-xs sm:text-sm font-bold text-foreground truncate">{protocol.material}</p>
               </div>
             </div>
 
-            <div className="p-3 sm:p-4 rounded-2xl bg-muted/40 border border-border/50 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                <CheckmarkBadge01Icon className="w-5 h-5" />
+            <div className="p-2.5 sm:p-4 rounded-2xl bg-muted/40 border border-border/50 flex items-center gap-2.5 sm:gap-3">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                <CheckmarkBadge01Icon className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
               <div className="min-w-0">
-                <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Recovery Pace</p>
+                <p className="text-[9px] sm:text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Recovery Pace</p>
                 <p className="text-xs sm:text-sm font-bold text-foreground truncate">{protocol.recovery}</p>
               </div>
             </div>
@@ -358,10 +359,16 @@ export function ServiceClient({ slug }: { slug: string }) {
 
       {/* 3. Treatment Process Timeline (Consistent Stepper Architecture) */}
       <section className="py-14 sm:py-24 bg-background">
-        <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+        <div className="shell">
           <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-foreground mb-3 leading-tight">
-              Your Treatment Process<span className="italic font-serif text-primary">.</span>
+            <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-3">
+              Clinical Workflow /
+            </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-sans font-medium text-foreground tracking-[-0.03em] leading-[1.15] mb-3">
+              Your Treatment{" "}
+              <span className="inline-block rounded-md bg-primary/20 text-foreground px-2 py-0.5 font-normal">
+                Process
+              </span>
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
               Five clear stages designed to ensure predictable, unhurried, and comfortable clinical care.
@@ -454,10 +461,16 @@ export function ServiceClient({ slug }: { slug: string }) {
 
       {/* 4. Benefits Section (Double-Bezel Architecture) */}
       <section className="py-14 sm:py-24 bg-card relative overflow-hidden border-t border-border/60">
-        <div className="container mx-auto px-4 md:px-8 max-w-7xl relative z-10">
+        <div className="shell relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-foreground mb-3 leading-tight">
-              Why Choose Us for {title}?
+            <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-3">
+              Clinical Advantages /
+            </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-sans font-medium text-foreground tracking-[-0.03em] leading-[1.15] mb-3">
+              Why Choose Us for{" "}
+              <span className="inline-block rounded-md bg-primary/20 text-foreground px-2 py-0.5 font-normal">
+                {title}
+              </span>
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
               Specialist clinicians, advanced digital technology, and a dedicated comfort-first environment.
@@ -484,10 +497,13 @@ export function ServiceClient({ slug }: { slug: string }) {
 
       {/* 5. FAQ Section (Double-Bezel Accordion) */}
       <section className="py-14 sm:py-24 bg-background">
-        <div className="container mx-auto px-4 md:px-8 max-w-4xl">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-5xl font-bold font-heading text-foreground mb-3 leading-tight">
-              Frequently Asked Questions.
+            <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-3">
+              Patient FAQ /
+            </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-sans font-medium text-foreground tracking-[-0.03em] leading-[1.15] mb-3">
+              Frequently Asked Questions
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base">Everything you need to know about {title.toLowerCase()} before your visit.</p>
           </div>
@@ -531,9 +547,14 @@ export function ServiceClient({ slug }: { slug: string }) {
 
       {/* 6. Related Services */}
       <section className="py-12 sm:py-24 bg-card border-t border-border/60">
-        <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+        <div className="shell">
           <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-5xl font-bold font-heading text-foreground mb-3 leading-tight">Explore Related Care</h2>
+            <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-3">
+              Complementary Care /
+            </p>
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-sans font-medium text-foreground tracking-[-0.03em] leading-[1.15] mb-3">
+              Explore Related Care
+            </h2>
             <p className="text-muted-foreground text-sm sm:text-base">Complementary treatments often considered alongside {title}.</p>
           </div>
 
@@ -566,13 +587,18 @@ export function ServiceClient({ slug }: { slug: string }) {
       {/* 7. Clinician Tie-in */}
       {careTeam.length > 0 && (
         <section className="py-12 sm:py-24 bg-background border-t border-border/60">
-          <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+          <div className="shell">
             <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-foreground mb-3 leading-tight">Meet Your Care Team</h2>
+              <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-3">
+                Restorative Team /
+              </p>
+              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-sans font-medium text-foreground tracking-[-0.03em] leading-[1.15] mb-3">
+                Meet Your Care Team
+              </h2>
               <p className="text-muted-foreground text-sm sm:text-base">Specialist clinicians dedicated to {title.toLowerCase()} and related restorative care.</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
               {careTeam.map((doctor) => (
                 <div key={doctor.id} className="p-1.5 sm:p-2 rounded-3xl bg-muted/40 border border-border/70 shadow-sm flex flex-col group hover:-translate-y-1 transition-all duration-300">
                   <Link
@@ -605,41 +631,8 @@ export function ServiceClient({ slug }: { slug: string }) {
         </section>
       )}
 
-      {/* 8. Bottom CTA Banner */}
-      <section className="relative py-16 sm:py-24 bg-secondary overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/15 rounded-full blur-[140px] pointer-events-none" />
-
-        <div className="container mx-auto px-4 md:px-8 relative z-10 text-center max-w-3xl">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-secondary-foreground mb-4 sm:mb-6 leading-tight">
-            Ready To Begin Your Care?
-          </h2>
-          <p className="text-base sm:text-lg text-secondary-foreground/80 mb-8 sm:mb-10 leading-relaxed font-normal">
-            Schedule an unhurried consultation with our specialists to discuss your personalized treatment plan and transparent financing options.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <Button
-              size="lg"
-              variant="cta"
-              onClick={openBooking}
-              className="w-full sm:w-auto"
-            >
-              <Calendar01Icon className="size-4 shrink-0" aria-hidden="true" />
-              <span>{siteConfig.hero.ctaTextPlain}</span>
-            </Button>
-            <Button
-              asChild
-              variant="onDark"
-              size="lg"
-              className="w-full sm:w-auto"
-            >
-              <a href={`tel:${siteConfig.contact.phone}`}>
-                <Call02Icon className="size-4 shrink-0" aria-hidden="true" />
-                <span>Call Clinic ({siteConfig.contact.phone})</span>
-              </a>
-            </Button>
-          </div>
-        </div>
-      </section>
+      {/* 8. Unified Bottom CTA Banner */}
+      <CTA />
     </div>
   );
 }

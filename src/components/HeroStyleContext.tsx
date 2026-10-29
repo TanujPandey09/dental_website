@@ -5,6 +5,8 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export type HeroStyle =
   | "cinematic"
+  | "dentix"
+  | "luma"
   | "booking"
   | "specialist"
   | "minimal"
@@ -12,6 +14,8 @@ export type HeroStyle =
 
 export const HERO_STYLES: HeroStyle[] = [
   "cinematic",
+  "dentix",
+  "luma",
   "booking",
   "specialist",
   "minimal",

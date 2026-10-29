@@ -14,7 +14,7 @@ import { useHeroStyle, HeroStyle } from "@/components/HeroStyleContext";
 import siteConfig from "@/config/site";
 import { cn } from "@/lib/utils";
 
-type SectionTab = "hero" | "services" | "about";
+type SectionTab = "hero" | "services" | "doctors" | "about";
 
 interface VariantItem {
   id: string;
@@ -81,12 +81,29 @@ const SERVICES_VARIANTS: VariantItem[] = [
   },
 ];
 
+const DOCTORS_VARIANTS: VariantItem[] = [
+  {
+    id: "luma",
+    num: "01",
+    title: "Luma Clinicians",
+    subtitle: "Austin clinics, public Texas licenses & verified credentials",
+    href: "/doctors",
+  },
+  {
+    id: "dentix",
+    num: "02",
+    title: "Dentix Team",
+    subtitle: "Surgical team hero, dentist card grid & split smile CTA",
+    href: "/doctors?view=dentix",
+  },
+];
+
 const ABOUT_VARIANTS: VariantItem[] = [
   {
     id: "story",
     num: "01",
-    title: "Story & Vision",
-    subtitle: "Founder narrative, practice philosophy, and patient ethos",
+    title: "Studio Sanctuary",
+    subtitle: "Calm studio editorial, 3D equipment suite & team preview",
     href: "/about",
   },
   {
@@ -115,6 +132,8 @@ export function MobileTemplateSwitcher() {
   const openWithCurrentTab = () => {
     if (pathname.startsWith("/services")) {
       setActiveTab("services");
+    } else if (pathname.startsWith("/doctors")) {
+      setActiveTab("doctors");
     } else if (pathname.startsWith("/about")) {
       setActiveTab("about");
     } else {
@@ -128,6 +147,8 @@ export function MobileTemplateSwitcher() {
     const handleOpen = () => {
       if (pathname.startsWith("/services")) {
         setActiveTab("services");
+      } else if (pathname.startsWith("/doctors")) {
+        setActiveTab("doctors");
       } else if (pathname.startsWith("/about")) {
         setActiveTab("about");
       } else {
@@ -175,6 +196,11 @@ export function MobileTemplateSwitcher() {
       ? new URLSearchParams(window.location.search).get("view") || "story"
       : "story";
 
+  const currentDoctorView =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("view") || "luma"
+      : "luma";
+
   const handleSelectHero = (id: string) => {
     setHeroStyle(id as HeroStyle);
     setIsOpen(false);
@@ -192,29 +218,7 @@ export function MobileTemplateSwitcher() {
 
   return (
     <>
-      {/* Floating Trigger Pill on Mobile — Clean glass pill */}
-      {!isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 15 }}
-          className="fixed bottom-5 right-4 z-40 sm:hidden pointer-events-auto"
-        >
-          <button
-            type="button"
-            onClick={openWithCurrentTab}
-            aria-label="Open template variations preview"
-            aria-expanded={isOpen}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-slate-900/95 text-white border border-white/20 shadow-[0_8px_24px_rgba(0,0,0,0.28)] backdrop-blur-md active:scale-95 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
-          >
-            <Layers01Icon className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-            <span className="text-xs font-mono font-medium tracking-wide">11 Layouts</span>
-            <ArrowUp01Icon className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-          </button>
-        </motion.div>
-      )}
-
-      {/* Slide-Up Bottom Sheet Modal */}
+      {/* Slide-Up Bottom Sheet Modal (Triggered cleanly from Navbar Drawer or switcher events) */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -268,12 +272,12 @@ export function MobileTemplateSwitcher() {
 
               {/* Segmented Section Tabs */}
               <div className="px-5 pt-3 pb-2 shrink-0">
-                <div className="grid grid-cols-3 gap-1 p-1 bg-slate-100 rounded-xl">
+                <div className="grid grid-cols-4 gap-1 p-1 bg-slate-100 rounded-xl">
                   <button
                     type="button"
                     onClick={() => setActiveTab("hero")}
                     className={cn(
-                      "py-1.5 text-xs font-mono font-medium rounded-lg transition-all",
+                      "py-1.5 text-[11px] font-mono font-medium rounded-lg transition-all",
                       activeTab === "hero"
                         ? "bg-white text-teal-800 font-semibold shadow-xs"
                         : "text-slate-600 hover:text-slate-900"
@@ -285,7 +289,7 @@ export function MobileTemplateSwitcher() {
                     type="button"
                     onClick={() => setActiveTab("services")}
                     className={cn(
-                      "py-1.5 text-xs font-mono font-medium rounded-lg transition-all",
+                      "py-1.5 text-[11px] font-mono font-medium rounded-lg transition-all",
                       activeTab === "services"
                         ? "bg-white text-teal-800 font-semibold shadow-xs"
                         : "text-slate-600 hover:text-slate-900"
@@ -295,9 +299,21 @@ export function MobileTemplateSwitcher() {
                   </button>
                   <button
                     type="button"
+                    onClick={() => setActiveTab("doctors")}
+                    className={cn(
+                      "py-1.5 text-[11px] font-mono font-medium rounded-lg transition-all",
+                      activeTab === "doctors"
+                        ? "bg-white text-teal-800 font-semibold shadow-xs"
+                        : "text-slate-600 hover:text-slate-900"
+                    )}
+                  >
+                    Doctors (2)
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => setActiveTab("about")}
                     className={cn(
-                      "py-1.5 text-xs font-mono font-medium rounded-lg transition-all",
+                      "py-1.5 text-[11px] font-mono font-medium rounded-lg transition-all",
                       activeTab === "about"
                         ? "bg-white text-teal-800 font-semibold shadow-xs"
                         : "text-slate-600 hover:text-slate-900"
@@ -375,6 +391,63 @@ export function MobileTemplateSwitcher() {
                     </p>
                     {SERVICES_VARIANTS.map((variant) => {
                       const isActive = pathname.startsWith("/services") && currentServiceView === variant.id;
+                      return (
+                        <button
+                          key={variant.id}
+                          type="button"
+                          onClick={() => handleSelectPageVariant(variant.href!)}
+                          className={cn(
+                            "w-full text-left p-3 rounded-2xl border transition-all flex items-start justify-between gap-3 cursor-pointer",
+                            isActive
+                              ? "bg-teal-700 text-white border-teal-700 shadow-sm"
+                              : "bg-slate-50/80 border-slate-200/90 text-slate-800 hover:border-teal-600/40 hover:bg-slate-100"
+                          )}
+                        >
+                          <div className="space-y-0.5 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span
+                                className={cn(
+                                  "text-[10px] font-mono font-bold px-1.5 py-0.5 rounded",
+                                  isActive
+                                    ? "bg-white/20 text-white"
+                                    : "bg-teal-50 text-teal-800 border border-teal-200/60"
+                                )}
+                              >
+                                {variant.num}
+                              </span>
+                              <span className="font-serif text-sm font-medium tracking-tight">
+                                {variant.title}
+                              </span>
+                            </div>
+                            <p
+                              className={cn(
+                                "text-xs leading-relaxed line-clamp-1",
+                                isActive ? "text-white/85" : "text-slate-500"
+                              )}
+                            >
+                              {variant.subtitle}
+                            </p>
+                          </div>
+                          <div className="shrink-0 mt-0.5">
+                            {isActive ? (
+                              <CheckmarkCircle02Icon className="w-5 h-5 text-white" />
+                            ) : (
+                              <ArrowRight01Icon className="w-4 h-4 text-slate-400 opacity-60" />
+                            )}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {activeTab === "doctors" && (
+                  <div className="space-y-2">
+                    <p className="text-[11px] font-mono text-slate-400 uppercase tracking-wider mb-2">
+                      Doctors Page · 2 Clinician Layouts
+                    </p>
+                    {DOCTORS_VARIANTS.map((variant) => {
+                      const isActive = pathname.startsWith("/doctors") && currentDoctorView === variant.id;
                       return (
                         <button
                           key={variant.id}

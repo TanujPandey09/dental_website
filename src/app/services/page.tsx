@@ -1,4 +1,5 @@
 import { ServicesClient } from "./ServicesClient";
+import { PatientCareBento } from "@/components/home/PatientCareBento";
 import { CTA } from "@/components/home/CTA";
 import { CheckmarkCircle02Icon } from "hugeicons-react";
 import Image from "next/image";
@@ -16,7 +17,7 @@ export default function ServicesPage() {
       <ServicesClient />
 
       <section className="py-16 sm:py-24 bg-card border-y border-border/50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="shell">
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
               <Image
@@ -28,8 +29,14 @@ export default function ServicesPage() {
               />
             </div>
             <div>
-              <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground mb-6">
-                Clinical Technology Grounded in Patient Comfort
+              <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-3">
+                Digital Diagnostics /
+              </p>
+              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-sans font-medium text-foreground tracking-[-0.03em] leading-[1.15] mb-5">
+                Clinical Technology Grounded in{" "}
+                <span className="inline-block rounded-md bg-primary/20 text-foreground px-2 py-0.5 font-normal">
+                  Patient Comfort
+                </span>
               </h2>
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 We replace outdated dental equipment with whisper-quiet, low-radiation digital systems designed to eliminate discomfort, eliminate impression goop, and give you clear visual co-diagnosis before any treatment begins.
@@ -54,6 +61,8 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
+      <PatientCareBento />
 
       <CTA />
     </>

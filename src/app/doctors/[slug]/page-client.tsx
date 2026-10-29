@@ -20,6 +20,7 @@ import { useBooking } from "@/components/BookingContext";
 import { Button } from "@/components/ui/button";
 import { images } from "@/config/images";
 import siteConfig from "@/config/site";
+import { CTA } from "@/components/home/CTA";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -138,15 +139,15 @@ export function DoctorClient({ slug }: { slug: string }) {
     <div className="bg-background min-h-screen pt-20 sm:pt-28 pb-0 overflow-x-clip">
 
       {/* 1. Hero Section */}
-      <section className="container mx-auto px-4 md:px-8 pt-4 sm:pt-8 lg:pt-16 pb-12 sm:pb-20 max-w-7xl">
+      <section className="shell pt-4 sm:pt-8 lg:pt-16 pb-12 sm:pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
           <div className="lg:col-span-5 order-2 lg:order-1 space-y-6 sm:space-y-8">
             <div className="space-y-3 sm:space-y-4">
-              <p className="text-xs font-mono uppercase tracking-[0.2em] text-primary font-semibold mb-2">
-                {role}
+              <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-2">
+                {role} /
               </p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading text-foreground leading-tight">
+              <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-sans font-medium text-foreground tracking-[-0.03em] leading-tight">
                 {name}
               </h1>
               {siteConfig.ui.showSampleContentNotices && doctor?.demo && (
@@ -186,12 +187,12 @@ export function DoctorClient({ slug }: { slug: string }) {
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
               <Button
                 size="lg"
                 variant="cta"
                 onClick={openBooking}
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto h-12 text-sm sm:text-base touch-manipulation"
               >
                 <Calendar01Icon className="size-4 shrink-0" aria-hidden="true" />
                 <span>Book Appointment</span>
@@ -201,7 +202,7 @@ export function DoctorClient({ slug }: { slug: string }) {
                 asChild
                 variant="outline"
                 size="lg"
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto h-12 text-sm sm:text-base touch-manipulation"
               >
                 <Link href="/contact">
                   <Call02Icon className="size-4 shrink-0" aria-hidden="true" />
@@ -211,21 +212,19 @@ export function DoctorClient({ slug }: { slug: string }) {
             </div>
           </div>
 
-          {/* Double-Bezel Portrait Showcase */}
+          {/* Portrait Showcase */}
           <div className="lg:col-span-7 order-1 lg:order-2">
-            <div className="p-2 sm:p-2.5 rounded-[2.5rem] bg-muted/40 border border-border/80 shadow-2xl">
-              <div className="relative h-[360px] sm:h-[480px] lg:h-[620px] rounded-[calc(2.5rem-0.5rem)] overflow-hidden bg-muted shadow-lg">
-                <div className="absolute inset-0 z-0" ref={heroImageRef}>
-                  <Image
-                    src={heroImage}
-                    alt={name}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 58vw"
-                    className="object-cover object-top scale-105"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-                </div>
+            <div className="relative h-[320px] xs:h-[380px] sm:h-[480px] lg:h-[620px] rounded-2xl sm:rounded-3xl overflow-hidden bg-muted shadow-lg border border-border/70">
+              <div className="absolute inset-0 z-0" ref={heroImageRef}>
+                <Image
+                  src={heroImage}
+                  alt={name}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 58vw"
+                  className="object-cover object-top scale-105"
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
               </div>
             </div>
           </div>
@@ -235,14 +234,20 @@ export function DoctorClient({ slug }: { slug: string }) {
 
       {/* 2. Philosophy & Credentials Section */}
       <section className="py-14 sm:py-24 bg-card border-y border-border/60">
-        <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+        <div className="shell">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
 
             {/* Philosophy & Skill Bars */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-3xl sm:text-5xl font-bold font-heading text-foreground mb-4 leading-tight">
-                  Care Philosophy.
+                <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-3">
+                  Clinical Ethos /
+                </p>
+                <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-sans font-medium text-foreground tracking-[-0.03em] leading-[1.15] mb-4">
+                  Care{" "}
+                  <span className="inline-block rounded-md bg-primary/20 text-foreground px-2 py-0.5 font-normal">
+                    Philosophy
+                  </span>
                 </h2>
                 <div className="text-muted-foreground leading-relaxed text-sm sm:text-base space-y-4">
                   <p className="italic text-foreground/90 font-medium">
@@ -257,7 +262,7 @@ export function DoctorClient({ slug }: { slug: string }) {
 
               {/* Clinical Expertise Skill Bars */}
               <div className="pt-6 border-t border-border/60">
-                <h3 className="text-xl font-bold font-heading text-foreground mb-6">Specialist Expertise</h3>
+                <h3 className="text-xl font-sans font-medium text-foreground tracking-tight mb-6">Specialist Expertise</h3>
                 <div className="space-y-5">
                   {expertise.map((skill, index) => (
                     <div key={index}>
@@ -278,31 +283,29 @@ export function DoctorClient({ slug }: { slug: string }) {
               </div>
             </div>
 
-            {/* Credentials Stepper (Double-Bezel Architecture) */}
-            <div className="p-2 sm:p-2.5 rounded-[2.5rem] bg-muted/40 border border-border/80 shadow-sm">
-              <div className="rounded-[calc(2.5rem-0.5rem)] bg-card p-6 sm:p-10 border border-border/60">
-                <h3 className="text-2xl sm:text-3xl font-bold font-heading text-foreground mb-8">
-                  Education &amp; Credentials
-                </h3>
+            {/* Credentials Stepper */}
+            <div className="rounded-2xl sm:rounded-3xl bg-card p-5 sm:p-8 md:p-10 border border-border/70 shadow-xs">
+              <h3 className="text-2xl sm:text-3xl font-sans font-medium text-foreground tracking-[-0.02em] mb-8">
+                Education &amp; Credentials
+              </h3>
 
-                <div className="relative space-y-8" ref={timelineRef}>
-                  {/* Continuous Vertical Connecting Line */}
-                  <div className="absolute left-4 top-2 bottom-2 w-0.5 bg-primary/25 -translate-x-1/2" aria-hidden="true" />
+              <div className="relative space-y-8" ref={timelineRef}>
+                {/* Continuous Vertical Connecting Line */}
+                <div className="absolute left-4 top-2 bottom-2 w-0.5 bg-primary/25 -translate-x-1/2" aria-hidden="true" />
 
-                  {credentials.map((cred, index) => (
-                    <div key={index} className="relative flex items-start gap-4 sm:gap-5 group" ref={el => { if (el) credsRef.current[index] = el; }}>
-                      {/* Stepper node centered directly on the line */}
-                      <div className="w-8 h-8 rounded-full bg-card border-2 border-primary text-primary flex items-center justify-center ring-4 ring-card shadow-sm shrink-0 z-10 transition-transform duration-200 group-hover:scale-110">
-                        <CheckmarkBadge01Icon className="w-4 h-4 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0 pt-0.5">
-                        <span className="text-xs font-mono font-bold text-primary tracking-wider uppercase block mb-1">{cred.year}</span>
-                        <h4 className="text-base sm:text-lg font-bold font-heading text-foreground mb-1 leading-snug">{cred.title}</h4>
-                        <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">{cred.desc}</p>
-                      </div>
+                {credentials.map((cred, index) => (
+                  <div key={index} className="relative flex items-start gap-4 sm:gap-5 group" ref={el => { if (el) credsRef.current[index] = el; }}>
+                    {/* Stepper node centered directly on the line */}
+                    <div className="w-8 h-8 rounded-full bg-card border-2 border-primary text-primary flex items-center justify-center ring-4 ring-card shadow-xs shrink-0 z-10 transition-transform duration-200 group-hover:scale-110">
+                      <CheckmarkBadge01Icon className="w-4 h-4 text-primary" />
                     </div>
-                  ))}
-                </div>
+                    <div className="flex-1 min-w-0 pt-0.5">
+                      <span className="text-xs font-mono font-bold text-primary tracking-wider uppercase block mb-1">{cred.year}</span>
+                      <h4 className="text-base sm:text-lg font-bold font-heading text-foreground mb-1 leading-snug">{cred.title}</h4>
+                      <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed">{cred.desc}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -310,17 +313,19 @@ export function DoctorClient({ slug }: { slug: string }) {
         </div>
       </section>
 
-      {/* 3. Testimonials & Double-Bezel Sticky Booking Card */}
+      {/* 3. Testimonials & Sticky Booking Card */}
       <section className="py-14 sm:py-24 bg-background">
-        <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+        <div className="shell">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
 
             {/* Reviews Grid */}
             <div className="lg:col-span-8">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <span className="text-xs font-bold text-primary uppercase tracking-wider block mb-1">Direct Feedback</span>
-                  <h2 className="text-3xl sm:text-4xl font-bold font-heading text-foreground">Patient Experiences</h2>
+                  <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-2">Direct Feedback /</p>
+                  <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-sans font-medium text-foreground tracking-[-0.03em] leading-[1.15]">
+                    Patient <span className="inline-block rounded-md bg-primary/20 text-foreground px-2 py-0.5 font-normal">Experiences</span>
+                  </h2>
                 </div>
                 {siteConfig.ui.showSampleContentNotices && doctor?.demo && (
                   <span className="text-xs font-semibold px-3 py-1 rounded-full bg-muted border border-border text-muted-foreground">
@@ -331,19 +336,17 @@ export function DoctorClient({ slug }: { slug: string }) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {testimonials.map((t) => (
-                  <div key={t.id} className="p-1.5 rounded-3xl bg-muted/40 border border-border/70 shadow-sm flex flex-col group hover:-translate-y-1 transition-all duration-300">
-                    <div className="p-6 sm:p-7 flex flex-col justify-between flex-1 bg-card rounded-[calc(1.5rem-2px)] border border-border/60">
-                      <div>
-                        <QuoteDownIcon className="w-8 h-8 text-primary/20 mb-4" aria-hidden="true" />
-                        <p className="text-muted-foreground text-xs sm:text-sm italic mb-6 leading-relaxed">&ldquo;{t.text}&rdquo;</p>
-                      </div>
-                      <div className="flex items-center justify-between pt-4 border-t border-border/60 mt-auto">
-                        <div className="font-bold text-xs sm:text-sm text-foreground">{t.author}</div>
-                        <div className="flex text-rating" role="img" aria-label={`${t.rating} out of 5 stars`}>
-                          {[...Array(t.rating)].map((_, i) => (
-                            <StarIcon key={i} className="w-3.5 h-3.5 fill-current" aria-hidden="true" />
-                          ))}
-                        </div>
+                  <div key={t.id} className="p-6 sm:p-7 rounded-2xl bg-card border border-border/70 shadow-xs flex flex-col justify-between group hover:-translate-y-1 transition-all duration-300">
+                    <div>
+                      <QuoteDownIcon className="w-8 h-8 text-primary/20 mb-4" aria-hidden="true" />
+                      <p className="text-muted-foreground text-xs sm:text-sm italic mb-6 leading-relaxed">&ldquo;{t.text}&rdquo;</p>
+                    </div>
+                    <div className="flex items-center justify-between pt-4 border-t border-border/60 mt-auto">
+                      <div className="font-bold text-xs sm:text-sm text-foreground">{t.author}</div>
+                      <div className="flex text-rating" role="img" aria-label={`${t.rating} out of 5 stars`}>
+                        {[...Array(t.rating)].map((_, i) => (
+                          <StarIcon key={i} className="w-3.5 h-3.5 fill-current" aria-hidden="true" />
+                        ))}
                       </div>
                     </div>
                   </div>
@@ -351,45 +354,43 @@ export function DoctorClient({ slug }: { slug: string }) {
               </div>
             </div>
 
-            {/* Sticky Double-Bezel Booking Card */}
+            {/* Sticky Booking Card */}
             <div className="lg:col-span-4">
-              <div className="p-2 rounded-3xl bg-muted/40 border border-border/80 shadow-xl sticky top-28">
-                <div className="rounded-[calc(1.5rem-2px)] bg-secondary text-secondary-foreground p-6 sm:p-8">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-accent block mb-1">
-                    Direct Scheduling
-                  </span>
-                  <h3 className="text-2xl font-bold font-heading mb-6">Schedule a Visit</h3>
+              <div className="rounded-2xl sm:rounded-3xl bg-secondary text-secondary-foreground p-6 sm:p-8 border border-border/70 shadow-lg sticky top-28">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-accent block mb-1">
+                  Direct Scheduling
+                </span>
+                <h3 className="text-2xl font-bold font-heading mb-6">Schedule a Visit</h3>
 
-                  <div className="space-y-5 mb-8">
-                    <div className="flex items-start gap-4">
-                      <Calendar01Icon className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                      <div>
-                        <div className="font-semibold text-xs sm:text-sm mb-0.5">Availability</div>
-                        <div className="text-secondary-foreground/80 text-xs whitespace-pre-line">{siteConfig.contact.hours}</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <Location01Icon className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                      <div>
-                        <div className="font-semibold text-xs sm:text-sm mb-0.5">Location</div>
-                        <div className="text-secondary-foreground/80 text-xs whitespace-pre-line">{siteConfig.contact.address}</div>
-                      </div>
+                <div className="space-y-5 mb-8">
+                  <div className="flex items-start gap-4">
+                    <Calendar01Icon className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs sm:text-sm mb-0.5">Availability</div>
+                      <div className="text-secondary-foreground/80 text-xs whitespace-pre-line">{siteConfig.contact.hours}</div>
                     </div>
                   </div>
-
-                  <Button
-                    size="lg"
-                    variant="cta"
-                    onClick={openBooking}
-                    className="w-full"
-                  >
-                    <Calendar01Icon className="size-4 shrink-0" aria-hidden="true" />
-                    <span>Book with {name}</span>
-                  </Button>
-
-                  <div className="mt-4 text-center text-[11px] text-secondary-foreground/70">
-                    Accepting new patients. Emergency slots reserved daily.
+                  <div className="flex items-start gap-4">
+                    <Location01Icon className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-semibold text-xs sm:text-sm mb-0.5">Location</div>
+                      <div className="text-secondary-foreground/80 text-xs whitespace-pre-line">{siteConfig.contact.address}</div>
+                    </div>
                   </div>
+                </div>
+
+                <Button
+                  size="lg"
+                  variant="cta"
+                  onClick={openBooking}
+                  className="w-full h-11 rounded-lg text-sm font-semibold touch-manipulation"
+                >
+                  <Calendar01Icon className="size-4 shrink-0" aria-hidden="true" />
+                  <span>Book with {name}</span>
+                </Button>
+
+                <div className="mt-4 text-center text-[11px] text-secondary-foreground/70">
+                  Accepting new patients. Emergency slots reserved daily.
                 </div>
               </div>
             </div>
@@ -398,6 +399,8 @@ export function DoctorClient({ slug }: { slug: string }) {
         </div>
       </section>
 
+      {/* Unified Bottom CTA Banner */}
+      <CTA />
     </div>
   );
 }

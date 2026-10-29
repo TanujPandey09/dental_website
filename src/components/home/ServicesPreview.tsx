@@ -1,157 +1,258 @@
 "use client";
 
-import { useRef } from "react";
-import { ArrowRight01Icon } from "hugeicons-react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
+import {
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+  ArrowUpRight01Icon,
+} from "hugeicons-react";
 import siteConfig from "@/config/site";
+import { images } from "@/config/images";
 
-gsap.registerPlugin(ScrollTrigger);
+interface TreatmentCard {
+  id: string;
+  titleLine1: string;
+  titleLine2: string;
+  meta: string;
+  image: string;
+  href: string;
+}
 
-const SERVICE_TAGS: Record<string, string> = {
-  "cosmetic-dentistry": "Same-Day CEREC",
-  "dental-implants": "Computer-Guided 3D",
-  "teeth-whitening": "In-Office Laser",
-  orthodontics: "Clear Aligners",
-  "general-dentistry": "Ultrasonic Gentle",
-  "root-canal": "Precision Rotary",
-  "pediatric-dentistry": "Kid-Friendly Care",
-  "oral-surgery": "Sedation Options",
-};
+const SIGNATURE_TREATMENTS: TreatmentCard[] = [
+  {
+    id: "general-dentistry",
+    titleLine1: "Check-up",
+    titleLine2: "& cleaning",
+    meta: "45 min · from $85",
+    image: images.services["general-dentistry"],
+    href: "/services/general-dentistry",
+  },
+  {
+    id: "teeth-whitening",
+    titleLine1: "Teeth",
+    titleLine2: "whitening",
+    meta: "60 min · from $290",
+    image: images.services["teeth-whitening"],
+    href: "/services/teeth-whitening",
+  },
+  {
+    id: "orthodontics",
+    titleLine1: "Clear",
+    titleLine2: "aligners",
+    meta: "6-18 months · from $2,900",
+    image: images.services["orthodontics"],
+    href: "/services/orthodontics",
+  },
+  {
+    id: "dental-implants",
+    titleLine1: "Dental",
+    titleLine2: "implants",
+    meta: "2-3 visits · from $1,800",
+    image: images.services["dental-implants"],
+    href: "/services/dental-implants",
+  },
+  {
+    id: "cosmetic-dentistry",
+    titleLine1: "Cosmetic",
+    titleLine2: "veneers",
+    meta: "2 visits · from $950",
+    image: images.services["cosmetic-dentistry"],
+    href: "/services/cosmetic-dentistry",
+  },
+  {
+    id: "root-canal",
+    titleLine1: "Root canal",
+    titleLine2: "therapy",
+    meta: "60 min · from $650",
+    image: images.services["root-canal"],
+    href: "/services/root-canal",
+  },
+];
 
 export function ServicesPreview() {
-  const container = useRef<HTMLElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  useGSAP(
-    () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        gsap.set(".service-card", { opacity: 1, y: 0 });
-        return;
-      }
-      gsap.fromTo(
-        ".service-card",
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: container.current,
-            start: "top 75%",
-          },
-        }
-      );
-    },
-    { scope: container }
-  );
+  const checkScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 10);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 10);
+  };
 
-  // Show top 4 flagship services on the landing page for a clean, balanced single row
-  const serviceLinks = siteConfig.services.slice(0, 4).map((service) => ({
-    ...service,
-    slug: service.id,
-  }));
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    checkScroll();
+    el.addEventListener("scroll", checkScroll, { passive: true });
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      el.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, []);
+
+  const scroll = (direction: "left" | "right") => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const scrollAmount = 300;
+    el.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
+
+  const patientAvatars = [
+    images.testimonials.patients[1],
+    images.testimonials.patients[2],
+    images.testimonials.patients[3],
+  ];
 
   return (
-    <section ref={container} className="py-16 sm:py-24 bg-muted/30 relative">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-10 sm:mb-16">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground leading-tight">
-              Advanced Dental Solutions.
+    <section className="py-16 sm:py-24 bg-background border-t border-border/40 overflow-hidden">
+      <div className="shell">
+        {/* Top Header Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start mb-12 sm:mb-16">
+          <div className="lg:col-span-7">
+            <span className="text-muted-foreground/80 text-sm font-medium tracking-tight">
+              Treatments /
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-sans font-medium text-foreground tracking-[-0.03em] leading-[1.12] mt-1 text-balance">
+              Discover our signature <br className="hidden sm:inline" />
+              dental treatments
             </h2>
-            <p className="text-muted-foreground mt-3 sm:mt-4 text-base sm:text-lg max-w-xl leading-relaxed">
-              From preventive hygiene to full-mouth reconstruction, delivered by specialists using sub-millimeter digital technology.
+          </div>
+          <div className="lg:col-span-5 lg:pt-6">
+            <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-lg lg:ml-auto">
+              Every treatment starts with a digital check-up and a written plan
+              with costs up front. Our studio is calm and quiet, designed to
+              make every visit feel unhurried.
             </p>
           </div>
-
-          {/* Header Action */}
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-          >
-            <Link href="/services">
-              <span>View All Services</span>
-              <ArrowRight01Icon className="size-4 transition-transform duration-150 group-hover/button:translate-x-0.5" />
-            </Link>
-          </Button>
         </div>
 
-        {/* Double-Bezel Card Showcase: Horizontal Swipe Slider on Mobile, 4-Col Grid on Desktop */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 no-scrollbar">
-          {serviceLinks.map((service) => (
-            <div
-              key={service.id}
-              className="service-card w-[82vw] max-w-[320px] shrink-0 snap-center sm:w-auto sm:max-w-none p-1.5 sm:p-2 rounded-3xl bg-muted/40 border border-border/70 shadow-sm flex flex-col group hover:-translate-y-1.5 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]"
-            >
-              <Link
-                href={`/services/${service.slug}`}
-                className="relative h-[360px] sm:h-[420px] md:h-[440px] rounded-[calc(1.5rem-2px)] overflow-hidden cursor-pointer shadow-sm flex flex-col justify-end p-5 sm:p-7 block"
-              >
-                {/* Background Image */}
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover scale-100 group-hover:scale-108 transition-transform duration-700 ease-out"
-                  />
-                  {/* Natural Dark Photographic Scrim */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-transparent opacity-85 group-hover:opacity-95 transition-opacity duration-300" />
+        {/* Content Body: Left Social/Nav block + Right Carousel */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+          {/* Left Column: Avatars, Rating, Copy & Arrow Controls */}
+          <div className="lg:col-span-3 flex flex-col justify-between py-1">
+            <div>
+              {/* Overlapping Patient Avatars + 750+ Reviews */}
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-2.5">
+                  {patientAvatars.map((src, i) => (
+                    <div
+                      key={i}
+                      className="relative h-9 w-9 rounded-full overflow-hidden border-2 border-background bg-muted shrink-0 shadow-xs"
+                    >
+                      <Image
+                        src={src}
+                        alt="Patient review"
+                        fill
+                        sizes="36px"
+                        className="object-cover"
+                      />
+                    </div>
+                  ))}
                 </div>
-
-                {/* Floating Category & Spec Pills */}
-                <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-10">
-                  <div className="backdrop-blur-md bg-white/15 border border-white/20 text-white text-[10px] sm:text-[11px] font-bold px-3 py-1 rounded-full shadow-sm">
-                    {service.category}
-                  </div>
-                  <div className="backdrop-blur-md bg-slate-950/60 border border-white/15 text-white/90 text-[10px] font-semibold px-2.5 py-1 rounded-full">
-                    {SERVICE_TAGS[service.id] || "Advanced Protocol"}
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="relative z-10">
-                  <div className="w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center text-white mb-4 border border-white/20 group-hover:scale-105 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
-                    {service.icon}
-                  </div>
-
-                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-white mb-2 leading-snug drop-shadow-sm">
-                    {service.title}
-                  </h3>
-
-                  <p className="text-white/80 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2 font-normal">
-                    {service.description}
+                <div className="leading-tight">
+                  <p className="text-base font-bold text-foreground">
+                    {siteConfig.clinic.stats.patientsTreated || "750+"}
                   </p>
-
-                  {/* Trailing Action */}
-                  <div className="inline-flex items-center gap-2 text-xs font-semibold text-white group-hover:text-emerald-300 transition-colors pt-2">
-                    <span>Explore Treatment</span>
-                    <span className="w-6 h-6 rounded-lg bg-white/15 border border-white/20 flex items-center justify-center overflow-hidden shrink-0 transition-all duration-300 group-hover:bg-emerald-400 group-hover:text-slate-950 group-hover:border-emerald-400">
-                      <ArrowRight01Icon className="w-3.5 h-3.5 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-6" aria-hidden="true" />
-                      <ArrowRight01Icon className="w-3.5 h-3.5 absolute -translate-x-6 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0" aria-hidden="true" />
-                    </span>
-                  </div>
+                  <p className="text-xs text-muted-foreground font-medium">
+                    Five-star reviews
+                  </p>
                 </div>
+              </div>
 
-                {/* Focus/Hover Outer Highlight */}
-                <div className="absolute inset-0 border border-white/0 group-hover:border-white/20 rounded-[calc(1.5rem-2px)] transition-colors duration-300 pointer-events-none" />
-              </Link>
+              {/* Persuasive Subtext */}
+              <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mt-6 max-w-[260px]">
+                Patients describe their visits as comfortable and clearly
+                explained. Swipe through what we do most often.
+              </p>
             </div>
-          ))}
-        </div>
 
-        {/* Mobile Swipe Indicator */}
-        <div className="flex sm:hidden items-center justify-center gap-1.5 mt-3 text-[11px] font-medium text-muted-foreground">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          <span>Swipe to explore all flagship services →</span>
+            {/* Carousel Navigation Buttons */}
+            <div className="flex items-center gap-2.5 mt-8 sm:mt-10">
+              <button
+                type="button"
+                onClick={() => scroll("left")}
+                disabled={!canScrollLeft}
+                aria-label="Previous treatments"
+                className="h-11 w-11 rounded-full border border-border/80 bg-background text-foreground/80 hover:bg-muted/80 hover:text-foreground flex items-center justify-center transition-all duration-200 cursor-pointer shadow-xs active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
+              >
+                <ArrowLeft01Icon className="h-4 w-4" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scroll("right")}
+                disabled={!canScrollRight}
+                aria-label="Next treatments"
+                className="h-11 w-11 rounded-full bg-foreground text-background hover:bg-foreground/90 flex items-center justify-center transition-all duration-200 cursor-pointer shadow-xs active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
+              >
+                <ArrowRight01Icon className="h-4 w-4" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column: Horizontal Scrollable Cards */}
+          <div className="lg:col-span-9 min-w-0">
+            <div
+              ref={scrollRef}
+              className="flex gap-4 sm:gap-5 overflow-x-auto pb-4 pt-1 px-1 -mx-5 px-5 sm:mx-0 sm:px-1 snap-x snap-mandatory scroll-smooth no-scrollbar"
+              style={{
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
+            >
+              {SIGNATURE_TREATMENTS.map((treatment) => (
+                <Link
+                  key={treatment.id}
+                  href={treatment.href}
+                  className="group relative w-[240px] sm:w-[260px] md:w-[275px] h-[370px] sm:h-[400px] shrink-0 snap-start rounded-[26px] overflow-hidden bg-slate-900 border border-border/40 shadow-xs hover:shadow-xl transition-all duration-300 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                >
+                  {/* Full-bleed photo with zoom on card hover */}
+                  <div className="absolute inset-0 z-0">
+                    <Image
+                      src={treatment.image}
+                      alt={`${treatment.titleLine1} ${treatment.titleLine2}`}
+                      fill
+                      sizes="(max-width: 640px) 240px, (max-width: 1024px) 260px, 275px"
+                      className="object-cover scale-100 group-hover:scale-106 transition-transform duration-700 ease-out"
+                    />
+                    {/* Editorial photo scrim gradient for contrast */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-transparent opacity-90 group-hover:opacity-95 transition-opacity" />
+                  </div>
+
+                  {/* Bottom Text & Icon Overlay */}
+                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 z-10 flex items-end justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      {/* Meta badge: duration and transparent pricing */}
+                      <p className="font-mono text-[11px] sm:text-xs text-white/80 tracking-wide font-normal mb-1.5">
+                        {treatment.meta}
+                      </p>
+                      {/* Treatment Title on 2 lines */}
+                      <h3 className="text-lg sm:text-xl font-sans font-medium text-white tracking-tight leading-[1.2] group-hover:text-primary-foreground transition-colors">
+                        {treatment.titleLine1}
+                        <br />
+                        {treatment.titleLine2}
+                      </h3>
+                    </div>
+
+                    {/* Circular Translucent Arrow Up-Right Action Pill */}
+                    <div
+                      aria-hidden="true"
+                      className="h-9 w-9 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:bg-primary group-hover:border-primary group-hover:text-primary-foreground shadow-sm"
+                    >
+                      <ArrowUpRight01Icon className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

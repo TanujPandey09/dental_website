@@ -7,16 +7,16 @@ import { cn } from "@/lib/utils"
 const buttonVariants = cva(
   [
     "group/button inline-flex shrink-0 items-center justify-center gap-2",
-    "rounded-xl border border-transparent bg-clip-padding",
+    "rounded-lg border border-transparent bg-clip-padding",
     "text-sm font-medium leading-none whitespace-nowrap",
     "transition-[color,background-color,border-color,box-shadow,scale] duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]",
     "active:scale-[0.98]",
-    "outline-none select-none cursor-pointer",
+    "outline-none select-none cursor-pointer touch-manipulation",
     "focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-0",
     "disabled:pointer-events-none disabled:opacity-50",
     "aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20",
     "dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
-    "[&_svg]:pointer-events-none [&_svg]:shrink-0",
+    "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:size-4",
   ].join(" "),
   {
     variants: {
@@ -24,19 +24,19 @@ const buttonVariants = cva(
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         cta: [
           "bg-primary text-primary-foreground",
-          "shadow-[0_8px_20px_color-mix(in_oklch,var(--primary)_22%,transparent)]",
+          "shadow-[0_4px_14px_color-mix(in_oklch,var(--primary)_22%,transparent)]",
           "hover:bg-primary/90",
-          "hover:shadow-[0_10px_24px_color-mix(in_oklch,var(--primary)_28%,transparent)]",
+          "hover:shadow-[0_6px_20px_color-mix(in_oklch,var(--primary)_28%,transparent)]",
         ].join(" "),
         onDark:
-          "bg-primary text-white ring-1 ring-inset ring-white/20 shadow-[0_8px_20px_rgba(0,0,0,0.35)] hover:ring-accent/70 hover:shadow-[0_0_0_4px_rgba(20,184,166,0.18),0_14px_30px_rgba(0,0,0,0.40)]",
+          "bg-primary text-white ring-1 ring-inset ring-white/20 shadow-[0_4px_14px_rgba(0,0,0,0.3)] hover:ring-accent/70 hover:shadow-[0_0_0_3px_rgba(20,184,166,0.18)]",
         light:
-          "bg-white text-primary shadow-sm hover:bg-[#F0FDFA] hover:text-primary-hover hover:shadow-[0_14px_30px_rgba(0,0,0,0.18)]",
+          "bg-white text-primary shadow-xs hover:bg-[#F0FDFA] hover:text-primary-hover",
         glass:
-          "border border-white/30 bg-white/10 text-white backdrop-blur-md hover:bg-white/20 hover:border-white/50 shadow-sm",
+          "border border-white/20 bg-white/10 text-white backdrop-blur-md hover:bg-white/20 hover:border-white/30 shadow-xs",
         outline: [
-          "border-border bg-card text-foreground shadow-sm",
-          "hover:border-primary/40 hover:bg-card hover:text-primary",
+          "border-border/90 bg-card text-foreground shadow-xs",
+          "hover:border-primary/50 hover:bg-muted/40 hover:text-primary",
           "aria-expanded:bg-muted aria-expanded:text-foreground",
           "dark:bg-input/30 dark:hover:bg-input/50",
         ].join(" "),
@@ -49,16 +49,16 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        xs: "h-7 gap-1.5 rounded-md px-2.5 text-xs has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-9 gap-1.5 rounded-lg px-3 text-sm has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 [&_svg:not([class*='size-'])]:size-4",
+        xs: "h-7 gap-1.5 rounded-md px-2.5 text-xs [&_svg]:size-3.5",
+        sm: "h-9 gap-1.5 rounded-md px-3 text-xs font-semibold [&_svg]:size-3.5",
         default:
-          "h-10 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 [&_svg:not([class*='size-'])]:size-4",
-        lg: "h-12 gap-2 px-6 text-base has-data-[icon=inline-end]:pr-5 has-data-[icon=inline-start]:pl-5 [&_svg:not([class*='size-'])]:size-5",
-        xl: "h-14 gap-3 px-7 text-base font-semibold has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3 [&_svg:not([class*='size-'])]:size-5",
-        icon: "size-10 [&_svg:not([class*='size-'])]:size-4",
-        "icon-xs": "size-7 rounded-md [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm": "size-9 rounded-lg [&_svg:not([class*='size-'])]:size-4",
-        "icon-lg": "size-12 [&_svg:not([class*='size-'])]:size-5",
+          "h-10 px-4 text-sm font-medium [&_svg]:size-4",
+        lg: "h-11 sm:h-12 gap-2 px-5 sm:px-6 text-sm sm:text-base font-semibold [&_svg]:size-4",
+        xl: "h-12 sm:h-13 gap-2.5 px-6 sm:px-7 text-base font-semibold [&_svg]:size-4.5",
+        icon: "size-10 rounded-lg [&_svg]:size-4",
+        "icon-xs": "size-7 rounded-md [&_svg]:size-3.5",
+        "icon-sm": "size-9 rounded-md [&_svg]:size-4",
+        "icon-lg": "size-12 rounded-lg [&_svg]:size-5",
       },
     },
     defaultVariants: {

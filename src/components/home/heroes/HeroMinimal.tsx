@@ -65,18 +65,18 @@ export function HeroMinimal() {
   };
 
   return (
-    <section className="relative min-h-[82vh] lg:min-h-[85vh] pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-32 lg:pb-24 overflow-hidden bg-[#FBFBFC] dark:bg-[#0B0F17] text-foreground border-b border-border/80 flex flex-col justify-center">
+    <section className="relative min-h-[80vh] lg:min-h-[85vh] pt-16 sm:pt-28 pb-24 sm:pb-20 lg:pt-32 lg:pb-24 overflow-hidden bg-[#FBFBFC] dark:bg-[#0B0F17] text-foreground border-b border-border/80 flex flex-col justify-center">
       {/* Swiss Hairline Grid Matrix Background */}
       <div
         aria-hidden="true"
         className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.035)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.035)_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:3.5rem_3.5rem] pointer-events-none"
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+      <div className="shell relative z-10">
         
         {/* Top Swiss System Index Header */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/80 pb-2 mb-5 text-[11px] font-mono tracking-widest uppercase text-muted-foreground">
-          <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 pb-2 mb-4 text-[10px] sm:text-[11px] font-mono tracking-widest uppercase text-muted-foreground">
+          <div className="flex items-center gap-2">
             {/* Iconic Swiss Red Badge */}
             <span className="w-4 h-4 bg-[#E30613] text-white flex items-center justify-center font-bold text-[10px] leading-none shrink-0 rounded-[2px]" aria-label="Swiss Standard">
               +
@@ -85,7 +85,7 @@ export function HeroMinimal() {
             <span className="text-border">/</span>
             <span>STANDARD 8001</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <span className="hidden sm:inline">15+ YRS · 4.9★ RATING · 0.02MM CAD/CAM</span>
             <span className="text-border hidden sm:inline">/</span>
             <span className="text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-1.5">
@@ -106,7 +106,7 @@ export function HeroMinimal() {
           <div className="lg:col-span-6 flex flex-col justify-center items-start">
             <motion.h1
               variants={itemVariants}
-              className="text-3xl sm:text-4xl lg:text-[2.75rem] font-heading font-black text-foreground leading-[1.08] tracking-tight mb-3 text-balance"
+              className="text-2xl xs:text-3xl sm:text-4xl lg:text-[2.75rem] font-heading font-black text-foreground leading-[1.12] tracking-tight mb-2 sm:mb-3 text-balance"
             >
               Dentistry, <br />
               <span className="text-primary font-serif font-normal italic">
@@ -124,41 +124,41 @@ export function HeroMinimal() {
             {/* Swiss 3-Pillar Specifications Strip */}
             <motion.div
               variants={itemVariants}
-              className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-5 font-mono text-xs w-full"
+              className="grid grid-cols-3 gap-2 sm:gap-2.5 mb-5 font-mono text-xs w-full"
             >
-              <div className="p-2.5 sm:p-3 rounded-lg bg-card border border-border/70 shadow-sm">
-                <span className="text-[10px] text-muted-foreground block mb-0.5">01 / RESOLUTION</span>
-                <p className="font-bold text-foreground">0.02mm Digital</p>
+              <div className="p-2 sm:p-2.5 rounded-lg bg-card border border-border/70 shadow-xs">
+                <span className="text-[9px] text-muted-foreground block mb-0.5">01 / RESOLUTION</span>
+                <p className="font-bold text-foreground text-xs sm:text-sm">0.02mm</p>
               </div>
-              <div className="p-2.5 sm:p-3 rounded-lg bg-card border border-border/70 shadow-sm">
-                <span className="text-[10px] text-muted-foreground block mb-0.5">02 / MATERIALS</span>
-                <p className="font-bold text-foreground">100% Bio-Ceramic</p>
+              <div className="p-2 sm:p-2.5 rounded-lg bg-card border border-border/70 shadow-xs">
+                <span className="text-[9px] text-muted-foreground block mb-0.5">02 / MATERIALS</span>
+                <p className="font-bold text-foreground text-xs sm:text-sm">Bio-Ceramic</p>
               </div>
-              <div className="p-2.5 sm:p-3 rounded-lg bg-card border border-border/70 shadow-sm">
-                <span className="text-[10px] text-muted-foreground block mb-0.5">03 / TIME PACE</span>
-                <p className="font-bold text-foreground">Unhurried Care</p>
+              <div className="p-2 sm:p-2.5 rounded-lg bg-card border border-border/70 shadow-xs">
+                <span className="text-[9px] text-muted-foreground block mb-0.5">03 / TIME PACE</span>
+                <p className="font-bold text-foreground text-xs sm:text-sm">Unhurried</p>
               </div>
             </motion.div>
 
             {/* CTAs */}
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <motion.div variants={itemVariants} className="flex flex-row items-center gap-2.5 sm:gap-3">
               <Button
-                size="lg"
+                size="default"
                 onClick={openBooking}
-                className="rounded-none bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold tracking-wide uppercase text-xs px-7 h-11 sm:h-12 cursor-pointer shadow-sm"
+                className="rounded-lg bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 font-bold tracking-wide uppercase text-xs px-3.5 sm:px-5 h-10 sm:h-11 cursor-pointer shadow-xs touch-manipulation justify-center shrink-0"
               >
-                <span>Reserve Consultation</span>
-                <ArrowRight01Icon className="size-4 ml-1.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                <span>Consultation</span>
+                <ArrowRight01Icon className="size-3.5 sm:size-4 ml-1.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </Button>
 
               <Button
                 asChild
-                size="lg"
+                size="default"
                 variant="outline"
-                className="rounded-none border-border/90 bg-card hover:bg-muted font-bold tracking-wide uppercase text-xs px-7 h-11 sm:h-12"
+                className="rounded-lg border-border/90 bg-card hover:bg-muted font-bold tracking-wide uppercase text-xs px-3.5 sm:px-5 h-10 sm:h-11 touch-manipulation justify-center shrink-0"
               >
                 <Link href="/about">
-                  <span>Clinical Standard</span>
+                  <span>Standard</span>
                 </Link>
               </Button>
             </motion.div>
@@ -187,7 +187,7 @@ export function HeroMinimal() {
                         key={tab.id}
                         type="button"
                         onClick={() => setActiveTab(tab.id)}
-                        className={`relative overflow-hidden px-2 py-1.5 text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase transition-colors text-left cursor-pointer border ${
+                        className={`relative overflow-hidden px-2 py-2 min-h-[38px] sm:min-h-[40px] text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase transition-colors text-left cursor-pointer border touch-manipulation ${
                           isActive
                             ? "bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-900 dark:border-white shadow-sm"
                             : "bg-muted/40 text-muted-foreground border-border/60 hover:text-foreground hover:bg-muted/80"

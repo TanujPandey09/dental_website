@@ -141,7 +141,7 @@ export function AwardsWall() {
       />
 
       {/* Top Editorial Authority Header */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl mb-8 sm:mb-12 text-center relative z-10">
+      <div className="shell mb-8 sm:mb-12 text-center relative z-10">
         <motion.div
           initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -171,9 +171,9 @@ export function AwardsWall() {
           {carouselItems.map((item, index) => (
             <div
               key={`${item.id || item.name}-${index}`}
-              className="inline-flex items-center gap-3.5 p-1 rounded-2xl bg-muted/40 border border-border/70 hover:border-primary/50 shadow-xs hover:shadow-md transition-all duration-300 cursor-default select-none group/card"
+              className="inline-flex items-center gap-3.5 px-4 py-3 rounded-2xl bg-card border border-border/60 hover:border-primary/50 shadow-xs hover:shadow-md transition-all duration-300 cursor-default select-none group/card"
             >
-              <div className="px-4 py-3 rounded-[calc(1rem-2px)] bg-card border border-border/50 flex items-center gap-3.5">
+              <div className="flex items-center gap-3.5">
                 {/* Emblem Container */}
                 <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-muted/60 border border-border/60 flex items-center justify-center shrink-0 group-hover/card:scale-105 transition-transform duration-300">
                   <AccreditationIcon type={item.badgeType} />
@@ -212,11 +212,11 @@ export function AwardsWall() {
       </div>
 
       {/* Bottom Trust & Verification Guarantee Bar (Driven by siteConfig) */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+      <div className="shell">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 text-left">
           {/* Pillar 1: Certified Faculty */}
-          <div className="p-1.5 rounded-2xl bg-muted/40 border border-border/70 shadow-xs hover:border-primary/40 transition-all duration-300">
-            <div className="p-4 sm:p-5 rounded-[calc(1rem-2px)] bg-card border border-border/40 flex flex-col justify-between h-full">
+          <div           className="h-full flex flex-col">
+            <div             className="p-4 sm:p-5 rounded-2xl bg-card border border-border/60 shadow-xs hover:border-primary/40 hover:shadow-md transition-colors duration-300 flex flex-col justify-between flex-1">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                   <Award01Icon className="w-4 h-4" aria-hidden="true" />
@@ -237,8 +237,8 @@ export function AwardsWall() {
           </div>
 
           {/* Pillar 2: Micro-Precision */}
-          <div className="p-1.5 rounded-2xl bg-muted/40 border border-border/70 shadow-xs hover:border-primary/40 transition-all duration-300">
-            <div className="p-4 sm:p-5 rounded-[calc(1rem-2px)] bg-card border border-border/40 flex flex-col justify-between h-full">
+          <div           className="h-full flex flex-col">
+            <div             className="p-4 sm:p-5 rounded-2xl bg-card border border-border/60 shadow-xs hover:border-primary/40 hover:shadow-md transition-colors duration-300 flex flex-col justify-between flex-1">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                   <MicroscopeIcon className="w-4 h-4" aria-hidden="true" />
@@ -259,8 +259,8 @@ export function AwardsWall() {
           </div>
 
           {/* Pillar 3: Asepsis & Clean Air */}
-          <div className="p-1.5 rounded-2xl bg-muted/40 border border-border/70 shadow-xs hover:border-primary/40 transition-all duration-300">
-            <div className="p-4 sm:p-5 rounded-[calc(1rem-2px)] bg-card border border-border/40 flex flex-col justify-between h-full">
+          <div           className="h-full flex flex-col">
+            <div             className="p-4 sm:p-5 rounded-2xl bg-card border border-border/60 shadow-xs hover:border-primary/40 hover:shadow-md transition-colors duration-300 flex flex-col justify-between flex-1">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                   <Shield01Icon className="w-4 h-4" aria-hidden="true" />
@@ -281,8 +281,8 @@ export function AwardsWall() {
           </div>
 
           {/* Pillar 4: Verified Patient Outcomes */}
-          <div className="p-1.5 rounded-2xl bg-muted/40 border border-border/70 shadow-xs hover:border-primary/40 transition-all duration-300">
-            <div className="p-4 sm:p-5 rounded-[calc(1rem-2px)] bg-card border border-border/40 flex flex-col justify-between h-full">
+          <div           className="h-full flex flex-col">
+            <div             className="p-4 sm:p-5 rounded-2xl bg-card border border-border/60 shadow-xs hover:border-primary/40 hover:shadow-md transition-colors duration-300 flex flex-col justify-between flex-1">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
                   <CheckmarkBadge01Icon className="w-4 h-4" aria-hidden="true" />

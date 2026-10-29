@@ -318,37 +318,67 @@ export function ServicesBento({ services, activeCategory = "All" }: ServicesBent
           </motion.div>
         )}
 
-        {/* 07. The Light "Not Sure" Card (4 cols) - Matches Mockup 03 perfectly */}
+        {/* 07. The "Not Sure Which Service You Need" Advisory Card (Custom Lumina Palette) */}
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.35, delay: reduceMotion ? 0 : 0.3 }}
-          className="lg:col-span-4 bg-white border border-slate-200/90 text-slate-900 rounded-3xl p-6 sm:p-7 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-xl hover:border-teal-600/40 transition-all duration-300 flex flex-col justify-between min-h-[220px] group"
+          className="lg:col-span-4 relative bg-gradient-to-br from-[#0D282C] via-[#081B1E] to-[#040E10] text-white rounded-3xl p-6 sm:p-7 border border-teal-500/25 shadow-lg hover:border-teal-400/50 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between min-h-[250px] overflow-hidden group"
         >
-          <div>
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider text-teal-700 font-semibold bg-teal-50 border border-teal-200/60 leading-normal mb-3">
-              Not sure where to start?
-            </span>
+          {/* Ambient Radial Soft Glow */}
+          <div
+            className="absolute top-0 right-0 w-64 h-64 pointer-events-none select-none opacity-40"
+            style={{
+              background: "radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.35) 0%, transparent 70%)",
+            }}
+            aria-hidden="true"
+          />
 
-            <h3 className="text-2xl sm:text-3xl font-serif font-normal text-slate-900 leading-snug group-hover:text-teal-800 transition-colors">
-              Start with a conversation.
+          {/* Bespoke Geometric Dental Diamond & Alignment Ring Motif (Original Lumina Watermark) */}
+          <div
+            className="absolute -top-10 -right-10 w-44 h-44 pointer-events-none select-none text-teal-400/15 group-hover:text-teal-400/25 transition-all duration-700 group-hover:scale-105"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 200 200" fill="none" stroke="currentColor" className="w-full h-full">
+              <circle cx="100" cy="100" r="86" strokeWidth="1.5" strokeDasharray="4 4" />
+              <circle cx="100" cy="100" r="64" strokeWidth="1.5" />
+              <circle cx="100" cy="100" r="42" strokeWidth="1" strokeDasharray="2 3" />
+              {/* Central Diamond Spark */}
+              <path
+                d="M 100,60 L 108,92 L 140,100 L 108,108 L 100,140 L 92,108 L 60,100 L 92,92 Z"
+                fill="currentColor"
+                strokeWidth="0"
+                opacity="0.8"
+              />
+            </svg>
+          </div>
+
+          <div className="relative z-10">
+            {/* Eyebrow Tag */}
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-teal-500/15 border border-teal-500/30 text-[10px] font-mono uppercase tracking-wider text-teal-300 font-semibold mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
+              <span>Clinical Guidance</span>
+            </div>
+
+            <h3 className="text-xl sm:text-2xl font-heading font-bold text-white leading-snug pr-4">
+              Not Sure Which Service You Need?
             </h3>
-
-            <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed mt-2.5">
-              Explore the approach, the process, and what a consultation can tell you.
+            <p className="text-xs sm:text-[13px] text-slate-300 leading-relaxed mt-2.5 max-w-[280px]">
+              Tell us what is bothering you. Our team will examine your smile and plan the right next step.
             </p>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+          <div className="pt-4 relative z-10 flex items-center justify-between gap-3 border-t border-teal-900/50 mt-4">
             <button
               onClick={() => openBooking()}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-slate-900 hover:bg-teal-700 text-white text-xs font-semibold transition-colors cursor-pointer shadow-sm relative z-20"
+              className="inline-flex items-center gap-2.5 pl-4 pr-1.5 py-1.5 rounded-full bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-bold transition-all shadow-sm active:scale-95 cursor-pointer touch-manipulation group/btn"
             >
-              <span>Book a visit</span>
-              <ArrowRight01Icon className="w-3.5 h-3.5" />
+              <span>Consult Our Team</span>
+              <span className="w-6 h-6 rounded-full bg-slate-950 text-teal-400 flex items-center justify-center font-bold text-xs transition-transform group-hover/btn:translate-x-0.5">
+                →
+              </span>
             </button>
-
-            <span className="text-[11px] font-mono text-slate-400">Zero pressure</span>
+            <span className="text-[11px] font-mono text-teal-200/60">3D scan included</span>
           </div>
         </motion.div>
 

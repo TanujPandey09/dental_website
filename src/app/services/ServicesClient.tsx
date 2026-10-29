@@ -51,7 +51,7 @@ function ServicesClientContent() {
 
   return (
     <section className="pt-[66px] sm:pt-[72px] pb-12 sm:pb-16 bg-[#FAFAFA] min-h-screen">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div className="shell">
 
         {/* Top Control Bar */}
         <div className="flex flex-wrap items-center justify-end gap-2.5 mb-3 sm:mb-4">
@@ -70,32 +70,37 @@ function ServicesClientContent() {
         </div>
 
         {/* Editorial Header Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-end pb-6 sm:pb-8 border-b border-slate-200">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-end pb-6 sm:pb-8 border-b border-border/70">
           {/* Left Title & Subtitle */}
           <div className="lg:col-span-7">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-slate-900 tracking-tight leading-[1.12]">
-              Treatment, <br />
-              <span className="italic text-teal-700 font-serif">thought through.</span>
+            <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-3">
+              Treatments /
+            </p>
+            <h1 className="text-3xl sm:text-4xl lg:text-[46px] font-sans font-medium text-foreground tracking-[-0.03em] leading-[1.12]">
+              Treatment,{" "}
+              <span className="inline-block rounded-md bg-primary/20 text-foreground px-2 py-0.5 font-normal">
+                thought through.
+              </span>
             </h1>
 
-            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mt-2.5 max-w-xl">
+            <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mt-2.5 max-w-xl">
               Six core areas of care, each starting with an assessment and a conversation. Explore the approach, the process, and what a consultation can tell you.
             </p>
           </div>
 
           {/* Right Clinical Disclaimer Card */}
           <div className="lg:col-span-5 flex justify-start lg:justify-end">
-            <div className="w-full max-w-md bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-[0_2px_12px_rgba(0,0,0,0.03)]">
-              <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed mb-3">
+            <div className="w-full max-w-md bg-card border border-border/80 rounded-2xl p-4 sm:p-5 shadow-xs">
+              <p className="text-xs sm:text-[13px] text-muted-foreground leading-relaxed mb-3">
                 Treatment suitability is individual. Nothing on this page is a diagnosis or guarantee, or a substitute for clinical assessment.
               </p>
-              <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-slate-100 text-[10px] font-mono text-teal-700 font-semibold tracking-wider">
+              <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-border/60 text-[10px] font-mono text-primary font-semibold tracking-wider">
                 <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                   IN-PERSON ASSESSMENT
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal-600" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                   CLEAR WRITTEN PLAN
                 </span>
               </div>
@@ -113,10 +118,10 @@ function ServicesClientContent() {
                 onClick={() => setActiveCategory(category)}
                 aria-pressed={active}
                 className={cn(
-                  "px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer shadow-sm",
+                  "px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer shadow-xs",
                   active
-                    ? "bg-slate-900 text-white shadow-slate-900/10"
-                    : "bg-white text-slate-700 border border-slate-200 hover:border-slate-900 hover:text-slate-900"
+                    ? "bg-foreground text-background shadow-xs"
+                    : "bg-card text-muted-foreground border border-border/80 hover:border-foreground hover:text-foreground"
                 )}
               >
                 {category}

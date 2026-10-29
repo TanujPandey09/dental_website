@@ -74,16 +74,16 @@ export function ServicesGrid({ services }: ServicesGridProps) {
             {/* Left Column Info */}
             <div className="lg:col-span-7 space-y-4">
               <div className="flex flex-wrap items-center gap-2.5">
-                <span className="text-xs font-mono uppercase tracking-[0.2em] text-teal-800 font-semibold">
-                  Featured Treatment · {featured.category}
+                <span className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary">
+                  Featured Treatment · {featured.category} /
                 </span>
-                <span className="text-slate-300 font-mono text-xs hidden sm:inline">/</span>
-                <span className="text-[11px] font-mono text-slate-500 uppercase tracking-wider">
+                <span className="text-muted-foreground/40 font-mono text-xs hidden sm:inline">|</span>
+                <span className="text-[11px] font-mono text-muted-foreground uppercase tracking-wider">
                   {SERVICE_SPECS[featured.id]?.duration || "Specialist Care"}
                 </span>
               </div>
 
-              <h2 className="text-2xl sm:text-4xl font-serif font-normal text-slate-900 tracking-tight leading-tight">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-medium text-foreground tracking-[-0.03em] leading-tight">
                 {featured.title}
               </h2>
 
@@ -197,21 +197,21 @@ export function ServicesGrid({ services }: ServicesGridProps) {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-xl sm:text-2xl font-serif font-medium text-slate-900 group-hover:text-teal-700 transition-colors mb-2 leading-snug">
+                  <h3 className="text-xl sm:text-2xl font-sans font-medium text-foreground group-hover:text-primary transition-colors mb-2 leading-snug">
                     {service.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2">
+                  <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed mb-4 line-clamp-2">
                     {service.description}
                   </p>
 
                   {/* Treatment Highlights */}
                   {service.detailBullets && service.detailBullets.length > 0 && (
-                    <ul className="space-y-1.5 mb-5 pt-3 border-t border-slate-100 flex-1">
+                    <ul className="space-y-1.5 mb-5 pt-3 border-t border-border/60 flex-1">
                       {service.detailBullets.slice(0, 2).map((bullet, bIdx) => (
-                        <li key={bIdx} className="flex items-center gap-2 text-xs text-slate-600">
-                          <CheckmarkCircle02Icon className="w-3.5 h-3.5 text-teal-600 shrink-0" />
+                        <li key={bIdx} className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <CheckmarkCircle02Icon className="w-3.5 h-3.5 text-primary shrink-0" />
                           <span className="truncate">{bullet}</span>
                         </li>
                       ))}
@@ -219,10 +219,10 @@ export function ServicesGrid({ services }: ServicesGridProps) {
                   )}
 
                   {/* Bottom Actions Row */}
-                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 relative z-10 mt-auto">
+                  <div className="pt-4 border-t border-border/60 flex items-center justify-between gap-3 relative z-10 mt-auto">
                     <Link
                       href={`/services/${service.id}`}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-900 hover:text-teal-700 transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground hover:text-primary transition-colors"
                     >
                       <span>Details</span>
                       <ArrowUpRight01Icon className="w-3.5 h-3.5" />
@@ -230,7 +230,7 @@ export function ServicesGrid({ services }: ServicesGridProps) {
 
                     <button
                       onClick={() => openBooking()}
-                      className="px-3.5 py-1.5 rounded-full bg-slate-900 hover:bg-teal-700 text-white text-xs font-semibold transition-colors cursor-pointer relative z-20"
+                      className="px-4 py-1.5 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold transition-colors cursor-pointer relative z-20 shadow-xs active:scale-95"
                     >
                       Book Visit
                     </button>

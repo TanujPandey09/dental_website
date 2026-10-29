@@ -83,7 +83,7 @@ export function Logo({
       <div className="flex flex-col text-left">
         <span
           className={cn(
-            "font-heading font-bold tracking-tight leading-none transition-colors",
+            "font-sans font-medium tracking-tight leading-none transition-colors",
             sizeClasses.title,
             isDark ? "text-white" : "text-slate-900 group-hover:text-primary"
           )}

@@ -1,357 +1,248 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight01Icon, SparklesIcon, Cancel01Icon } from "hugeicons-react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence, Variants, useReducedMotion } from "framer-motion";
-import CountUp from "react-countup";
+import Link from "next/link";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import {
+  ArrowRight01Icon,
+  ArrowLeft01Icon,
+  ArrowUpRight01Icon,
+  StarIcon,
+} from "hugeicons-react";
 import { useBooking } from "@/components/BookingContext";
 import siteConfig from "@/config/site";
 import { images } from "@/config/images";
-import { cn } from "@/lib/utils";
+
+const AUTOPLAY_MS = 8000;
+const CHIPS = ["Dental check-ups", "Teeth whitening", "Clear aligners", "Implants", "Veneers", "Kids' dentistry"];
 
 export function HeroCinematic() {
   const { openBooking } = useBooking();
-  const reduceMotion = useReducedMotion();
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
-  const [isAmbientPlaying, setIsAmbientPlaying] = useState(true);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const reduced = useReducedMotion();
 
-  const cinematicSlide = siteConfig.heroSlides?.find((s) => s.id === "cinematic");
+  // Only the doctors rotate. Everything else in the hero is static.
+  const doctors = siteConfig.doctors.slice(0, 3);
 
-  // Keep ambient video playing / paused according to state
+  const [active, setActive] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [paused, setPaused] = useState(false);
+  const [touchX, setTouchX] = useState<number | null>(null);
+
+  const doctor = doctors[active] ?? doctors[0];
+
+  const go = (next: number, dir: number) => {
+    setDirection(dir);
+    setActive((next + doctors.length) % doctors.length);
+  };
+
   useEffect(() => {
-    if (!videoRef.current) return;
-    if (isAmbientPlaying) {
-      videoRef.current.play().catch(() => {
-        // Browser autoplay restrictions fallback
-      });
-    } else {
-      videoRef.current.pause();
-    }
-  }, [isAmbientPlaying]);
+    if (paused || reduced || doctors.length < 2) return;
+    const t = setInterval(() => {
+      setDirection(1);
+      setActive((p) => (p + 1) % doctors.length);
+    }, AUTOPLAY_MS);
+    return () => clearInterval(t);
+  }, [paused, reduced, active, doctors.length]);
 
-  // Toggle ambient audio
-  const toggleMute = () => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !isMuted;
-    setIsMuted(!isMuted);
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchX(e.touches[0].clientX);
+    setPaused(true);
   };
-
-  // Toggle ambient play/pause
-  const toggleAmbientPlay = () => {
-    setIsAmbientPlaying(!isAmbientPlaying);
-  };
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: reduceMotion ? 0 : 0.08,
-        delayChildren: reduceMotion ? 0 : 0.12,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: reduceMotion ? 0 : 16 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: reduceMotion ? 0 : 0.55, ease: [0.32, 0.72, 0, 1] },
-    },
+  const onTouchEnd = (e: React.TouchEvent) => {
+    setPaused(false);
+    if (touchX === null) return;
+    const delta = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(delta) > 48) go(active + (delta < 0 ? 1 : -1), delta < 0 ? 1 : -1);
+    setTouchX(null);
   };
 
   return (
-    <>
-      <section className="relative min-h-[92vh] pt-12 pb-12 sm:pt-16 sm:pb-16 lg:pt-20 lg:pb-24 flex flex-col justify-center overflow-hidden bg-[#07142A] text-white">
-        {/* Full-bleed clinic cinematic background with crisp video presentation & calibrated lighting mask */}
-        <div className="absolute inset-0 z-0 overflow-hidden select-none">
-          {/* Base High-Resolution Fallback Poster */}
-          <Image
-            src={images.heroCinematic || images.hero}
-            alt="Lumina Dental Private Operatory Suite"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center scale-100"
-          />
+    <section
+      className="relative flex min-h-[100svh] flex-col overflow-hidden bg-slate-950 text-white"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
+      {/* Static background */}
+      <div className="absolute inset-0 z-0 select-none">
+        <Image
+          src={images.heroAveline}
+          alt="Dentist showing a patient her smile in a hand mirror"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+          style={{ objectPosition: "70% 50%" }}
+          draggable={false}
+        />
+      </div>
 
-          {/* Ambient 4K Looping Practice Video — Crisp & Clearly Visible */}
-          {!reduceMotion && (
-            <video
-              ref={videoRef}
-              autoPlay
-              loop
-              muted={isMuted}
-              playsInline
-              preload="auto"
-              poster={images.heroCinematic || images.hero}
-              onLoadedData={() => setIsVideoLoaded(true)}
-              className={cn(
-                "absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000 pointer-events-none",
-                isVideoLoaded ? "opacity-100" : "opacity-0"
-              )}
-            >
-              <source src={images.heroVideo} type="video/mp4" />
-            </video>
-          )}
+      {/* Legibility overlays */}
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/45 to-transparent" />
+      <div aria-hidden className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-slate-950/70 to-transparent" />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-slate-950/80 to-transparent" />
 
-          {/* Calibrated Directional Lighting Masks — Gives text 100% contrast while letting video shine */}
-          {/* 1. Top Navbar Fade */}
-          <div
-            aria-hidden="true"
-            className="absolute top-0 inset-x-0 h-44 bg-gradient-to-b from-[#07142A]/85 via-[#07142A]/40 to-transparent pointer-events-none"
-          />
-
-          {/* 2. Soft horizontal center scrim (30% opacity vs previous 90% blackout) */}
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-gradient-to-r from-[#07142A]/70 via-[#07142A]/25 to-[#07142A]/70 pointer-events-none"
-          />
-
-          {/* 3. Subtle center focus radial mask */}
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(7,20,42,0.2)_0%,_rgba(7,20,42,0.65)_100%)] pointer-events-none"
-          />
-
-          {/* 4. Bottom Grounding Fade to Next Section */}
-          <div
-            aria-hidden="true"
-            className="absolute bottom-0 inset-x-0 h-52 bg-gradient-to-t from-[#07142A] via-[#07142A]/70 to-transparent pointer-events-none"
-          />
+      <div className="relative z-10 mx-auto flex w-full max-w-[1800px] flex-1 flex-col px-4 xs:px-5 pb-24 sm:pb-16 lg:pb-12 pt-20 sm:pt-24 lg:pt-32">
+        {/* Headline (static) */}
+        <div className="flex flex-1 items-center py-4 sm:py-0">
+          <h1 className="text-[clamp(1.95rem,6.5vw,5rem)] font-medium leading-[1.02] sm:leading-[0.98] tracking-[-0.04em] sm:tracking-[-0.045em] text-balance">
+            Modern dentistry
+            <br />
+            with a gentle touch.
+          </h1>
         </div>
 
-        {/* Ambient Video Control Pill (Top Right on Desktop) */}
-        {!reduceMotion && (
-          <div className="absolute top-5 right-4 sm:top-8 sm:right-8 z-20 flex items-center gap-2">
-            {/* Live 4K Tag with pulsing beacon */}
-            <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/60 border border-white/15 backdrop-blur-md text-[11px] font-mono text-white/80 shadow-lg">
-              <span className="relative flex h-2 w-2" aria-hidden="true">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        {/* Description + CTAs (static) */}
+        <div className="flex flex-col gap-5 sm:gap-6 pb-6 sm:pb-8 lg:flex-row lg:items-end lg:gap-14">
+          <p className="max-w-[560px] text-sm xs:text-base leading-[1.5] text-white/90 lg:text-lg">
+            Expert care for healthy, confident smiles at every age. Delivered with comfort,
+            precision and a team that explains every step before it happens.
+          </p>
+
+          <div className="flex flex-row items-center gap-2.5 sm:gap-3.5">
+            <button
+              type="button"
+              onClick={openBooking}
+              className="group inline-flex h-11 xs:h-12 sm:h-[58px] cursor-pointer items-center gap-2 xs:gap-3 rounded-full bg-white pl-4 xs:pl-5 sm:pl-6 pr-1.5 xs:pr-2 text-xs xs:text-sm sm:text-base font-semibold text-slate-900 transition active:scale-95 touch-manipulation shadow-md shrink-0"
+            >
+              <span>Book an appointment</span>
+              <span className="flex h-8 w-8 xs:h-9 xs:w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-sky-100 text-slate-800 transition-transform group-hover:translate-x-0.5 shrink-0">
+                <ArrowRight01Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </span>
-              <span>4K CLINIC CAM</span>
+            </button>
+
+            <Link
+              href="/services"
+              className="inline-flex h-11 xs:h-12 sm:h-[58px] items-center justify-center rounded-full border border-white/25 bg-white/10 px-3.5 xs:px-5 sm:px-6 text-xs xs:text-sm sm:text-base font-semibold text-white backdrop-blur-md transition hover:bg-white/20 active:scale-95 touch-manipulation shrink-0"
+            >
+              Explore treatments
+            </Link>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="h-px w-full bg-white/20" />
+
+        {/* Bottom row: chips (left) + slider controls & doctor card (right) */}
+        <div className="flex flex-col gap-6 sm:gap-8 pt-6 sm:pt-8 lg:flex-row lg:items-end lg:justify-between">
+          {/* Chips */}
+          <div className="flex max-w-[640px] flex-wrap gap-2 sm:gap-3">
+            {CHIPS.map((label, i) => (
+              <button
+                key={label}
+                type="button"
+                onClick={openBooking}
+                className={`h-[38px] sm:h-[46px] cursor-pointer rounded-full border px-3.5 sm:px-5 text-xs sm:text-[15px] font-medium transition active:scale-95 touch-manipulation ${i === 0
+                  ? "border-white bg-white text-slate-900"
+                  : "border-white/30 bg-slate-950/20 text-white backdrop-blur-md hover:bg-white/15"
+                  }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          {/* Right column */}
+          <div className="w-full max-w-[488px] select-none lg:ml-auto">
+            {/* Controls */}
+            <div className="mb-4 flex items-center gap-3">
+              <button
+                type="button"
+                aria-label="Previous doctor"
+                onClick={() => go(active - 1, -1)}
+                className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/40 transition hover:bg-white/15 active:scale-95"
+              >
+                <ArrowLeft01Icon className="h-4 w-4" />
+              </button>
+
+              <span className="font-mono text-xs font-semibold">{String(active + 1).padStart(2, "0")}</span>
+
+              <div className="flex flex-1 items-center gap-2">
+                {doctors.map((d, i) => (
+                  <div key={d.id} className="h-px flex-1 bg-white/30">
+                    {i === active && (
+                      <motion.div
+                        key={`${active}-${paused}`}
+                        className="h-[2px] -translate-y-px bg-white"
+                        initial={{ width: paused || reduced ? "100%" : "0%" }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: paused || reduced ? 0 : AUTOPLAY_MS / 1000, ease: "linear" }}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <span className="font-mono text-xs font-semibold">{String(doctors.length).padStart(2, "0")}</span>
+
+              <button
+                type="button"
+                aria-label="Next doctor"
+                onClick={() => go(active + 1, 1)}
+                className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/40 transition hover:bg-white/15 active:scale-95"
+              >
+                <ArrowRight01Icon className="h-4 w-4" />
+              </button>
             </div>
 
-            {/* Mute / Unmute Toggle */}
-            <button
-              type="button"
-              onClick={toggleMute}
-              aria-label={isMuted ? "Unmute ambient clinic sound" : "Mute ambient clinic sound"}
-              className="w-9 h-9 rounded-full bg-slate-950/60 hover:bg-slate-900 border border-white/20 backdrop-blur-md text-white flex items-center justify-center transition-all cursor-pointer active:scale-90 shadow-lg hover:border-teal-400/50"
-            >
-              {isMuted ? (
-                // Muted speaker SVG
-                <svg className="w-4 h-4 text-white/75" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
-                </svg>
-              ) : (
-                // Sound on speaker SVG
-                <svg className="w-4 h-4 text-teal-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                </svg>
-              )}
-            </button>
+            {/* Doctor card (only thing that changes) */}
+            <div className="overflow-hidden rounded-[28px] bg-white p-2.5 text-slate-900 shadow-xl">
+              <AnimatePresence mode="wait" custom={direction} initial={false}>
+                <motion.div
+                  key={doctor.id}
+                  custom={direction}
+                  variants={{
+                    enter: (d: number) => ({ opacity: 0, x: d * 24 }),
+                    center: { opacity: 1, x: 0 },
+                    exit: (d: number) => ({ opacity: 0, x: d * -24 }),
+                  }}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.28, ease: "easeOut" }}
+                  className="flex items-stretch gap-4"
+                >
+                  <div className="relative h-[90px] w-[106px] shrink-0 overflow-hidden rounded-2xl bg-slate-100">
+                    <Image
+                      src={doctor.image}
+                      alt={doctor.name}
+                      fill
+                      sizes="106px"
+                      className="object-cover object-top"
+                      draggable={false}
+                    />
+                  </div>
 
-            {/* Ambient Video Play / Pause Toggle */}
-            <button
-              type="button"
-              onClick={toggleAmbientPlay}
-              aria-label={isAmbientPlaying ? "Pause ambient video" : "Resume ambient video"}
-              className="w-9 h-9 rounded-full bg-slate-950/60 hover:bg-slate-900 border border-white/20 backdrop-blur-md text-white flex items-center justify-center transition-all cursor-pointer active:scale-90 shadow-lg hover:border-teal-400/50"
-            >
-              {isAmbientPlaying ? (
-                // Pause SVG
-                <svg className="w-3.5 h-3.5 text-white/80 fill-current" viewBox="0 0 24 24">
-                  <rect x="6" y="5" width="4" height="14" rx="1" />
-                  <rect x="14" y="5" width="4" height="14" rx="1" />
-                </svg>
-              ) : (
-                // Play SVG
-                <svg className="w-3.5 h-3.5 text-white/80 fill-current ml-0.5" viewBox="0 0 24 24">
-                  <path d="M7 5.5v13a1 1 0 0 0 1.55.83l10-6.5a1 1 0 0 0 0-1.66l-10-6.5A1 1 0 0 0 7 5.5z" />
-                </svg>
-              )}
-            </button>
+                  <div className="relative flex min-w-0 flex-1 flex-col justify-between py-0.5 pr-1">
+                    <div>
+                      <p className="truncate pr-12 text-xl font-medium leading-tight">{doctor.name}</p>
+                      <p className="mt-1 text-sm text-slate-500">{doctor.specialty}</p>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-sm text-slate-700">
+                      <span>{doctor.experience} years experience</span>
+                      <span className="inline-flex items-center gap-1">
+                        <StarIcon className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />
+                        {doctor.rating}
+                      </span>
+                    </div>
+
+                    <Link
+                      href="/doctors"
+                      aria-label={`View ${doctor.name}`}
+                      className="absolute right-0 top-0 flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 transition hover:bg-slate-100"
+                    >
+                      <ArrowUpRight01Icon className="h-4 w-4" />
+                    </Link>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
-        )}
-
-        {/* Main Centered Content — Scaled & Grand Cinematic Presence */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl text-center relative z-10 py-4 my-auto">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="show"
-            className="flex flex-col items-center"
-          >
-            {/* Cinematic Eyebrow Badge with Pulsing Live Status */}
-            <motion.div
-              variants={itemVariants}
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.08] border border-white/20 backdrop-blur-xl text-white/95 text-xs font-semibold mb-6 shadow-xl"
-            >
-              <span className="w-2.5 h-2.5 rounded-full bg-teal-400 animate-pulse" aria-hidden="true" />
-              <span className="tracking-widest uppercase text-[11px] font-mono text-teal-200">
-                4K CLINIC TOUR &amp; PRACTICE FILM · DIRECTORS CUT
-              </span>
-            </motion.div>
-
-            {/* Headline — Grand, Cinematic Film Scale with Drop Shadow for Contrast */}
-            <motion.h1
-              variants={itemVariants}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[4.75rem] font-heading font-extrabold text-white leading-[1.04] tracking-tight mb-5 text-balance max-w-4xl mx-auto drop-shadow-[0_4px_30px_rgba(0,0,0,0.85)]"
-            >
-              {cinematicSlide?.headline || "Quietly extraordinary"} <br />
-              <span className="italic font-normal text-teal-300 font-serif">
-                {cinematicSlide?.headlineAccent || "dentistry."}
-              </span>
-            </motion.h1>
-
-            {/* Subtitle — Cinematic Outcome Line with High-Legibility Shadow */}
-            <motion.p
-              variants={itemVariants}
-              className="text-base sm:text-lg md:text-xl text-slate-100/90 leading-relaxed mb-9 max-w-2xl mx-auto font-normal drop-shadow-[0_2px_16px_rgba(0,0,0,0.8)]"
-            >
-              {cinematicSlide?.description || siteConfig.hero.description}
-            </motion.p>
-
-            {/* Dual CTAs with Button-in-Button Trailing Icon & Video Trigger */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-10 sm:mb-12"
-            >
-              <Button
-                size="lg"
-                onClick={openBooking}
-                className="w-full sm:w-auto rounded-full bg-teal-600 hover:bg-teal-500 text-white font-semibold shadow-[0_10px_35px_rgba(20,184,166,0.4)] hover:shadow-[0_14px_45px_rgba(20,184,166,0.6)] px-8 h-13 sm:h-14 flex items-center justify-center gap-3 cursor-pointer group text-sm sm:text-base transition-all active:scale-95 border border-teal-400/40"
-              >
-                <span>{cinematicSlide?.primaryCtaText || "Request Consultation"}</span>
-                <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center transition-transform group-hover:translate-x-0.5">
-                  <ArrowRight01Icon className="size-3.5 text-white" aria-hidden="true" />
-                </span>
-              </Button>
-
-              <button
-                type="button"
-                onClick={() => setIsVideoOpen(true)}
-                className="w-full sm:w-auto rounded-full border border-white/25 bg-slate-950/45 hover:bg-slate-900/75 backdrop-blur-xl text-white px-7 h-13 sm:h-14 font-semibold flex items-center justify-center gap-3 transition-all cursor-pointer group active:scale-95 shadow-2xl text-sm sm:text-base hover:border-teal-400/50"
-              >
-                <span className="w-8 h-8 rounded-full bg-teal-500/20 border border-teal-400/40 flex items-center justify-center text-teal-300 group-hover:scale-110 group-hover:bg-teal-500/30 transition-all shadow-sm">
-                  <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M7 5.5v13a1 1 0 0 0 1.55.83l10-6.5a1 1 0 0 0 0-1.66l-10-6.5A1 1 0 0 0 7 5.5z" />
-                  </svg>
-                </span>
-                <span>{cinematicSlide?.secondaryCtaText || "Watch 60s Practice Film"}</span>
-              </button>
-            </motion.div>
-
-            {/* Bottom Floating Double-Bezel Stats & Emergency Dock */}
-            <motion.div
-              variants={itemVariants}
-              className="w-full max-w-4xl p-1.5 rounded-[26px] bg-white/[0.08] border border-white/20 backdrop-blur-2xl shadow-[0_30px_70px_rgba(0,0,0,0.65)]"
-            >
-              <div className="rounded-[20px] bg-slate-950/80 border border-white/10 px-6 py-4 sm:px-8 sm:py-5 flex flex-col md:flex-row items-center justify-between gap-5">
-                {/* Trust Metrics */}
-                <div className="grid grid-cols-3 gap-6 sm:gap-10 flex-1 text-left w-full sm:w-auto">
-                  <div className="relative">
-                    <p className="text-xl sm:text-2xl font-heading font-bold text-white tracking-tight">
-                      <CountUp end={siteConfig.clinic.stats.yearsExperience} duration={2} enableScrollSpy scrollSpyOnce />+
-                    </p>
-                    <p className="text-[11px] text-teal-200/80 font-mono font-medium uppercase tracking-wider mt-1">
-                      Years in Practice
-                    </p>
-                  </div>
-                  <div className="relative border-l border-white/10 pl-4 sm:pl-6">
-                    <p className="text-xl sm:text-2xl font-heading font-bold text-white tracking-tight">
-                      {siteConfig.clinic.stats.patientsTreated}
-                    </p>
-                    <p className="text-[11px] text-teal-200/80 font-mono font-medium uppercase tracking-wider mt-1">
-                      Smiles Restored
-                    </p>
-                  </div>
-                  <div className="relative border-l border-white/10 pl-4 sm:pl-6">
-                    <p className="text-xl sm:text-2xl font-heading font-bold text-white tracking-tight">
-                      {siteConfig.clinic.stats.satisfactionScore}<span className="text-teal-400">%</span>
-                    </p>
-                    <p className="text-[11px] text-teal-200/80 font-mono font-medium uppercase tracking-wider mt-1">
-                      Comfort Score
-                    </p>
-                  </div>
-                </div>
-
-                {/* 24/7 Priority Emergency Hotline */}
-                <a
-                  href={`tel:${siteConfig.contact.emergencyPhone.replace(/[^0-9+]/g, "")}`}
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/5 border border-white/15 hover:bg-white/10 hover:border-teal-400/40 transition-all group shrink-0 w-full sm:w-auto justify-center cursor-pointer active:scale-95"
-                >
-                  <div className="w-9 h-9 rounded-lg bg-teal-500/20 border border-teal-400/40 flex items-center justify-center text-teal-300 shrink-0 group-hover:scale-105 transition-transform">
-                    <SparklesIcon className="w-4 h-4" aria-hidden="true" />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-[9px] text-white/60 uppercase tracking-widest font-mono font-semibold">
-                      24/7 Priority Care
-                    </p>
-                    <p className="text-xs sm:text-sm font-semibold text-white group-hover:text-teal-300 transition-colors">
-                      {siteConfig.contact.emergencyPhone}
-                    </p>
-                  </div>
-                </a>
-              </div>
-            </motion.div>
-          </motion.div>
         </div>
-      </section>
-
-      {/* Cinematic Practice Film Lightbox Modal */}
-      <AnimatePresence>
-        {isVideoOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-2xl"
-            onClick={() => setIsVideoOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-4xl aspect-video rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-black"
-            >
-              {/* Close Button */}
-              <button
-                type="button"
-                onClick={() => setIsVideoOpen(false)}
-                aria-label="Close practice film"
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-slate-950/80 border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"
-              >
-                <Cancel01Icon className="w-5 h-5" />
-              </button>
-
-              {/* High Definition Practice Film Video Player */}
-              <div className="relative w-full h-full bg-black flex items-center justify-center">
-                <video
-                  controls
-                  autoPlay
-                  playsInline
-                  poster={images.heroCinematic || images.hero}
-                  className="w-full h-full object-cover"
-                >
-                  <source src={images.heroVideo} type="video/mp4" />
-                </video>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+      </div>
+    </section>
   );
 }

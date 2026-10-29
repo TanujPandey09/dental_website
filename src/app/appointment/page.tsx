@@ -29,7 +29,7 @@ export default function AppointmentPage() {
         <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-1/4 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[140px] pointer-events-none" />
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+        <div className="shell relative z-10">
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             
             {/* Left: SaaS Concierge & Trust Panel */}
@@ -39,7 +39,7 @@ export default function AppointmentPage() {
               <div className="p-1.5 rounded-3xl bg-muted/40 border border-border/70 shadow-sm">
                 <div className="rounded-2xl bg-card border border-border/60 p-6 sm:p-7 space-y-6">
                   <div>
-                    <h3 className="text-xl font-heading font-bold text-foreground tracking-tight">
+                    <h3 className="text-xl font-sans font-medium text-foreground tracking-tight">
                       Why Choose {siteConfig.clinic.name}?
                     </h3>
                   </div>
@@ -144,7 +144,7 @@ export default function AppointmentPage() {
 
       {/* Location & Map Section */}
       <section className="py-12 sm:py-16 bg-muted/30 border-t border-border/40">
-        <div className="container mx-auto px-4 md:px-8 max-w-7xl">
+        <div className="shell">
           <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-2">

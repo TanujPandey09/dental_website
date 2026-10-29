@@ -44,104 +44,104 @@ export default function ContactPage() {
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[140px] pointer-events-none" />
         
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-7xl">
+        <div className="shell relative z-10">
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-start">
             
-            {/* Left: Double-Bezel SaaS Style Info Cards */}
-            <div className="lg:col-span-5 space-y-8">
+            {/* Left: Clean Architectural Info Cards */}
+            <div className="lg:col-span-5 space-y-6 sm:space-y-8">
               <div>
-                <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground mb-4 tracking-tight leading-tight">
-                  How can we help?
+                <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-3">
+                  Concierge Care /
+                </p>
+                <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-sans font-medium text-foreground mb-3 tracking-[-0.03em] leading-tight">
+                  How can we{" "}
+                  <span className="inline-block rounded-md bg-primary/20 text-foreground px-2 py-0.5 font-normal">
+                    help you?
+                  </span>
                 </h2>
-                <p className="text-muted-foreground text-base sm:text-lg leading-relaxed font-medium">
+                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed font-normal">
                   Whether you need to schedule a routine checkup or require immediate emergency assistance, our concierge team is on standby.
                 </p>
               </div>
 
-              <div className="space-y-4">
-                {/* Email Card - Double Bezel */}
-                <div className="p-1.5 rounded-2xl bg-muted/40 border border-border/70 shadow-sm hover:border-primary/40 hover:shadow-md transition-all duration-300">
-                  <div className="rounded-xl bg-card border border-border/60 p-5 sm:p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 transition-colors">
-                        <Mail01Icon className="w-6 h-6" aria-hidden="true" />
+              <div className="space-y-3.5">
+                {/* Email Card - Single Crisp Container */}
+                <div className="rounded-xl bg-card border border-border/80 p-5 sm:p-6 shadow-xs hover:border-primary/40 transition-colors">
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+                      <Mail01Icon className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <h3 className="font-heading font-bold text-foreground text-base">Email Support</h3>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-muted text-muted-foreground">
+                          &lt;2h Response
+                        </span>
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-heading font-bold text-foreground text-base sm:text-lg">Email Support</h3>
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-muted border border-border/60 text-muted-foreground">
-                            &lt;2h Response
-                          </span>
+                      <p className="text-muted-foreground text-xs mb-2.5">For general inquiries, records transfer & treatment estimates.</p>
+                      <a 
+                        href={`mailto:${siteConfig.contact.email}`} 
+                        className="text-primary font-semibold hover:underline break-all text-sm inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+                      >
+                        {siteConfig.contact.email}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Phone Card - Single Crisp Container */}
+                <div className="rounded-xl bg-card border border-border/80 p-5 sm:p-6 shadow-xs hover:border-primary/40 transition-colors">
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+                      <Call02Icon className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    <div className="w-full min-w-0">
+                      <div className="flex items-center justify-between gap-2 mb-1 flex-wrap">
+                        <h3 className="font-heading font-bold text-foreground text-base">Phone Support</h3>
+                        <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-primary/10 border border-primary/20 text-primary text-[10px] font-semibold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" aria-hidden="true" />
+                          Emergency Ready
                         </div>
-                        <p className="text-muted-foreground text-xs sm:text-sm mb-3">For general inquiries, records transfer & treatment estimates.</p>
+                      </div>
+                      <p className="text-muted-foreground text-xs mb-2.5 whitespace-pre-line leading-relaxed">{siteConfig.contact.hours}</p>
+                      <a 
+                        href={`tel:${siteConfig.contact.phone}`} 
+                        className="text-primary font-semibold hover:underline text-base block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+                      >
+                        {siteConfig.contact.phone}
+                      </a>
+                      <div className="mt-3 pt-2.5 border-t border-border/50 flex items-center justify-between text-xs text-muted-foreground flex-wrap gap-1">
+                        <span>After-hours urgent line:</span>
                         <a 
-                          href={`mailto:${siteConfig.contact.email}`} 
-                          className="text-primary font-bold hover:underline break-all text-sm sm:text-base inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
+                          href={`tel:${siteConfig.contact.emergencyPhone}`} 
+                          className="text-primary font-semibold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
                         >
-                          {siteConfig.contact.email}
+                          {siteConfig.contact.emergencyPhone}
                         </a>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Phone Card - Double Bezel */}
-                <div className="p-1.5 rounded-2xl bg-muted/40 border border-border/70 shadow-sm hover:border-primary/40 hover:shadow-md transition-all duration-300">
-                  <div className="rounded-xl bg-card border border-border/60 p-5 sm:p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 transition-colors">
-                        <Call02Icon className="w-6 h-6" aria-hidden="true" />
-                      </div>
-                      <div className="w-full min-w-0">
-                        <div className="flex items-center justify-between gap-2 mb-1 flex-wrap">
-                          <h3 className="font-heading font-bold text-foreground text-base sm:text-lg">Phone Support</h3>
-                          <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-[11px] font-semibold">
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" aria-hidden="true" />
-                            Emergency Ready
-                          </div>
-                        </div>
-                        <p className="text-muted-foreground text-xs sm:text-sm mb-3 whitespace-pre-line leading-relaxed">{siteConfig.contact.hours}</p>
-                        <a 
-                          href={`tel:${siteConfig.contact.phone}`} 
-                          className="text-primary font-bold hover:underline text-base sm:text-lg block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
-                        >
-                          {siteConfig.contact.phone}
-                        </a>
-                        <div className="mt-3 pt-3 border-t border-border/50 flex items-center justify-between text-xs text-muted-foreground flex-wrap gap-1">
-                          <span>After-hours urgent line:</span>
-                          <a 
-                            href={`tel:${siteConfig.contact.emergencyPhone}`} 
-                            className="text-primary font-bold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded"
-                          >
-                            {siteConfig.contact.emergencyPhone}
-                          </a>
-                        </div>
-                      </div>
+                {/* Location Card - Single Crisp Container */}
+                <div className="rounded-xl bg-card border border-border/80 p-5 sm:p-6 shadow-xs hover:border-primary/40 transition-colors">
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-10 h-10 rounded-lg bg-secondary/10 border border-secondary/20 flex items-center justify-center text-secondary shrink-0">
+                      <Location01Icon className="w-5 h-5" aria-hidden="true" />
                     </div>
-                  </div>
-                </div>
-
-                {/* Location Card - Double Bezel */}
-                <div className="p-1.5 rounded-2xl bg-muted/40 border border-border/70 shadow-sm hover:border-primary/40 hover:shadow-md transition-all duration-300">
-                  <div className="rounded-xl bg-card border border-border/60 p-5 sm:p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-secondary/10 border border-secondary/20 flex items-center justify-center text-secondary shrink-0 transition-colors">
-                        <Location01Icon className="w-6 h-6" aria-hidden="true" />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <h3 className="font-heading font-bold text-foreground text-base">Visit Our Clinic</h3>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-muted text-muted-foreground">
+                          Valet Available
+                        </span>
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-heading font-bold text-foreground text-base sm:text-lg">Visit Our Clinic</h3>
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-muted border border-border/60 text-muted-foreground">
-                            Valet Available
-                          </span>
-                        </div>
-                        <p className="text-muted-foreground text-xs sm:text-sm leading-relaxed whitespace-pre-line">
-                          {siteConfig.contact.address}
-                        </p>
-                        <div className="mt-3 pt-3 border-t border-border/50 flex items-center gap-1.5 text-xs text-muted-foreground">
-                          <Clock01Icon className="w-3.5 h-3.5 text-primary shrink-0" aria-hidden="true" />
-                          <span>{siteConfig.contact.transitInfo}</span>
-                        </div>
+                      <p className="text-muted-foreground text-xs leading-relaxed whitespace-pre-line mb-2.5">
+                        {siteConfig.contact.address}
+                      </p>
+                      <div className="mt-2.5 pt-2.5 border-t border-border/50 flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <Clock01Icon className="w-3.5 h-3.5 text-primary shrink-0" aria-hidden="true" />
+                        <span>{siteConfig.contact.transitInfo}</span>
                       </div>
                     </div>
                   </div>
@@ -149,24 +149,22 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Right: Double-Bezel Form Container */}
+            {/* Right: Clean Single Form Container */}
             <div className="lg:col-span-7">
-              <div className="p-1.5 sm:p-2 rounded-3xl bg-muted/30 border border-border/70 shadow-sm">
-                <div className="rounded-[calc(1.5rem-2px)] sm:rounded-[calc(1.5rem-4px)] bg-card border border-border/60 p-6 sm:p-10 shadow-xl relative overflow-hidden">
-                  <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
-                    <h3 className="text-2xl sm:text-3xl font-heading font-bold text-foreground tracking-tight">
-                      Send us a message
-                    </h3>
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold">
-                      <span className="w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true" />
-                      Avg. 2h response
-                    </div>
+              <div className="rounded-xl bg-card border border-border/80 p-5 sm:p-8 shadow-sm">
+                <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
+                  <h3 className="text-xl sm:text-2xl font-heading font-bold text-foreground tracking-tight">
+                    Send us a message
+                  </h3>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-primary/10 text-primary text-xs font-semibold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary" aria-hidden="true" />
+                    Avg. 2h response
                   </div>
-                  <p className="text-muted-foreground mb-8 text-sm sm:text-base leading-relaxed">
-                    Fill out the form below and our clinical coordination team will get back to you promptly.
-                  </p>
-                  <ContactForm />
                 </div>
+                <p className="text-muted-foreground mb-6 text-xs sm:text-sm leading-relaxed">
+                  Fill out the form below and our clinical coordination team will get back to you promptly.
+                </p>
+                <ContactForm />
               </div>
             </div>
 
@@ -174,33 +172,37 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Modern FAQ Section - Double Bezel Accordions */}
-      <section className="py-16 sm:py-24 bg-muted/30 border-t border-border/40 relative">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl relative z-10">
-          <div className="text-center mb-8 sm:mb-16">
-            <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground mb-3 sm:mb-4 tracking-tight">
-              Frequently Asked Questions
+      {/* Modern FAQ Section - Single Clean Accordions */}
+      <section className="py-12 sm:py-20 bg-muted/30 border-t border-border/40 relative">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl relative z-10">
+          <div className="text-center mb-8 sm:mb-12">
+            <p className="text-[13px] font-medium tracking-[0.08em] uppercase text-primary mb-3">
+              Common Questions /
+            </p>
+            <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-sans font-medium text-foreground mb-2 sm:mb-3 tracking-[-0.03em] leading-tight">
+              Frequently Asked{" "}
+              <span className="inline-block rounded-md bg-primary/20 text-foreground px-2 py-0.5 font-normal">
+                Questions
+              </span>
             </h2>
-            <p className="text-muted-foreground text-base sm:text-lg">
+            <p className="text-muted-foreground text-sm sm:text-base">
               Everything you need to know about your consultation, insurance coverage, and clinic protocols.
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {faqs.map((faq, idx) => (
-              <div key={idx} className="p-1 rounded-2xl bg-muted/40 border border-border/60 hover:border-primary/40 transition-all duration-200">
-                <details className="group bg-card rounded-xl border border-border/50 overflow-hidden [&_summary::-webkit-details-marker]:hidden">
-                  <summary className="flex items-center justify-between p-5 sm:p-6 font-heading font-bold text-foreground cursor-pointer select-none transition-colors group-hover:text-primary">
-                    <span className="text-base sm:text-lg pr-4">{faq.question}</span>
-                    <span className="ml-4 flex-shrink-0 w-8 h-8 rounded-full bg-muted/70 group-hover:bg-primary/10 flex items-center justify-center group-open:rotate-180 transition-all duration-300">
-                      <ArrowDown01Icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                    </span>
-                  </summary>
-                  <div className="px-5 sm:px-6 pb-6 pt-1 text-muted-foreground leading-relaxed text-sm sm:text-base border-t border-border/30">
-                    {faq.answer}
-                  </div>
-                </details>
-              </div>
+              <details key={idx} className="group bg-card rounded-xl border border-border/80 overflow-hidden shadow-xs hover:border-primary/40 transition-colors [&_summary::-webkit-details-marker]:hidden">
+                <summary className="flex items-center justify-between p-4 sm:p-5 font-heading font-semibold text-foreground cursor-pointer select-none transition-colors group-hover:text-primary">
+                  <span className="text-sm sm:text-base pr-4">{faq.question}</span>
+                  <span className="ml-2 flex-shrink-0 w-7 h-7 rounded-md bg-muted flex items-center justify-center group-open:rotate-180 transition-transform duration-200">
+                    <ArrowDown01Icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </span>
+                </summary>
+                <div className="px-4 sm:px-5 pb-5 pt-1 text-muted-foreground leading-relaxed text-xs sm:text-sm border-t border-border/40">
+                  {faq.answer}
+                </div>
+              </details>
             ))}
           </div>
         </div>

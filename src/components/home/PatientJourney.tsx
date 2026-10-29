@@ -61,17 +61,21 @@ export function PatientJourney() {
         className="absolute bottom-0 left-10 w-[500px] h-[300px] bg-teal-600/5 rounded-full blur-[120px] pointer-events-none"
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+      <div className="shell relative z-10">
         {/* Header Row: Left Eyebrow & Title, Right Editorial Subtext */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 sm:gap-8 pb-12 sm:pb-16 border-b border-white/10">
           <div className="max-w-2xl">
-            {/* From first question to aftercare. */}
+            <span className="text-teal-300/80 text-xs sm:text-sm font-medium tracking-tight block mb-2">
+              The Patient Journey /
+            </span>
             <h2
               id="patient-journey-heading"
-              className="text-3xl sm:text-4xl lg:text-5xl font-serif font-normal text-white tracking-tight leading-[1.15]"
+              className="text-3xl sm:text-4xl lg:text-[44px] font-sans font-medium text-white tracking-[-0.03em] leading-[1.12]"
             >
               From first question{" "}
-              <span className="italic text-teal-400 font-serif">to aftercare.</span>
+              <span className="inline-block rounded-md bg-teal-500/25 text-white px-2 py-0.5 font-normal">
+                to aftercare.
+              </span>
             </h2>
           </div>
 
@@ -206,7 +210,7 @@ export function PatientJourney() {
                   </div>
 
                   {/* Step Info */}
-                  <h3 className="font-serif text-lg font-medium text-white tracking-tight mt-0.5 mb-2">
+                  <h3 className="font-sans text-lg font-medium text-white tracking-tight mt-0.5 mb-2">
                     {step.title}
                   </h3>
                   <p className="text-slate-400 text-xs leading-relaxed">

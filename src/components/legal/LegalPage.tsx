@@ -17,7 +17,7 @@ interface LegalPageProps {
 export function LegalPage({ eyebrow, title, updated, intro, sections }: LegalPageProps) {
   return (
     <section className="pt-32 pb-24 sm:pt-40 bg-background">
-      <div className="container mx-auto px-4 md:px-8 max-w-3xl">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-3xl">
         <p className="text-sm font-medium text-primary mb-3">
           {eyebrow}
         </p>

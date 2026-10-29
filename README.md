@@ -92,6 +92,7 @@ Requires **Node ≥ 20.9** (see `.nvmrc`).
 | `src/components/home/*` | Home sections use config |
 | `src/components/contact/ClinicMap.tsx` | Dynamic map with floating directions card |
 | `src/app/globals.css` | Brand color tokens / base styles |
+| `DESIGN.md` | Design system, color tokens & typography rules |
 
 ### Layout variants
 
@@ -206,8 +207,9 @@ src/
 
 ---
 
-## 💬 Support
+## 💬 Support & Docs
 
+- Design system & typography: [`DESIGN.md`](./DESIGN.md)
 - Setup & customization: [`CUSTOMIZATION.md`](./CUSTOMIZATION.md)
 - Form / email setup: [`FORM-INTEGRATION.md`](./FORM-INTEGRATION.md)
 - Packaging for sale: `npm run package` (see [`RELEASE-CHECKLIST.md`](./RELEASE-CHECKLIST.md))

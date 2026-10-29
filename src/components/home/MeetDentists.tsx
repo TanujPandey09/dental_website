@@ -1,188 +1,363 @@
 "use client";
 
-import { useRef } from "react";
-import { ArrowRight01Icon, ArrowUpRight01Icon, StarIcon, Location01Icon, Calendar01Icon } from "hugeicons-react";
-import Link from "next/link";
+import { useState } from "react";
 import Image from "next/image";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import {
+  StarIcon,
+  ArrowRight01Icon,
+  ArrowUpRight01Icon,
+  Calendar01Icon,
+  Shield01Icon,
+} from "hugeicons-react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useBooking } from "@/components/BookingContext";
 import siteConfig from "@/config/site";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export function MeetDentists() {
-  const container = useRef<HTMLElement>(null);
   const { openBooking } = useBooking();
+  const reduceMotion = useReducedMotion();
 
-  // Show top 4 featured specialists on the landing page for UI consistency with Services
-  const doctorLinks = siteConfig.doctors.slice(0, 4).map((doctor) => ({
-    ...doctor,
-    slug: doctor.id,
-  }));
+  // Pick top 4 featured specialists directly from siteConfig (100% customizable from config)
+  const specialists = siteConfig.doctors.slice(0, 4);
 
-  useGSAP(
-    () => {
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) {
-        gsap.set(".doctor-card", { opacity: 1, y: 0 });
-        return;
-      }
-      gsap.fromTo(
-        ".doctor-card",
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: container.current,
-            start: "top 75%",
-          },
-        }
-      );
-    },
-    { scope: container }
-  );
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeDoctor = specialists[activeIndex] ?? specialists[0];
 
   return (
-    <section ref={container} className="py-16 sm:py-24 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-10 sm:mb-16">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl sm:text-5xl font-heading font-bold text-foreground leading-tight">
-              World-Class Specialists.
+    <section className="py-14 sm:py-20 lg:py-24 bg-background border-t border-border/40 overflow-hidden">
+      <div className="shell">
+        {/* Top Header Row with Action Pill */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12 lg:mb-16">
+          <div>
+            <span className="text-muted-foreground/80 text-xs sm:text-sm font-medium tracking-tight block mb-1">
+              Specialists /
+            </span>
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[44px] font-sans font-medium text-foreground tracking-[-0.03em] leading-[1.12] text-balance">
+              Experienced hands, <br className="hidden sm:inline" />
+              unhurried appointments
             </h2>
-            <p className="text-muted-foreground mt-3 sm:mt-4 text-base sm:text-lg max-w-xl leading-relaxed">
-              Board-certified clinicians across every dental discipline, each dedicated to a focused area of restorative and aesthetic expertise.
-            </p>
           </div>
 
-          {/* Header Action */}
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
+          <button
+            type="button"
+            onClick={openBooking}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border/80 bg-background hover:bg-muted/70 text-xs sm:text-sm font-medium text-foreground transition-all duration-200 cursor-pointer shadow-xs active:scale-95 shrink-0 self-start sm:self-end touch-manipulation"
           >
-            <Link href="/doctors">
-              <span>Meet Entire Team</span>
-              <ArrowRight01Icon className="size-4 transition-transform duration-150 group-hover/button:translate-x-0.5" />
-            </Link>
-          </Button>
+            <span>Book with a specialist</span>
+            <ArrowRight01Icon className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
+          </button>
         </div>
 
-        {/* Double-Bezel Specialist Showcase: Horizontal Swipe Slider on Mobile, 4-Col Grid on Desktop */}
-        <div className="flex overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 no-scrollbar">
-          {doctorLinks.map((doctor) => (
-            <div
-              key={doctor.id}
-              className="doctor-card w-[82vw] max-w-[300px] shrink-0 snap-center sm:w-auto sm:max-w-none p-1.5 sm:p-2 rounded-3xl bg-muted/40 border border-border/70 shadow-sm flex flex-col group hover:-translate-y-1.5 transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] relative"
-            >
-              <div className="rounded-[calc(1.5rem-2px)] bg-card border border-border/60 overflow-hidden flex flex-col flex-1 hover:shadow-xl hover:border-primary/40 transition-all duration-300">
-                <Link
-                  href={`/doctors/${doctor.slug}`}
-                  aria-label={`View details for ${doctor.name}`}
-                  tabIndex={-1}
-                  className="absolute inset-0 z-10"
-                />
+        {/* ======================================================================= */}
+        {/* 1. MOBILE & TABLET VIEW (< lg): Cohesive, Compact & Touch-Friendly      */}
+        {/* ======================================================================= */}
+        <div className="block lg:hidden">
+          {/* Segmented Doctor Selector Pill Bar */}
+          <div
+            className="flex items-center gap-1 p-1 rounded-full bg-muted/60 border border-border/60 overflow-x-auto no-scrollbar mb-4"
+            role="tablist"
+            aria-label="Select specialist"
+          >
+            {specialists.map((doc, idx) => {
+              const isActive = idx === activeIndex;
+              const firstName = doc.name.split(" ")[1] || doc.name;
+              return (
+                <button
+                  key={doc.id}
+                  role="tab"
+                  type="button"
+                  aria-selected={isActive}
+                  onClick={() => setActiveIndex(idx)}
+                  className={`flex-1 min-w-[76px] py-1.5 px-2.5 rounded-full text-xs transition-all duration-200 cursor-pointer touch-manipulation whitespace-nowrap text-center ${
+                    isActive
+                      ? "bg-background text-foreground shadow-xs font-semibold"
+                      : "text-muted-foreground hover:text-foreground font-medium"
+                  }`}
+                >
+                  0{idx + 1} {firstName}
+                </button>
+              );
+            })}
+          </div>
 
-                {/* Portrait Header */}
-                <div className="relative h-[270px] md:h-[300px] overflow-hidden bg-muted">
+          {/* Unified Active Doctor Card */}
+          <div className="rounded-2xl sm:rounded-3xl bg-card border border-border/80 p-4 xs:p-5 sm:p-6 shadow-xs">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeDoctor.id}
+                initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : -8 }}
+                transition={{ duration: reduceMotion ? 0 : 0.25, ease: "easeOut" }}
+                className="space-y-3.5 sm:space-y-4"
+              >
+                {/* Doctor Portrait Header */}
+                <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full rounded-xl sm:rounded-2xl overflow-hidden bg-muted border border-border/50">
                   <Image
-                    src={doctor.image}
-                    alt={doctor.name}
+                    src={activeDoctor.image}
+                    alt={activeDoctor.name}
                     fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover object-top scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                    priority
+                    className="object-cover object-top"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent pointer-events-none" />
 
-                  {/* Rating Pill Top-Right */}
-                  <div className="absolute top-3.5 right-3.5 backdrop-blur-md bg-white/95 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm border border-white/20">
-                    <StarIcon className="w-3.5 h-3.5 fill-rating text-rating" aria-hidden="true" />
-                    <span className="text-xs font-bold text-slate-950">{doctor.rating.toFixed(1)}</span>
-                    <span className="text-[10px] text-muted-foreground font-medium">({doctor.reviews})</span>
+                  {/* Rating Pill (bottom-left) */}
+                  <div className="absolute bottom-2.5 left-2.5 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-background/95 backdrop-blur-md shadow-xs border border-border/60 text-xs font-semibold text-foreground z-10">
+                    <StarIcon className="w-3.5 h-3.5 fill-amber-500 text-amber-500" aria-hidden="true" />
+                    <span>{activeDoctor.rating.toFixed(1)}</span>
+                    <span className="text-muted-foreground font-normal ml-0.5">
+                      ({activeDoctor.reviews})
+                    </span>
                   </div>
 
-                  {/* Sample profile notice if preview */}
-                  {siteConfig.ui.showSampleContentNotices && doctor.demo && (
-                    <div className="absolute top-3.5 left-3.5 backdrop-blur-md bg-slate-950/70 border border-white/20 text-white px-2.5 py-0.5 rounded-full shadow-sm text-[10px] font-bold">
-                      Sample Profile
+                  {/* Availability Pill (top-right) */}
+                  {activeDoctor.nextAvailable && (
+                    <div className="absolute top-2.5 right-2.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/20 text-white text-[11px] font-medium shadow-xs z-10">
+                      <Calendar01Icon className="w-3 h-3 text-primary" aria-hidden="true" />
+                      <span>{activeDoctor.nextAvailable}</span>
                     </div>
                   )}
+                </div>
 
-                  {/* Name & Role (Overlaid on bottom of photo) */}
-                  <div className="absolute bottom-0 left-0 w-full p-4 sm:p-5 text-white">
-                    <h3 className="text-lg md:text-xl font-heading font-bold mb-0.5 leading-snug drop-shadow-sm">
-                      {doctor.name}
-                    </h3>
-                    <p className="text-white/85 text-xs sm:text-sm font-medium">{doctor.role}</p>
+                {/* Doctor Name & Role */}
+                <div>
+                  <h3 className="text-lg xs:text-xl font-sans font-medium text-foreground tracking-tight">
+                    {activeDoctor.name}
+                  </h3>
+                  <p className="text-xs xs:text-sm font-semibold text-primary mt-0.5">
+                    {activeDoctor.role || activeDoctor.specialty}
+                  </p>
+                </div>
+
+                {/* Doctor Philosophy / Bio */}
+                <p className="text-xs xs:text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                  {activeDoctor.philosophy || activeDoctor.heroDescription}
+                </p>
+
+                {/* 3 Metric Chips */}
+                <div className="grid grid-cols-3 gap-2 py-2.5 border-y border-border/60 text-center">
+                  <div className="bg-muted/40 rounded-lg p-2">
+                    <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tight">
+                      Experience
+                    </p>
+                    <p className="text-xs font-bold text-foreground mt-0.5 truncate">
+                      {activeDoctor.experience}
+                    </p>
+                  </div>
+                  <div className="bg-muted/40 rounded-lg p-2">
+                    <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tight">
+                      Focus
+                    </p>
+                    <p className="text-xs font-bold text-foreground mt-0.5 truncate">
+                      {activeDoctor.specializations?.[0] || activeDoctor.specialty}
+                    </p>
+                  </div>
+                  <div className="bg-muted/40 rounded-lg p-2">
+                    <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tight">
+                      Care Pacing
+                    </p>
+                    <p className="text-xs font-bold text-emerald-700 dark:text-emerald-400 mt-0.5 truncate">
+                      Unhurried
+                    </p>
                   </div>
                 </div>
 
-                {/* Info & Spec Section */}
-                <div className="p-4 sm:p-5 flex flex-col flex-1 justify-between">
-                  <div>
-                    <div className="space-y-1.5 mb-3">
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Location01Icon className="w-3.5 h-3.5 text-primary shrink-0" aria-hidden="true" />
-                        <span className="truncate">{doctor.qualifications}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Calendar01Icon className="w-3.5 h-3.5 text-primary shrink-0" aria-hidden="true" />
-                        <span>{doctor.experience} Clinical Practice</span>
-                      </div>
-                    </div>
+                {/* Sleek Action Row: Buttons in a ROW */}
+                <div className="flex flex-row items-center gap-2.5 pt-1">
+                  <button
+                    type="button"
+                    onClick={openBooking}
+                    className="inline-flex items-center justify-center gap-1.5 h-10 px-4 xs:px-5 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs xs:text-sm font-semibold shadow-xs transition-all active:scale-95 cursor-pointer touch-manipulation shrink-0"
+                  >
+                    <span>Book consultation</span>
+                    <ArrowRight01Icon className="w-3.5 h-3.5" />
+                  </button>
 
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                      {doctor.specializations.slice(0, 2).map((spec) => (
-                        <span
-                          key={spec}
-                          className="text-[10px] font-medium px-2.5 py-0.5 bg-primary/10 text-primary rounded-full border border-primary/15"
-                        >
-                          {spec}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-2 relative z-20 pt-2 border-t border-border/60">
-                    <Button
-                      size="sm"
-                      variant="cta"
-                      onClick={() => openBooking()}
-                      className="flex-1"
-                    >
-                      <Calendar01Icon className="size-3.5 shrink-0" aria-hidden="true" />
-                      <span>Book</span>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
-                    >
-                      <Link href={`/doctors/${doctor.slug}`}>
-                        <span>Profile</span>
-                        <ArrowUpRight01Icon className="size-3.5 transition-transform duration-150 group-hover/button:translate-x-0.5 group-hover/button:-translate-y-0.5" />
-                      </Link>
-                    </Button>
-                  </div>
+                  <Link
+                    href={`/doctors/${activeDoctor.id}`}
+                    className="inline-flex items-center justify-center gap-1.5 h-10 px-3.5 xs:px-4 rounded-full border border-border/80 bg-background hover:bg-muted text-foreground text-xs xs:text-sm font-medium transition-all active:scale-95 touch-manipulation shrink-0"
+                  >
+                    <span>Profile</span>
+                    <ArrowUpRight01Icon className="w-3.5 h-3.5 text-muted-foreground" />
+                  </Link>
                 </div>
-              </div>
-            </div>
-          ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
 
-        {/* Mobile Swipe Indicator */}
-        <div className="flex sm:hidden items-center justify-center gap-1.5 mt-3 text-[11px] font-medium text-muted-foreground">
-          <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          <span>Swipe to meet our clinical specialists →</span>
+        {/* ======================================================================= */}
+        {/* 2. DESKTOP VIEW (lg+): Editorial Two-Column Interactive Row & Portrait  */}
+        {/* ======================================================================= */}
+        <div className="hidden lg:grid grid-cols-12 gap-10 lg:gap-14 items-start">
+          {/* Left Column: Portrait Card of Active Specialist */}
+          <div className="col-span-5 w-full">
+            <div className="relative aspect-[4/4.8] w-full rounded-[28px] overflow-hidden bg-muted shadow-md border border-border/50">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeDoctor.id}
+                  initial={{ opacity: reduceMotion ? 1 : 0, scale: reduceMotion ? 1 : 1.02 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: reduceMotion ? 1 : 0 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.35, ease: "easeOut" }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={activeDoctor.image}
+                    alt={activeDoctor.name}
+                    fill
+                    sizes="42vw"
+                    priority
+                    className="object-cover object-top"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none" />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Floating Rating Pill: bottom-left */}
+              <div className="absolute bottom-5 left-5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-background/95 backdrop-blur-md shadow-md border border-border/50 text-xs font-semibold text-foreground z-10">
+                <StarIcon className="w-3.5 h-3.5 fill-amber-500 text-amber-500" aria-hidden="true" />
+                <span>{activeDoctor.rating.toFixed(1)}</span>
+                <span className="text-muted-foreground font-normal font-sans ml-0.5">
+                  {activeDoctor.reviews} reviews
+                </span>
+              </div>
+
+              {/* Floating Availability Pill: top-right */}
+              {activeDoctor.nextAvailable && (
+                <div className="absolute top-5 right-5 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-950/80 backdrop-blur-md border border-white/20 text-white text-xs font-medium shadow-sm z-10">
+                  <Calendar01Icon className="w-3.5 h-3.5 text-primary" aria-hidden="true" />
+                  <span>{activeDoctor.nextAvailable}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Right Column: Interactive Doctor List & Active Details */}
+          <div className="col-span-7 flex flex-col justify-between h-full pt-1">
+            {/* Numbered Row List */}
+            <div className="border-t border-border/80 divide-y divide-border/80">
+              {specialists.map((doc, idx) => {
+                const isActive = idx === activeIndex;
+                const num = `0${idx + 1}`;
+                return (
+                  <button
+                    key={doc.id}
+                    type="button"
+                    onClick={() => setActiveIndex(idx)}
+                    onMouseEnter={() => setActiveIndex(idx)}
+                    className={`w-full flex items-center justify-between py-4 sm:py-5 text-left transition-all duration-200 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm ${
+                      isActive ? "opacity-100" : "opacity-75 hover:opacity-100"
+                    }`}
+                  >
+                    {/* Left: Number + Doctor Name */}
+                    <div className="flex items-center gap-4 sm:gap-6 min-w-0">
+                      <span
+                        className={`font-mono text-xs sm:text-sm transition-colors ${
+                          isActive
+                            ? "text-primary font-bold"
+                            : "text-muted-foreground/60 group-hover:text-foreground/70"
+                        }`}
+                      >
+                        {num}
+                      </span>
+                      <span
+                        className={`text-base sm:text-lg lg:text-xl tracking-tight transition-colors truncate ${
+                          isActive
+                            ? "text-foreground font-semibold"
+                            : "text-foreground/80 group-hover:text-foreground font-medium"
+                        }`}
+                      >
+                        {doc.name}
+                      </span>
+                    </div>
+
+                    {/* Right: Specialty */}
+                    <span
+                      className={`text-xs sm:text-sm font-normal text-right shrink-0 ml-4 transition-colors ${
+                        isActive
+                          ? "text-foreground font-medium"
+                          : "text-muted-foreground/75 group-hover:text-foreground/90"
+                      }`}
+                    >
+                      {doc.role || doc.specialty}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Active Doctor Bio, Metrics & CTAs */}
+            <div className="mt-8 pt-4">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeDoctor.id}
+                  initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : -8 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.25, ease: "easeOut" }}
+                >
+                  {/* Bio Paragraph */}
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl font-normal">
+                    {activeDoctor.philosophy || activeDoctor.heroDescription}
+                  </p>
+
+                  {/* 3-Column Metrics: Experience, Focus, Location */}
+                  <div className="grid grid-cols-3 gap-4 sm:gap-6 pt-6 mt-6 border-t border-border/60">
+                    <div>
+                      <p className="text-[11px] sm:text-xs text-muted-foreground font-medium tracking-tight">
+                        Experience
+                      </p>
+                      <p className="text-xs sm:text-sm font-semibold text-foreground mt-1">
+                        {activeDoctor.experience}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-[11px] sm:text-xs text-muted-foreground font-medium tracking-tight">
+                        Specialization
+                      </p>
+                      <p className="text-xs sm:text-sm font-semibold text-foreground mt-1 truncate">
+                        {activeDoctor.specializations?.slice(0, 2).join(", ") || activeDoctor.specialty}
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-[11px] sm:text-xs text-muted-foreground font-medium tracking-tight">
+                        Suite Location
+                      </p>
+                      <p className="text-xs sm:text-sm font-semibold text-foreground mt-1 truncate">
+                        {activeDoctor.clinicLocation || siteConfig.clinic.name}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Desktop Action Row in a ROW */}
+                  <div className="flex flex-row items-center gap-3 mt-6 pt-4">
+                    <button
+                      type="button"
+                      onClick={openBooking}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-sm font-semibold shadow-xs transition-all active:scale-95 cursor-pointer touch-manipulation shrink-0"
+                    >
+                      <span>Book consultation</span>
+                      <ArrowRight01Icon className="w-4 h-4" />
+                    </button>
+
+                    <Link
+                      href={`/doctors/${activeDoctor.id}`}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-foreground hover:text-primary transition-colors shrink-0"
+                    >
+                      <span>View full biography</span>
+                      <ArrowUpRight01Icon className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
       </div>
     </section>

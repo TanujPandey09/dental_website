@@ -17,7 +17,13 @@ export const images = {
   // Global sections
   // ---------------------------------------------------------------------------
   /** Home hero background — large, landscape. */
-  hero: "/dental/images/hero.jpg",
+  hero: "/dental/images/hero-aveline.jpg",
+  /** Aveline signature full-bleed suite photo (from dental lumi enhnce.png). */
+  heroAveline: "/dental/images/hero-aveline.jpg",
+  /** Dentix signature smile mirror portrait (from Dentix reference). */
+  heroDentix: "/dental/images/hero-dentix.jpg",
+  /** Luma Dental warm operatory clinician portrait (from 5.png). */
+  heroLuma: "/dental/images/hero-luma.jpg",
   /** Cinematic hero suite background. */
   heroCinematic: "/dental/images/hero-cinematic.jpg",
   /** Cinematic ambient video background. */

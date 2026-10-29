@@ -66,7 +66,7 @@ export function HeroSpecialistSplit() {
   };
 
   return (
-    <section className="relative min-h-[82vh] lg:min-h-[85vh] pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-32 lg:pb-24 overflow-hidden bg-[#07142A] text-white flex flex-col justify-center">
+    <section className="relative min-h-[80vh] lg:min-h-[85vh] pt-16 sm:pt-28 pb-24 sm:pb-20 lg:pt-32 lg:pb-24 overflow-hidden bg-[#07142A] text-white flex flex-col justify-center">
       {/* Subtle technical grid overlay */}
       <div
         aria-hidden="true"
@@ -83,7 +83,7 @@ export function HeroSpecialistSplit() {
         className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-accent/10 rounded-full blur-[140px] pointer-events-none"
       />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+      <div className="shell relative z-10">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -93,7 +93,7 @@ export function HeroSpecialistSplit() {
           {/* Left Column: Clinical Credentials & Authority */}
           <div className="lg:col-span-7 flex flex-col items-start">
             {/* Eyebrow badge */}
-            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-white/90 text-xs font-semibold mb-4">
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/10 border border-white/15 text-white/90 text-xs font-semibold mb-3">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" aria-hidden="true" />
               <span>FELLOWSHIP-TRAINED CLINICAL FACULTY</span>
             </motion.div>
@@ -101,7 +101,7 @@ export function HeroSpecialistSplit() {
             {/* Headline */}
             <motion.h1
               variants={itemVariants}
-              className="text-3xl sm:text-4xl lg:text-[2.85rem] font-heading font-bold text-white leading-[1.08] tracking-tight mb-4 text-balance"
+              className="text-2xl xs:text-3xl sm:text-4xl lg:text-[2.85rem] font-heading font-bold text-white leading-[1.12] tracking-tight mb-3 text-balance"
             >
               The standard <br />
               of care,{" "}
@@ -113,7 +113,7 @@ export function HeroSpecialistSplit() {
             {/* Subtitle - Short, Clear, Outcome-Driven */}
             <motion.p
               variants={itemVariants}
-              className="text-sm sm:text-base text-white/80 leading-relaxed mb-6 max-w-lg font-normal"
+              className="text-sm sm:text-base text-white/80 leading-relaxed mb-5 max-w-lg font-normal"
             >
               Board-certified specialists with 15+ years of practice. Unhurried 60-minute consultations with zero sales pressure.
             </motion.p>
@@ -121,61 +121,59 @@ export function HeroSpecialistSplit() {
             {/* 3-Metrics Row with Generous Spatial Breathing Room */}
             <motion.div
               variants={itemVariants}
-              className="grid grid-cols-3 gap-4 sm:gap-6 py-4 border-y border-white/10 mb-7 max-w-xl w-full"
+              className="grid grid-cols-3 gap-3 sm:gap-6 py-3 sm:py-4 border-y border-white/10 mb-6 max-w-xl w-full"
             >
               <div>
-                <p className="text-xl sm:text-2xl font-heading font-bold text-white">
+                <p className="text-lg sm:text-2xl font-heading font-bold text-white">
                   <CountUp end={siteConfig.clinic.stats.yearsExperience} duration={2} enableScrollSpy scrollSpyOnce />+
                 </p>
-                <p className="text-[10px] sm:text-[11px] text-white/55 font-medium uppercase tracking-wider mt-1 leading-snug">
-                  Years Experience
+                <p className="text-[10px] text-white/55 font-medium uppercase tracking-wider mt-0.5 leading-snug">
+                  Years Exp.
                 </p>
               </div>
-              <div>
-                <p className="text-xl sm:text-2xl font-heading font-bold text-white">
+              <div className="border-l border-white/10 pl-3 sm:pl-4">
+                <p className="text-lg sm:text-2xl font-heading font-bold text-white">
                   {siteConfig.clinic.stats.patientsTreated}
                 </p>
-                <p className="text-[10px] sm:text-[11px] text-white/55 font-medium uppercase tracking-wider mt-1 leading-snug">
-                  Smiles Transformed
+                <p className="text-[10px] text-white/55 font-medium uppercase tracking-wider mt-0.5 leading-snug">
+                  Restored
                 </p>
               </div>
-              <div>
-                <p className="text-xl sm:text-2xl font-heading font-bold text-white">
+              <div className="border-l border-white/10 pl-3 sm:pl-4">
+                <p className="text-lg sm:text-2xl font-heading font-bold text-white">
                   {siteConfig.clinic.stats.satisfactionScore}<span className="text-accent">%</span>
                 </p>
-                <p className="text-[10px] sm:text-[11px] text-white/55 font-medium uppercase tracking-wider mt-1 leading-snug">
-                  Comfort Score
+                <p className="text-[10px] text-white/55 font-medium uppercase tracking-wider mt-0.5 leading-snug">
+                  Comfort
                 </p>
               </div>
             </motion.div>
 
-            {/* Dual CTAs with Button-in-Button Trailing Icon */}
-            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto">
+            {/* Dual CTAs — Rectangular rounded-lg with inline pixel-perfect icons */}
+            <motion.div variants={itemVariants} className="flex flex-row items-center gap-2.5 sm:gap-3">
               <Button
                 asChild
-                size="lg"
-                className="rounded-full bg-white text-slate-950 hover:bg-slate-100 font-semibold shadow-xl shadow-black/25 px-6 h-12 flex items-center gap-2.5 cursor-pointer group"
+                size="default"
+                className="rounded-lg bg-white text-slate-950 hover:bg-slate-100 font-semibold shadow-md px-3.5 sm:px-5 h-10 sm:h-11 flex items-center justify-center gap-1.5 sm:gap-2 cursor-pointer group text-xs sm:text-sm shrink-0"
               >
                 <Link href="/doctors">
-                  <span>Meet the Specialists</span>
-                  <span className="w-6 h-6 rounded-full bg-slate-950/10 flex items-center justify-center transition-transform group-hover:translate-x-0.5">
-                    <ArrowRight01Icon className="size-3.5 text-slate-950" aria-hidden="true" />
-                  </span>
+                  <span>Specialists</span>
+                  <ArrowRight01Icon className="size-3.5 sm:size-4 shrink-0 transition-transform group-hover:translate-x-0.5 text-slate-950" aria-hidden="true" />
                 </Link>
               </Button>
 
               <Button
-                size="lg"
+                size="default"
                 variant="outline"
                 onClick={openBooking}
-                className="rounded-full border-white/20 bg-white/5 text-white hover:bg-white/15 hover:text-white px-6 h-12 font-semibold cursor-pointer"
+                className="rounded-lg border-white/20 bg-white/5 text-white hover:bg-white/15 hover:text-white px-3.5 sm:px-5 h-10 sm:h-11 font-semibold cursor-pointer text-xs sm:text-sm justify-center shrink-0"
               >
-                <span>Book a consultation</span>
+                <span>Book Visit</span>
               </Button>
             </motion.div>
           </div>
 
-          {/* Right Column: Interactive Double-Bezel Specialist Showcase (Auto-cycles, pauses on hover) */}
+          {/* Right Column: Interactive Specialist Showcase (Single Crisp Card) */}
           <motion.div
             variants={itemVariants}
             className="lg:col-span-5 relative w-full"
@@ -183,7 +181,7 @@ export function HeroSpecialistSplit() {
             onMouseLeave={() => setIsPaused(false)}
           >
             {/* Top Interactive Doctor Selector Tabs */}
-            <div className="flex items-center gap-1.5 mb-3 p-1 rounded-xl bg-white/[0.06] border border-white/10 backdrop-blur-md">
+            <div className="flex items-center gap-1.5 mb-2.5 p-1 rounded-lg bg-white/[0.06] border border-white/10 backdrop-blur-md">
               {SPECIALISTS.map((doc) => {
                 const isActive = doc.id === activeDoctorId;
                 return (
@@ -191,13 +189,13 @@ export function HeroSpecialistSplit() {
                     key={doc.id}
                     type="button"
                     onClick={() => setActiveDoctorId(doc.id)}
-                    className={`relative overflow-hidden flex-1 py-1.5 px-2 text-[10px] sm:text-[11px] font-mono font-bold tracking-wider uppercase rounded-lg transition-all cursor-pointer text-center ${
+                    className={`relative overflow-hidden flex-1 min-h-[36px] sm:min-h-[38px] py-1 px-1 sm:px-2 text-[9px] xs:text-[10px] sm:text-[11px] font-mono font-bold tracking-tight sm:tracking-wider uppercase rounded-md transition-all cursor-pointer text-center touch-manipulation flex items-center justify-center ${
                       isActive
-                        ? "bg-white text-slate-950 shadow-md"
-                        : "text-white/60 hover:text-white hover:bg-white/10"
+                        ? "bg-white text-slate-950 shadow-xs font-extrabold"
+                        : "text-white/70 hover:text-white hover:bg-white/10"
                     }`}
                   >
-                    <span className="relative z-10">{doc.tabLabel}</span>
+                    <span className="relative z-10 truncate">{doc.tabLabel}</span>
                     {isActive && !isPaused && !reduceMotion && (
                       <motion.div
                         key={doc.id}
@@ -212,53 +210,50 @@ export function HeroSpecialistSplit() {
               })}
             </div>
 
-            {/* Double-Bezel Machined Outer Frame */}
-            <div className="p-2 sm:p-2.5 rounded-[2rem] bg-white/[0.04] border border-white/15 backdrop-blur-xl shadow-[0_30px_70px_rgba(0,0,0,0.6)]">
-              {/* Inner Core Container */}
-              <div className="relative aspect-[3/4] sm:aspect-[4/5] max-h-[460px] rounded-[calc(2rem-0.625rem)] overflow-hidden bg-slate-900 group mx-auto w-full">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentDoctor.id}
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.02 }}
-                    transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
-                    className="absolute inset-0"
-                  >
-                    <Image
-                      src={currentDoctor.image}
-                      alt={currentDoctor.name}
-                      fill
-                      priority
-                      sizes="(max-width: 1024px) 100vw, 40vw"
-                      className="object-cover object-top scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-transparent pointer-events-none" />
+            {/* Clean Single-Frame Container */}
+            <div className="relative aspect-[3/4] sm:aspect-[4/5] max-h-[440px] rounded-xl overflow-hidden bg-slate-900 border border-white/15 shadow-2xl group mx-auto w-full">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentDoctor.id}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.02 }}
+                  transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={currentDoctor.image}
+                    alt={currentDoctor.name}
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover object-top scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-transparent pointer-events-none" />
 
-                    {/* Top-Right Verified Badge Pill */}
-                    <div className="absolute top-3.5 right-3.5 flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/75 backdrop-blur-md border border-white/20 text-white text-[10px] font-semibold uppercase tracking-wider shadow-sm z-10">
-                      <CheckmarkBadge01Icon className="w-3.5 h-3.5 text-accent" aria-hidden="true" />
-                      <span>{currentDoctor.badge}</span>
-                    </div>
+                  {/* Top-Right Verified Badge */}
+                  <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-950/75 backdrop-blur-md border border-white/20 text-white text-[10px] font-semibold uppercase tracking-wider shadow-xs z-10">
+                    <CheckmarkBadge01Icon className="w-3.5 h-3.5 text-accent" aria-hidden="true" />
+                    <span>{currentDoctor.badge}</span>
+                  </div>
 
-                    {/* Floating Doctor Credential Glass Dock */}
-                    <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 bg-slate-950/80 backdrop-blur-xl border border-white/20 rounded-2xl p-3.5 sm:p-4 flex items-center gap-3.5 shadow-2xl z-10">
-                      <div className="w-10 h-10 rounded-xl bg-accent/20 border border-accent/40 flex items-center justify-center text-accent shrink-0">
-                        <Shield01Icon className="w-5 h-5" aria-hidden="true" />
-                      </div>
-                      <div className="min-w-0">
-                        <h3 className="text-sm sm:text-base font-heading font-bold text-white truncate">
-                          {currentDoctor.name}
-                        </h3>
-                        <p className="text-xs text-white/85 font-medium truncate">{currentDoctor.role}</p>
-                        <p className="text-[10px] text-accent font-mono uppercase tracking-wider font-semibold truncate mt-0.5">
-                          {currentDoctor.highlight}
-                        </p>
-                      </div>
+                  {/* Floating Doctor Credential Glass Dock */}
+                  <div className="absolute bottom-3 left-3 right-3 bg-slate-950/85 backdrop-blur-xl border border-white/20 rounded-lg p-3 flex items-center gap-3 shadow-xl z-10">
+                    <div className="w-9 h-9 rounded-md bg-accent/20 border border-accent/40 flex items-center justify-center text-accent shrink-0">
+                      <Shield01Icon className="w-4 h-4" aria-hidden="true" />
                     </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
+                    <div className="min-w-0">
+                      <h3 className="text-sm font-heading font-bold text-white truncate">
+                        {currentDoctor.name}
+                      </h3>
+                      <p className="text-xs text-white/80 font-medium truncate">{currentDoctor.role}</p>
+                      <p className="text-[10px] text-accent font-mono uppercase tracking-wider font-semibold truncate mt-0.5">
+                        {currentDoctor.highlight}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </motion.div>
         </motion.div>

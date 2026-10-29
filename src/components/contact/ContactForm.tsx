@@ -102,7 +102,7 @@ export function ContactForm() {
                 <div className="relative">
                   <Input
                     placeholder="e.g. Jane Doe"
-                    className="h-12 pl-10 rounded-xl bg-card border-border/70 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary text-sm"
+                    className="h-11 pl-10 rounded-lg bg-card border-border/70 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary text-base md:text-sm touch-manipulation"
                     {...field}
                   />
                   <UserIcon className="w-4 h-4 text-muted-foreground absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
@@ -113,7 +113,7 @@ export function ContactForm() {
           )}
         />
 
-        <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
+        <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
           <FormField
             control={form.control}
             name="email"
@@ -124,8 +124,9 @@ export function ContactForm() {
                   <div className="relative">
                     <Input
                       type="email"
+                      inputMode="email"
                       placeholder="e.g. jane@example.com"
-                      className="h-12 pl-10 rounded-xl bg-card border-border/70 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary text-sm"
+                      className="h-11 pl-10 rounded-lg bg-card border-border/70 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary text-base md:text-sm touch-manipulation"
                       {...field}
                     />
                     <Mail01Icon className="w-4 h-4 text-muted-foreground absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
@@ -145,8 +146,9 @@ export function ContactForm() {
                   <div className="relative">
                     <Input
                       type="tel"
+                      inputMode="tel"
                       placeholder="(555) 123-4567"
-                      className="h-12 pl-10 rounded-xl bg-card border-border/70 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary text-sm"
+                      className="h-11 pl-10 rounded-lg bg-card border-border/70 focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary text-base md:text-sm touch-manipulation"
                       {...field}
                     />
                     <Call02Icon className="w-4 h-4 text-muted-foreground absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
@@ -166,11 +168,11 @@ export function ContactForm() {
               <FormLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Topic of Inquiry</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="h-12 rounded-xl bg-card border-border/70 focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm">
+                  <SelectTrigger className="h-11 rounded-lg bg-card border-border/70 focus:ring-2 focus:ring-primary/20 focus:border-primary text-base md:text-sm touch-manipulation">
                     <SelectValue placeholder="Select a topic" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent className="rounded-xl border-border/70">
+                <SelectContent className="rounded-lg border-border/70">
                   {siteConfig.forms.contactInquiryTypes.map((option) => (
                     <SelectItem key={option.value} value={option.value} className="text-sm py-2.5">
                       {option.label}
@@ -191,7 +193,7 @@ export function ContactForm() {
               <FormLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Your Message</FormLabel>
               <FormControl>
                 <textarea
-                  className="flex min-h-[120px] w-full rounded-xl border border-border/70 bg-card px-4 py-3 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200"
+                  className="flex min-h-[110px] w-full rounded-lg border border-border/70 bg-card px-4 py-3 text-base md:text-sm shadow-xs placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200 touch-manipulation"
                   placeholder="Please describe your treatment goals or specific clinical questions..."
                   {...field}
                 />

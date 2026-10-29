@@ -1,13 +1,13 @@
-# Lumina Dental — Design System (Warm Editorial & Refined)
+# Lumina Dental — Design System & Style Guide
 
-> Bound via Open Design: `design-systems/warm-editorial` + `craft/anti-ai-slop` + `craft/typography-hierarchy-editorial`
-> Category: Luxury Boutique Medical & Dental Sanctuary
+> Aesthetic Direction: Warm Editorial & Refined Sanctuary  
+> Category: Luxury Boutique Medical & Dental Practice
 
 ## 1. Visual Theme & Atmosphere
-Quiet, unhurried, architectural luxury. Think Aesop, Kinfolk, and Aman wellness retreats applied to modern dental healthcare.
+Quiet, unhurried, architectural luxury. Think Aesop, Kinfolk, and Aman wellness retreats applied to modern healthcare.
 - Generous macro-whitespace (80–112px desktop vertical rhythm).
 - Restrained chrome, warm off-white paper canvas, deep botanical forest tones.
-- No cold hospital clinical slate, no generic AI gradient blobs, no default Tailwind indigo.
+- No cold hospital clinical slate, no harsh synthetic gradients, no default Tailwind palette.
 
 ## 2. Color Palette & Roles
 - **Canvas / Background:** `#FAF8F5` (warm paper off-white)

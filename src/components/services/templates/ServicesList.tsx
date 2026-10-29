@@ -108,58 +108,58 @@ export function ServicesList({ services }: ServicesListProps) {
                   {/* Content Block */}
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-1.5">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider font-semibold text-teal-700 bg-teal-50 border border-teal-200/60 leading-normal">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider font-semibold text-primary bg-primary/10 border border-primary/20 leading-normal">
                         {service.category}
                       </span>
                     </div>
 
-                    <h3 className="text-lg sm:text-2xl font-serif font-medium text-slate-900 group-hover:text-teal-700 transition-colors leading-snug">
+                    <h3 className="text-lg sm:text-2xl font-sans font-medium text-foreground group-hover:text-primary transition-colors leading-snug">
                       <Link href={`/services/${service.id}`}>
                         {service.title}
                       </Link>
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-slate-600 line-clamp-2 mt-1 leading-relaxed max-w-xl">
+                    <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 mt-1 leading-relaxed max-w-xl">
                       {service.description}
                     </p>
                   </div>
                 </div>
 
                 {/* Middle Section: Comparison Metadata Columns (Desktop) */}
-                <div className="grid grid-cols-3 gap-3 sm:gap-6 py-3 px-4 bg-slate-50/80 rounded-xl sm:rounded-2xl border border-slate-100 shrink-0 lg:min-w-[320px]">
+                <div className="grid grid-cols-3 gap-3 sm:gap-6 py-3 px-4 bg-muted/40 rounded-xl sm:rounded-2xl border border-border/70 shrink-0 lg:min-w-[320px]">
                   <div>
-                    <p className="text-[10px] font-mono uppercase tracking-wider font-semibold text-slate-400 mb-0.5">
+                    <p className="text-[10px] font-mono uppercase tracking-wider font-semibold text-muted-foreground mb-0.5">
                       Duration
                     </p>
-                    <p className="text-xs font-semibold text-slate-800 leading-tight">
+                    <p className="text-xs font-semibold text-foreground leading-tight">
                       {spec.duration}
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-[10px] font-mono uppercase tracking-wider font-semibold text-slate-400 mb-0.5">
+                    <p className="text-[10px] font-mono uppercase tracking-wider font-semibold text-muted-foreground mb-0.5">
                       Comfort
                     </p>
-                    <p className="text-xs font-semibold text-slate-800 leading-tight truncate">
+                    <p className="text-xs font-semibold text-foreground leading-tight truncate">
                       {spec.comfort}
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-[10px] font-mono uppercase tracking-wider font-semibold text-slate-400 mb-0.5">
+                    <p className="text-[10px] font-mono uppercase tracking-wider font-semibold text-muted-foreground mb-0.5">
                       Recovery
                     </p>
-                    <p className="text-xs font-semibold text-slate-800 leading-tight truncate">
+                    <p className="text-xs font-semibold text-foreground leading-tight truncate">
                       {spec.recovery}
                     </p>
                   </div>
                 </div>
 
                 {/* Right Section: Actions */}
-                <div className="flex items-center justify-end gap-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+                <div className="flex items-center justify-end gap-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-border/60">
                   <Link
                     href={`/services/${service.id}`}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-slate-700 hover:text-teal-700 px-3 py-1.5 transition-colors"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-foreground hover:text-primary px-3 py-1.5 transition-colors"
                   >
                     <span>Details</span>
                     <ArrowRight01Icon className="w-3.5 h-3.5" />
@@ -167,7 +167,7 @@ export function ServicesList({ services }: ServicesListProps) {
 
                   <button
                     onClick={() => openBooking()}
-                    className="px-4 py-1.5 rounded-full bg-slate-900 hover:bg-teal-700 text-white text-xs font-semibold transition-colors cursor-pointer shadow-sm"
+                    className="px-4 py-1.5 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold transition-colors cursor-pointer shadow-xs active:scale-95"
                   >
                     Book
                   </button>
