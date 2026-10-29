@@ -35,6 +35,7 @@ const EXCLUDE_DIRS = new Set([
   "release",
   "docs",
   "scripts",
+  "dental",
 ]);
 
 const EXCLUDE_FILES = new Set([
@@ -83,6 +84,9 @@ try {
     cpSync(join(root, entry), join(stagingDir, entry), { recursive: true });
   }
 
+  // Exclude marketing-only Pinterest pin images from buyer zip
+  rmSync(join(stagingDir, "public", "pinterest"), { recursive: true, force: true });
+
   // 2. Sanitize package.json for buyers: remove author packaging script
   const buyerPkg = { ...pkg };
   if (buyerPkg.scripts) {
@@ -107,16 +111,24 @@ try {
 
   // 4. Archive staging files to destination zip
   if (process.platform === "win32") {
-    const quote = (p) => `'${p.replace(/'/g, "''")}'`;
-    const script = [
-      "$ErrorActionPreference='Stop'",
-      `if (Test-Path -LiteralPath ${quote(outPath)}) { Remove-Item -LiteralPath ${quote(outPath)} -Force }`,
-      `$items = Get-ChildItem -Path ${quote(stagingDir)} -Force | ForEach-Object { $_.FullName }`,
-      `Compress-Archive -Path $items -DestinationPath ${quote(outPath)} -Force`,
-    ].join("; ");
-    execFileSync("powershell", ["-NoProfile", "-Command", script], {
-      stdio: "inherit",
-    });
+    // Windows 10+ includes bsdtar which creates zip files cleanly and fast without lock errors
+    try {
+      execFileSync("tar.exe", ["-a", "-c", "-f", outPath, "-C", stagingDir, "."], {
+        stdio: "inherit",
+      });
+    } catch {
+      // Fallback to Compress-Archive if tar is unavailable
+      const quote = (p) => `'${p.replace(/'/g, "''")}'`;
+      const script = [
+        "$ErrorActionPreference='Stop'",
+        `if (Test-Path -LiteralPath ${quote(outPath)}) { Remove-Item -LiteralPath ${quote(outPath)} -Force }`,
+        `$items = Get-ChildItem -Path ${quote(stagingDir)} -Force | ForEach-Object { $_.FullName }`,
+        `Compress-Archive -Path $items -DestinationPath ${quote(outPath)} -Force`,
+      ].join("; ");
+      execFileSync("powershell", ["-NoProfile", "-Command", script], {
+        stdio: "inherit",
+      });
+    }
   } else {
     execFileSync(
       "sh",
