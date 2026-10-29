@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ArrowRight01Icon, Calendar01Icon } from "hugeicons-react";
 import { useBooking } from "@/components/BookingContext";
 import siteConfig from "@/config/site";
@@ -43,22 +43,35 @@ function StageIcon({ index, className }: { index: number; className?: string }) 
 export function PatientJourney() {
   const { openBooking } = useBooking();
   const [activeStep, setActiveStep] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const ambientY1 = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [-40, 40]);
+  const ambientY2 = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [35, -35]);
 
   const steps = siteConfig.journey;
 
   return (
     <section
+      ref={sectionRef}
       className="py-20 sm:py-28 lg:py-32 bg-[#07142A] text-white relative overflow-hidden"
       aria-labelledby="patient-journey-heading"
     >
-      {/* Background ambient lighting */}
-      <div
+      {/* Background ambient lighting with parallax drift */}
+      <motion.div
         aria-hidden="true"
-        className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-teal-500/10 rounded-full blur-[140px] pointer-events-none"
+        style={{ y: ambientY1 }}
+        className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-teal-500/10 rounded-full blur-[140px] pointer-events-none will-change-transform"
       />
-      <div
+      <motion.div
         aria-hidden="true"
-        className="absolute bottom-0 left-10 w-[500px] h-[300px] bg-teal-600/5 rounded-full blur-[120px] pointer-events-none"
+        style={{ y: ambientY2 }}
+        className="absolute bottom-0 left-10 w-[500px] h-[300px] bg-teal-600/5 rounded-full blur-[120px] pointer-events-none will-change-transform"
       />
 
       <div className="shell relative z-10">
@@ -111,6 +124,8 @@ export function PatientJourney() {
                         animate={{
                           scale: isCurrent ? 1.08 : 1,
                         }}
+                        whileHover={reduceMotion ? undefined : { scale: 1.12, y: -2 }}
+                        whileTap={reduceMotion ? undefined : { scale: 0.95 }}
                         transition={{ type: "spring", stiffness: 350, damping: 22 }}
                         className={cn(
                           "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 shrink-0 z-10 relative ring-4 ring-[#07142A]",

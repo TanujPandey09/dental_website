@@ -75,7 +75,15 @@ export function Navbar() {
             alt={siteConfig.clinic.name}
             width={185}
             height={72}
-            className="h-9 xs:h-10 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-[1.02]"
+            className="h-9 xs:h-10 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-[1.02] dark:hidden"
+            priority
+          />
+          <Image
+            src={siteConfig.clinic.logoDark}
+            alt={siteConfig.clinic.name}
+            width={185}
+            height={72}
+            className="h-9 xs:h-10 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-[1.02] hidden dark:block"
             priority
           />
         </Link>
@@ -192,7 +200,14 @@ export function Navbar() {
                   alt={siteConfig.clinic.name}
                   width={130}
                   height={50}
-                  className="h-8 w-auto"
+                  className="h-8 w-auto dark:hidden"
+                />
+                <Image
+                  src={siteConfig.clinic.logoDark}
+                  alt={siteConfig.clinic.name}
+                  width={130}
+                  height={50}
+                  className="h-8 w-auto hidden dark:block"
                 />
                 <button
                   className="min-w-[44px] min-h-[44px] flex items-center justify-center text-foreground/80 hover:text-foreground bg-muted/60 hover:bg-muted rounded-lg transition-colors cursor-pointer touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-95"

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight01Icon, Call02Icon } from "hugeicons-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -46,6 +47,14 @@ export function CTA({
 }: CTAProps) {
   const { openBooking } = useBooking();
   const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Smooth scroll parallax depth
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const photoParallaxY = useTransform(scrollYProgress, [0, 1], ["-7%", "7%"]);
 
   const handleBooking = () => {
     if (onPrimaryClick) {
@@ -69,7 +78,7 @@ export function CTA({
     const resolvedBtnText = primaryButtonText || "Book an appointment";
 
     return (
-      <section className={cn("py-12 sm:py-20 bg-background", className)}>
+      <section ref={sectionRef} className={cn("py-12 sm:py-20 bg-background", className)}>
         <div className="shell">
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 16 }}
@@ -117,16 +126,21 @@ export function CTA({
                 </div>
               </div>
 
-              {/* Right Column: Seamless Flush Studio Photo (5 cols on lg) */}
+              {/* Right Column: Seamless Flush Studio Photo with Parallax (5 cols on lg) */}
               <div className="lg:col-span-5 relative min-h-[280px] sm:min-h-[340px] lg:min-h-[420px] w-full overflow-hidden">
-                <Image
-                  src={image}
-                  alt={imageAlt}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 42vw"
-                  className="object-cover object-center transition-transform duration-700 ease-out hover:scale-105"
-                  priority={false}
-                />
+                <motion.div
+                  style={{ y: reduce ? 0 : photoParallaxY }}
+                  className="absolute inset-0 will-change-transform scale-105"
+                >
+                  <Image
+                    src={image}
+                    alt={imageAlt}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                    className="object-cover object-center transition-transform duration-700 ease-out hover:scale-105"
+                    priority={false}
+                  />
+                </motion.div>
               </div>
             </div>
           </motion.div>

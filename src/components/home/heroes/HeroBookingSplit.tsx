@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Add01Icon, ArrowDown01Icon } from "hugeicons-react";
 import { useBooking } from "@/components/BookingContext";
 import siteConfig from "@/config/site";
@@ -18,6 +19,16 @@ const fieldBase =
 
 export function HeroBookingSplit() {
   const { openBookingWithDraft } = useBooking();
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  // Smooth scroll parallax depth
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
 
   const bookingServices = siteConfig.forms.bookingServices;
   const selectedService = bookingServices[0]?.value || "general";
@@ -53,9 +64,15 @@ export function HeroBookingSplit() {
   };
 
   return (
-    <section className="relative flex min-h-[720px] overflow-hidden bg-slate-950 text-white lg:min-h-[760px]">
-      {/* Full-bleed photo */}
-      <div className="absolute inset-0 z-0 select-none">
+    <section ref={sectionRef} className="relative flex min-h-[720px] overflow-hidden bg-slate-950 text-white lg:min-h-[760px]">
+      {/* Full-bleed photo with subtle parallax */}
+      <motion.div
+        style={{
+          y: reduceMotion ? 0 : backgroundY,
+          scale: reduceMotion ? 1 : backgroundScale,
+        }}
+        className="absolute inset-0 z-0 select-none will-change-transform"
+      >
         <Image
           src={images.heroCinematic}
           alt="Caring clinician comforting a patient"
@@ -66,7 +83,7 @@ export function HeroBookingSplit() {
           style={{ objectPosition: "65% 30%" }}
           draggable={false}
         />
-      </div>
+      </motion.div>
 
       {/* Left-side tint so the headline stays legible */}
       <div

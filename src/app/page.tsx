@@ -2,7 +2,6 @@ import { Hero } from "@/components/home/Hero";
 import { TrustBar } from "@/components/home/TrustBar";
 import { EmergencyBanner } from "@/components/home/EmergencyBanner";
 import { ServicesPreview } from "@/components/home/ServicesPreview";
-import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { BeforeAfterGallery } from "@/components/home/BeforeAfterGallery";
 import { PatientJourney } from "@/components/home/PatientJourney";
 import { MeetDentists } from "@/components/home/MeetDentists";
@@ -45,7 +44,6 @@ export default function Home() {
       <TrustBar />
       <EmergencyBanner />
       <ServicesPreview />
-      {/* <WhyChooseUs /> */}
       <BeforeAfterGallery />
       <PatientJourney />
       <MeetDentists />

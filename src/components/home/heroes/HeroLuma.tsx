@@ -1,7 +1,9 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import {
   ArrowRight01Icon,
   ArrowDown01Icon,
@@ -21,6 +23,18 @@ const STATS = [
 
 export function HeroLuma() {
   const { openBooking } = useBooking();
+  const heroRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  const imageY = useTransform(scrollYProgress, [0, 1], reduceMotion ? ["0%", "0%"] : ["0%", "12%"]);
+  const imageScale = useTransform(scrollYProgress, [0, 1], reduceMotion ? [1, 1] : [1, 1.06]);
+  const badgeComfortY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [0, -26]);
+  const badgeAvailY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [0, 22]);
 
   const patientAvatars = [
     images.testimonials.patients[1],
@@ -29,7 +43,7 @@ export function HeroLuma() {
   ];
 
   return (
-    <section className="bg-background pb-20 pt-16 text-foreground sm:pb-16 sm:pt-24 lg:pb-16 lg:pt-24">
+    <section ref={heroRef} className="bg-background pb-20 pt-16 text-foreground sm:pb-16 sm:pt-24 lg:pb-16 lg:pt-24">
       <div className="shell">
         {/* Two equal columns, 56px gap */}
         <div className="grid grid-cols-1 items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-14">
@@ -107,19 +121,29 @@ export function HeroLuma() {
             </div>
           </div>
 
-          {/* Right: portrait with two floating badges */}
-          <div className="relative mx-auto aspect-[9/10] w-full max-w-[480px] overflow-hidden rounded-2xl bg-muted lg:max-w-none">
-            <Image
-              src={images.heroLuma}
-              alt="Friendly welcoming dentist at Lumina Dental"
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 45vw"
-              className="object-cover"
-            />
+          {/* Right: portrait with multi-layer floating badges (Dentry-style Parallax) */}
+          <div className="relative mx-auto aspect-[9/10] w-full max-w-[480px] overflow-hidden rounded-2xl bg-muted lg:max-w-none shadow-xl border border-border/60">
+            <motion.div
+              style={{ y: imageY, scale: imageScale }}
+              className="absolute inset-0 w-full h-full will-change-transform"
+            >
+              <Image
+                src={images.heroLuma}
+                alt="Friendly welcoming dentist at Lumina Dental"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 45vw"
+                className="object-cover"
+              />
+            </motion.div>
 
-            {/* Right badge: comfort-first care */}
-            <div className="absolute right-4 top-[57%] flex items-center gap-2 rounded-lg bg-card px-2.5 py-2 text-card-foreground shadow-sm">
+            {/* Right badge: comfort-first care with differential scroll parallax */}
+            <motion.div
+              style={{ y: badgeComfortY }}
+              whileHover={reduceMotion ? undefined : { scale: 1.05, y: -4 }}
+              transition={{ type: "spring", stiffness: 350, damping: 20 }}
+              className="absolute right-4 top-[57%] flex items-center gap-2 rounded-lg bg-card/95 backdrop-blur-md px-2.5 py-2 text-card-foreground shadow-md border border-border/40 will-change-transform z-10"
+            >
               <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-primary/20 text-foreground">
                 <Shield01Icon className="h-3 w-3" />
               </span>
@@ -129,10 +153,15 @@ export function HeroLuma() {
                   Nitrous oxide available
                 </p>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Left badge: next availability */}
-            <div className="absolute bottom-9 left-4 flex items-center gap-2 rounded-lg bg-card px-2.5 py-2 text-card-foreground shadow-sm">
+            {/* Left badge: next availability with counter scroll parallax */}
+            <motion.div
+              style={{ y: badgeAvailY }}
+              whileHover={reduceMotion ? undefined : { scale: 1.05, y: -4 }}
+              transition={{ type: "spring", stiffness: 350, damping: 20 }}
+              className="absolute bottom-9 left-4 flex items-center gap-2 rounded-lg bg-card/95 backdrop-blur-md px-2.5 py-2 text-card-foreground shadow-md border border-border/40 will-change-transform z-10"
+            >
               <span className="flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-md bg-primary/20 text-foreground">
                 <Calendar01Icon className="h-3 w-3" />
               </span>
@@ -143,7 +172,7 @@ export function HeroLuma() {
                 <p className="text-[11px] font-medium">Today, 2:30 PM</p>
               </div>
               <ArrowDown01Icon className="ml-1 h-3 w-3 text-muted-foreground" />
-            </div>
+            </motion.div>
           </div>
         </div>
 

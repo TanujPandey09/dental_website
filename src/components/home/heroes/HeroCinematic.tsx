@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight01Icon,
   ArrowLeft01Icon,
@@ -20,6 +20,15 @@ const CHIPS = ["Dental check-ups", "Teeth whitening", "Clear aligners", "Implant
 export function HeroCinematic() {
   const { openBooking } = useBooking();
   const reduced = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Smooth scroll parallax depth
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
+  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
 
   // Only the doctors rotate. Everything else in the hero is static.
   const doctors = siteConfig.doctors.slice(0, 3);
@@ -59,14 +68,21 @@ export function HeroCinematic() {
 
   return (
     <section
+      ref={sectionRef}
       className="relative flex min-h-[100svh] flex-col overflow-hidden bg-slate-950 text-white"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      {/* Static background */}
-      <div className="absolute inset-0 z-0 select-none">
+      {/* Parallax background */}
+      <motion.div
+        style={{
+          y: reduced ? 0 : backgroundY,
+          scale: reduced ? 1 : backgroundScale,
+        }}
+        className="absolute inset-0 z-0 select-none will-change-transform"
+      >
         <Image
           src={images.heroAveline}
           alt="Dentist showing a patient her smile in a hand mirror"
@@ -77,7 +93,7 @@ export function HeroCinematic() {
           style={{ objectPosition: "70% 50%" }}
           draggable={false}
         />
-      </div>
+      </motion.div>
 
       {/* Legibility overlays */}
       <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/45 to-transparent" />

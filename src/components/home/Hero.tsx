@@ -18,11 +18,11 @@ export interface HeroVariantItem {
 }
 
 const HERO_VARIANTS: HeroVariantItem[] = [
-  { id: "cinematic", title: "Aveline Signature", num: "01", component: HeroCinematic },
-  { id: "dentix", title: "Dentix Surgical", num: "02", component: HeroDentix },
-  { id: "luma", title: "Luma Humane Care", num: "03", component: HeroLuma },
-  { id: "booking", title: "Booking Concierge", num: "04", component: HeroBookingSplit },
-  { id: "specialist", title: "Specialist Editorial", num: "05", component: HeroSpecialistSplit },
+  { id: "cinematic", title: "Cinematic Luxury", num: "01", component: HeroCinematic },
+  { id: "dentix", title: "Surgical Authority", num: "02", component: HeroDentix },
+  { id: "luma", title: "Boutique Practice", num: "03", component: HeroLuma },
+  { id: "booking", title: "Instant Scheduling", num: "04", component: HeroBookingSplit },
+  { id: "specialist", title: "Multi-Specialty Care", num: "05", component: HeroSpecialistSplit },
 ];
 
 export function Hero() {
